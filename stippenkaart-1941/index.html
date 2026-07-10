@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#030303" />
+    <meta
+      name="description"
+      content="A scroll memorial built from Amsterdam's May 1941 stippenkaart."
+    />
+    <title>Stippenkaart - 1941</title>
+    <script type="module" crossorigin src="./assets/index-DGk9YsaT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BgPyYzAK.css">
+  </head>
+  <body>
+    <!-- Ink-edge filter for the Act I paper captions: feTurbulence displaces the glyph
+         outlines a couple of px so the letters read as ink bitten into rag paper rather
+         than crisp vector type. Applied via `filter: url(#ink)` in style.css, scoped to
+         body.on-paper .script-copy. Hidden; contributes no layout. -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+      <filter id="ink" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.014" numOctaves="1" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.3" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </svg>
+
+    <div id="scene" aria-hidden="true"></div>
+
+    <div id="loading" role="status" aria-live="polite">
+      <span class="loading-mark"></span>
+      <p>Preparing the map</p>
+    </div>
+
+    <div id="fallback" aria-hidden="true">
+      <video id="fallback-video" muted playsinline preload="metadata"></video>
+    </div>
+
+    <div id="veil" aria-hidden="true"></div>
+
+    <main id="scroll-story" aria-label="Stippenkaart - 1941">
+      <!-- ACT I — the map: one slow top-down zoom onto the Royal Palace, ending close
+           enough to read the mapmaker's ink. -->
+      <section class="line-space opening-space" data-copy="drew" aria-label="The map is drawn">
+        <article class="copy script-copy copy-civil"><h1>In May 1941, Amsterdam civil servants drew a map.</h1></article>
+      </section>
+      <section class="line-space" data-copy="counted" aria-label="What the map counted">
+        <article class="copy script-copy copy-right"><p class="statement">It counted the number of Jewish homes across the city.</p></article>
+      </section>
+      <section class="line-space" data-copy="stippen" aria-label="The map's name">
+        <article class="copy script-copy copy-left"><p class="statement">It was called the Stippenkaart.</p></article>
+      </section>
+      <section class="line-space" data-copy="eachdot" aria-label="The dot-map legend">
+        <article class="copy script-copy copy-right"><p class="statement">Each dot counted 10 Jewish citizens.</p></article>
+      </section>
+      <section class="line-space" data-copy="ink" aria-label="The mapmaker's ink">
+        <article class="copy script-copy copy-left"><p class="statement">In blue ink, the mapmaker wrote the number of Jewish residents. In red ink, non-Jews.</p></article>
+      </section>
+
+      <!-- ACT II — the machine: the hinge, now in two movements. First a SILENT beat — the
+           camera lifts out of the ink close-up to the oblique canal-ring altitude while the
+           paper map dissolves into the modern basemap and the 3D souls rise (no caption, no
+           rotation). THEN the clockwise orbit of the inner canal ring begins under the caption.
+           This space is extra-long so the silent transformation and the orbit each keep their
+           pace instead of overlapping — see the 'transform'/'weaponized' beats in main.js. -->
+      <section class="transition-space long-transition hinge-transition" aria-label="The map silently lifts and transforms, then the camera begins to orbit"></section>
+      <section class="line-space" data-copy="weaponized" aria-label="Civic efficiency weaponized">
+        <article class="copy script-copy copy-right"><p class="statement">Civic efficiency was weaponized.</p></article>
+      </section>
+      <section class="transition-space" aria-label="The camera orbits the canal ring"></section>
+      <section class="line-space" data-copy="collab" aria-label="Mapping the Jewish community">
+        <article class="copy script-copy copy-left"><p class="statement">Collaborators mapped out the Jewish community.</p></article>
+      </section>
+      <section class="transition-space" aria-label="The orbit comes to rest at true north"></section>
+
+      <!-- ACT III — the Jewish heart: a full orbit of the Jodenbuurt; the synagogues and
+           the market squares light up. -->
+      <section class="line-space jodenbuurt-space" data-copy="jodenbuurt" aria-label="Jewish city life" id="jodenbuurt-section">
+        <article class="copy script-copy copy-right"><p class="statement">The center of Jewish city life was in the Jodenbuurt.</p></article>
+      </section>
+      <!-- Spacer: the synagogue dive is the largest camera move of the act — without this
+           the scroll→clock rate stepped ~3x at the jodenbuurt anchor (the "jolt"). -->
+      <section class="transition-space" aria-label="The camera dives toward the synagogues"></section>
+      <section class="line-space jodenbuurt-space" data-copy="synagogues" aria-label="The synagogues">
+        <article class="copy script-copy copy-left"><p class="statement">The Portuguese and Great Synagogues stood at its heart.</p></article>
+      </section>
+      <section class="line-space jodenbuurt-space" data-copy="markets" aria-label="The market squares">
+        <article class="copy script-copy copy-right"><p class="statement">Jewish street vendors at Waterlooplein, Nieuwmarkt, and Uilenburgerstraat were a mainstay of life in Amsterdam.</p></article>
+      </section>
+
+      <!-- ACT IV — two more neighbourhoods. -->
+      <section class="line-space" data-copy="transvaal" aria-label="The Transvaalbuurt">
+        <article class="copy script-copy copy-left"><p class="statement">In the Transvaalbuurt, four in five residents were Jewish.</p></article>
+      </section>
+      <section class="line-space" data-copy="rivieren" aria-label="The Rivierenbuurt and the Franks">
+        <article class="copy script-copy copy-right"><p class="statement">Middle-class refugees, like the Franks, settled in the newer Rivierenbuurt.</p></article>
+      </section>
+      <section class="transition-space" aria-label="The camera lifts to the whole city, then returns to the Jodenbuurt"></section>
+
+      <!-- ACT V — the destruction: return to the Jodenbuurt, a slow counter-clockwise orbit. -->
+      <section class="line-space" data-copy="fenced" aria-label="The Jodenbuurt is cordoned off">
+        <article class="copy script-copy copy-left"><p class="statement">In February 1941, the occupiers cordoned off the Jodenbuurt to isolate the population for the first mass arrests.</p></article>
+      </section>
+      <section class="line-space" data-copy="dismantled" aria-label="Jewish life dismantled">
+        <article class="copy script-copy copy-right"><p class="statement">Jewish property, businesses, homes, and community life were systematically dismantled.</p></article>
+      </section>
+      <section class="line-space" data-copy="demolished" aria-label="The demolished houses">
+        <article class="copy script-copy copy-left"><p class="statement">After Jewish families were deported, their empty houses were eventually demolished.</p></article>
+      </section>
+      <section class="transition-space long-transition" aria-label="The camera pitches back to the top-down map"></section>
+
+      <!-- ACT VI — the reckoning: top-down on the full Stippenkaart, the ghost map returns,
+           the lights fade. -->
+      <!-- Silent beat: the caption was removed — the slow return of the stippenkaart IS
+           the content here. The section keeps its data-copy so the camera/caption sync
+           and section layout are unchanged. -->
+      <section class="line-space" data-copy="deported" aria-label="The return to the full map"></section>
+      <section class="line-space" data-copy="reckoning" aria-label="The map's count">
+        <article class="copy script-copy copy-right"><p class="statement">The May 1941 Stippenkaart counted 89,343 Jewish residents.</p></article>
+      </section>
+      <section class="transition-space population-transition" aria-label="The lights diminish"></section>
+      <section class="line-space" data-copy="remained" aria-label="The surviving population">
+        <article class="copy script-copy copy-left"><p class="statement">By 1945, only 15,000 remained.</p></article>
+      </section>
+      <section class="line-space memorial-space" data-copy="memorial" aria-label="The one remaining light"></section>
+    </main>
+
+    <!-- Grand finale: a long, near-overwhelming passage of 60,000 lights (rendered in
+         the WebGL canvas). This section just supplies the scroll length. -->
+    <section id="finale" aria-label="In memory of the sixty thousand"></section>
+
+    <p id="finale-memorial" aria-hidden="true">In memory of those who lost their lives.</p>
+
+    <p class="scroll-cue" aria-hidden="true">Scroll</p>
+    <p class="quality-note" aria-hidden="true"></p>
+    <p class="map-credit" aria-label="Data attribution">
+      Stippenkaart: Bureau van Statistiek der Gemeente Amsterdam, 1941
+      (<a href="https://www.niod.nl/" target="_blank" rel="noreferrer">NIOD</a>,
+      via <a href="https://maps.amsterdam.nl/woii/" target="_blank" rel="noreferrer">maps.amsterdam.nl</a>)
+      · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>
+      © <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>
+      · © <a href="https://docs.3dbag.nl/en/copyright/" target="_blank" rel="noreferrer">3DBAG</a> (tudelft3d, 3DGI)
+    </p>
+
+    <!-- Corner pills share one geometry; icons are inline Lucide SVGs (MIT) so both
+         render with identical metrics on every platform (no symbol-font fallback). -->
+    <button id="top-return" type="button" aria-label="Return to top">
+      <span class="top-label" aria-hidden="true">Return to top</span>
+      <span class="pill-glyph" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg></span>
+    </button>
+    <button id="info-toggle" type="button" aria-label="About this project" aria-haspopup="dialog">
+      <span class="info-label" aria-hidden="true">About this project</span>
+      <span class="pill-glyph" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+    </button>
+    <div id="info-overlay" hidden>
+      <!-- data-lenis-prevent: Lenis ignores wheel/touch inside, so the panel scrolls natively -->
+      <div id="info-panel" role="dialog" aria-modal="true" aria-labelledby="info-title" data-lenis-prevent>
+        <button id="info-close" type="button" aria-label="Close">&times;</button>
+        <h2 id="info-title">Stippenkaart – Amsterdam, May 1941</h2>
+        <p>In May 1941, the Amsterdam Bureau of Statistics produced a map of the city's Jewish residents. Each dot represented ten people. This project reinterprets the original map as a memorial. Each individual light on this map symbolizes one person's soul. There are 89,343 individual lights in total. At the end, we witness 60,000 individual lights scroll past, each symbolizing one person who was murdered by the Nazi regime. My hope is that the project restores what the original map erased: where each human life was reduced to a data point, here they are given individuality.</p>
+        <p>To build this map, I took the population numbers recorded by the original mapmaker and matched them to the corresponding neighborhood's outline, traced by hand from the original stippenkaart. The lights were placed over buildings according to the population in each neighborhood. The original pre-war buildings were reconstructed using AI-assisted map analysis and then substantially redrawn by hand. The demolished buildings shown are those that were present in Jewish neighborhoods in 1941 and were subsequently demolished. They do not necessarily represent only Jewish homes. Modern features like the IJ Tunnel and A10 ring road were removed so the map reflects the city approximately as it was in 1941.</p>
+        <p>The stippenkaart has stuck with me since I first came across it. When digitizing old maps, I often find myself drawn in by the subtle defects: rips in the paper, typos, squiggles in hand-drawn lines. I picture the person who drew it, at a drafting table, generations ago, doing the same work I do now. I've worked with a lot of maps, and few are as poignant as this one. It makes me think about the ethics of ordinary work, about how a map chooses to portray people, and how much power is in that choice.</p>
+        <p class="info-signature">— P. R. Truesdell</p>
+        <p class="info-sources"><strong>Sources</strong><br>Stippenkaart "Verspreiding van de Joden over de Gemeente (Mei 1941)" — Bureau van Statistiek der Gemeente Amsterdam; original held by the <a href="https://www.niod.nl/" target="_blank" rel="noreferrer">NIOD Institute for War, Holocaust and Genocide Studies</a>; georeferenced scan via <a href="https://maps.amsterdam.nl/woii/" target="_blank" rel="noreferrer">maps.amsterdam.nl/woii</a>. Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors, © <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>. 3D buildings © <a href="https://docs.3dbag.nl/en/copyright/" target="_blank" rel="noreferrer">3DBAG</a> by tudelft3d and 3DGI (CC BY 4.0), historically filtered and transformed. Street network © OpenStreetMap contributors. Demolished-building footprints reconstructed from the 1943 Publieke Werken atlas using MapSAM (Xia et al., ETH Zurich) for initial segmentation, with extensive manual digitization and verification. Jewish Quarter cordon hand-drawn from research by Geschiedenislokaal Amsterdam, based on maps from the Stadsarchief Amsterdam Dienst Bouw- en Woningtoezicht archive.</p>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="noscript">This memorial requires JavaScript to unfold.</p>
+    </noscript>
+
+  </body>
+</html>

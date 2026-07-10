@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 2,
+  "purpose": "Basemap re-rendered from local vectors; A10 + IJtunnel excluded at source",
+  "generatedAt": "2026-07-09T12:35:17.234596+00:00",
+  "tileUrlTemplate": "data/basemap/{z}/{x}/{y}@2x.png",
+  "sceneBboxLonLat": [
+    4.831562,
+    52.331609,
+    4.971431,
+    52.420973
+  ],
+  "sceneBboxMerc": [
+    537847.01,
+    6860308.2,
+    553417.15,
+    6876603.61
+  ],
+  "palette": {
+    "land": "#0e0e0e",
+    "water": "#212121",
+    "street": "#0b0b0b",
+    "rail": "#1a1a1a"
+  },
+  "widths": {
+    "majorPx": {
+      "13": 1.2,
+      "14": 1.6,
+      "15": 2.2,
+      "16": 3.0
+    },
+    "minorPx": {
+      "13": 0.7,
+      "14": 0.9,
+      "15": 1.2,
+      "16": 1.6
+    },
+    "railPx": {
+      "13": 0.6,
+      "14": 0.8,
+      "15": 1.1,
+      "16": 1.5
+    }
+  },
+  "excludedHighway": [
+    "construction",
+    "motorway",
+    "motorway_link",
+    "proposed",
+    "trunk",
+    "trunk_link"
+  ],
+  "excludedTunnel": "yes",
+  "zooms": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "zoomCoverage": {
+    "13": "full extent",
+    "14": "full extent + patch regions",
+    "15": "patch regions",
+    "16": "patch regions"
+  },
+  "patchRegions": [
+    {
+      "name": "jodenbuurt",
+      "anchor": [
+        4.9041,
+        52.3676
+      ],
+      "radius": 10.0,
+      "zoom": 15,
+      "unit_m": 185.359,
+      "bbox_lonlat": [
+        4.887449,
+        52.357432,
+        4.920751,
+        52.377766
+      ]
+    },
+    {
+      "name": "transvaal",
+      "anchor": [
+        4.9215,
+        52.3537
+      ],
+      "radius": 8.0,
+      "zoom": 16,
+      "unit_m": 185.359,
+      "bbox_lonlat": [
+        4.908179,
+        52.345563,
+        4.934821,
+        52.361835
+      ]
+    },
+    {
+      "name": "merwede",
+      "anchor": [
+        4.901847,
+        52.34568
+      ],
+      "radius": 8.0,
+      "zoom": 16,
+      "unit_m": 185.359,
+      "bbox_lonlat": [
+        4.888526,
+        52.337542,
+        4.915168,
+        52.353817
+      ]
+    }
+  ],
+  "ijReconstruction": {
+    "purpose": "Pre-1968 IJtunnel-entrance shoreline: restore pre-tunnel water, then lay historical land on top \u2014 drawn as a final overlay.",
+    "waterMask": "IJ_reconstruction/IJ_mask_water.geojson",
+    "oldLandTop": "IJ_reconstruction/old_land_top.geojson",
+    "waterPolys": 1,
+    "landPolys": 2
+  },
+  "tileCount": 221,
+  "inputs": {
+    "boundaries": {
+      "path": "BOUNDARIES.geojson",
+      "mtime": "2026-06-27T08:39:25.055832+00:00",
+      "bytes": 213302
+    },
+    "water": {
+      "path": "web_embed/public/data/water/water_scene.geojson",
+      "mtime": "2026-07-09T08:18:01.773107+00:00",
+      "bytes": 1928929
+    },
+    "roads": {
+      "path": "streets/roads.geojson",
+      "mtime": "2026-07-08T10:40:33.846080+00:00",
+      "bytes": 300607670
+    },
+    "rails": {
+      "path": "streets/rails.geojson",
+      "mtime": "2026-07-08T10:40:08.622972+00:00",
+      "bytes": 5920391
+    },
+    "layersCache": {
+      "path": "pipeline/basemap/basemap_layers.json",
+      "mtime": "2026-07-09T12:02:00+00:00",
+      "bytes": 11131816
+    },
+    "ijWaterMask": {
+      "path": "IJ_reconstruction/IJ_mask_water.geojson",
+      "mtime": "2026-07-09T12:21:54.514633+00:00",
+      "bytes": 3266
+    },
+    "ijOldLand": {
+      "path": "IJ_reconstruction/old_land_top.geojson",
+      "mtime": "2026-07-09T12:26:55.012119+00:00",
+      "bytes": 2784
+    }
+  },
+  "source": "OpenStreetMap local extracts + BGT water (\u00a9 OpenStreetMap contributors)"
+}
