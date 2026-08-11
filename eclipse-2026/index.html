@@ -4,35 +4,6 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <link href="../favicon-tight.ico" rel="icon" type="image/x-icon"/>
 <title>Where to See Antwerp’s 2026 Partial Solar Eclipse</title>
-<!--
-  ECLIPSE FACTSHEET
-  ==================================================================
-  WRITING THE COPY
-    Open this file in a browser. Click "Edit copy" in the black bar.
-    Every editable string turns into a text field - click it and type
-    over it. The layout reflows as you write, so you can see straight
-    away when a line is too long.
-
-    A counter in the bottom corner shows the character budget for the
-    slot you are in. Budgets are advisory: the number is what fits the
-    design without reflowing anything else.
-
-    When you are done, click "Save file". Your browser downloads a new
-    factsheet.html with the copy baked in. Replace this file with it.
-    The downloaded file is still editable - you can do it again.
-
-  MAKING THE PDF
-    Ctrl+P  ->  Destination:         Save as PDF
-                Margins:             None
-                Background graphics: ON
-    The @page rule sets the paper to 400 x 1500 pt. Raise that number
-    if the sheet outgrows it; nothing else needs to change.
-
-  NOTES
-    Layout is display:table, not flex - identical result, survives
-    every PDF engine rather than only the good ones.
-    Text marked [PLACEHOLDER] is scaffolding, not copy.
--->
 <style>
 /* ============================================================ TOKENS */
 :root{
@@ -53,7 +24,6 @@
 @page { size: 400pt 1500pt; margin: 0; }
 @media print{
   html,body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .editbar, .counter{ display:none !important; }
 }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -67,9 +37,6 @@ body{
   font-size:10pt;
   line-height:1.55;
 }
-
-/* The public webpage is for reading, not in-browser copy editing. */
-.editbar, .counter{ display:none !important; }
 
 /* ========================================================= TYPE KIT */
 .eyebrow{
@@ -347,48 +314,9 @@ footer b{ color:var(--tx2); font-weight:400; }
   body{ zoom:1.25; }
 }
 
-/* ======================================================= EDIT CHROME */
-.editbar{
-  position:fixed; top:0; left:0; right:0; z-index:99;
-  background:#000; border-bottom:1px solid #333;
-  padding:8px 14px; font:12px/1 "Lato",sans-serif; color:#888;
-}
-.editbar button{
-  font:inherit; font-weight:700; cursor:pointer;
-  background:#1C232F; color:#E9ECF2;
-  border:1px solid #3A4354; border-radius:3px;
-  padding:6px 12px; margin-right:6px;
-}
-.editbar button:hover{ background:#29323F; }
-.editbar button.on{ background:var(--warm); color:#000; border-color:var(--warm); }
-.editbar .note{ margin-left:6px; }
-body{ padding-top:0; }
-body.chrome{ margin-top:36px; }
-
-.counter{
-  position:fixed; right:12px; bottom:12px; z-index:99;
-  background:#000; border:1px solid #3A4354; border-radius:3px;
-  padding:6px 10px; font:11px/1.4 "Liberation Mono",monospace; color:#888;
-  display:none;
-}
-.counter.show{ display:block; }
-.counter b{ color:#E9ECF2; font-weight:400; }
-.counter.over b{ color:var(--warm); }
-
-body.editing [data-copy]{ outline:1px dashed rgba(238,136,102,.35); outline-offset:2px; }
-body.editing [data-copy]:hover{ outline-color:rgba(238,136,102,.8); }
-body.editing [data-copy]:focus{
-  outline:1.5px solid var(--warm); outline-offset:2px; background:rgba(238,136,102,.06);
-}
 </style>
 </head>
 <body class="">
-<div class="editbar">
-<button class="" id="toggle">Edit copy</button>
-<button id="save">Save file</button>
-<span class="note">Click any text and type over it. Save downloads a new factsheet.html.</span>
-</div>
-<div class="counter" id="counter">s2.lede  <b>193</b> / 230</div>
 <!-- ================================================ HERO ========= -->
 <div class="hero">
 <svg class="glyph" viewbox="0 0 200 200">
@@ -519,78 +447,4 @@ body.editing [data-copy]:focus{
 <div class="credit"><span class="ckey">IMAGE</span><span class="cval">LANGE WAPPER, ALBERT POELS · PHOTO MARK AHSMANN, CC BY-SA 3.0 · CROPPED, DARKENED · THIS VERSION CC BY-SA 3.0</span></div>
 <div class="credit"><span class="ckey">BUILT BY</span><span class="cval" data-copy="foot.credit" data-max="60">P.R. Truesdell · github.com/ptrues/eclipse_viewshed_2026</span></div>
 </footer>
-<script>
-(function(){
-  var body    = document.body;
-  var toggle  = document.getElementById('toggle');
-  var save    = document.getElementById('save');
-  var counter = document.getElementById('counter');
-  var slots   = document.querySelectorAll('[data-copy]');
-  var editing = false;
-
-  body.classList.add('chrome');
-
-  function setEditing(on){
-    editing = on;
-    body.classList.toggle('editing', on);
-    toggle.classList.toggle('on', on);
-    toggle.textContent = on ? 'Editing — click to stop' : 'Edit copy';
-    for (var i = 0; i < slots.length; i++){
-      if (on) slots[i].setAttribute('contenteditable', 'true');
-      else    slots[i].removeAttribute('contenteditable');
-    }
-    if (!on) counter.classList.remove('show');
-  }
-
-  function count(el){
-    var n   = el.textContent.replace(/\s+/g, ' ').trim().length;
-    var max = parseInt(el.getAttribute('data-max'), 10);
-    counter.innerHTML = el.getAttribute('data-copy') + '  <b>' + n + '</b> / ' + max;
-    counter.classList.toggle('over', n > max);
-    counter.classList.add('show');
-  }
-
-  toggle.addEventListener('click', function(){ setEditing(!editing); });
-
-  document.addEventListener('focusin', function(e){
-    var el = e.target.closest && e.target.closest('[data-copy]');
-    if (el) count(el);
-  });
-  document.addEventListener('input', function(e){
-    var el = e.target.closest && e.target.closest('[data-copy]');
-    if (el) count(el);
-  });
-
-  /* paste as plain text, so pasted copy cannot import foreign markup */
-  document.addEventListener('paste', function(e){
-    if (!editing) return;
-    var el = e.target.closest && e.target.closest('[data-copy]');
-    if (!el) return;
-    e.preventDefault();
-    document.execCommand('insertText', false,
-      (e.clipboardData || window.clipboardData).getData('text/plain'));
-  });
-
-  save.addEventListener('click', function(){
-    var clone = document.documentElement.cloneNode(true);
-    var live  = clone.querySelectorAll('[contenteditable]');
-    for (var i = 0; i < live.length; i++) live[i].removeAttribute('contenteditable');
-    clone.querySelector('body').classList.remove('editing', 'chrome');
-    var c = clone.querySelector('#counter');
-    if (c) c.className = 'counter';
-    var t = clone.querySelector('#toggle');
-    if (t){ t.className = ''; t.textContent = 'Edit copy'; }
-
-    var blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML],
-                        {type: 'text/html;charset=utf-8'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'factsheet.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
-  });
-})();
-</script>
 </body></html>
