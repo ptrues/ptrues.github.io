@@ -341,6 +341,12 @@ footer b{ color:var(--tx2); font-weight:400; }
   footer{ font-size:8pt; }
 }
 
+/* Preserve the carefully composed factsheet proportions, but give the whole
+   canvas a modest lift on desktop instead of leaving it at its print width. */
+@media screen and (min-width:700px){
+  body{ zoom:1.15; }
+}
+
 /* ======================================================= EDIT CHROME */
 .editbar{
   position:fixed; top:0; left:0; right:0; z-index:99;
