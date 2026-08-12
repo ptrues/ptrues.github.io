@@ -300,7 +300,15 @@ footer b{ color:var(--tx2); font-weight:400; }
   .step .n{ font-size:8.5pt; }
   .step p{ font-size:10.2pt; }
   .chip{ font-size:9pt; padding:4pt 6.5pt; }
-  footer{ font-size:7.4pt; }
+  footer{ font-size:7.4pt; line-height:1.55; letter-spacing:.02em; }
+  footer .row{ display:block; }
+  footer .row > span{ display:block; white-space:nowrap; }
+  footer .row > span + span{ margin-top:2pt; }
+  footer .row > span:last-child{ text-align:left; }
+  footer .credit{ display:block; margin-top:9pt; }
+  footer .credit .ckey,
+  footer .credit .cval{ display:block; width:auto; }
+  footer .credit .ckey{ margin-bottom:2pt; }
 }
 
 /* Preserve the carefully composed factsheet proportions, but give the whole
