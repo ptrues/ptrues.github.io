@@ -52,6 +52,16 @@
   background: #f7f5f4;
 }
 
+/* Crop the photographed border around the Stippenkaart. */
+.proj-media--stippenkaart a {
+  overflow: hidden;
+}
+
+.proj-media--stippenkaart img {
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
 .proj-media a {
   position: relative;
   display: inline-block;
