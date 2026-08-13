@@ -4,36 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects – P. R. Truesdell</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/projects.css">
+  <link rel="stylesheet" href="../projects.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bigger-picture/dist/bigger-picture.min.css">
-  <link rel="icon" href="/assets/favicon-tight.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-tight-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-tight-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-tight-180x180.png">
+  <link rel="icon" href="../favicon-tight.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-tight-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-tight-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-tight-180x180.png">
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner container">
       <h1 class="site-title">
-        <a href="/" class="site-title-link">P. R. Truesdell</a>
+        <a href="../" class="site-title-link">P. R. Truesdell</a>
       </h1>
       <button class="menu-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="site-nav">
-        <a href="/" class="home-link">Home</a>
-        <a href="/projects/" aria-current="page">Projects</a>
-        <a href="/about-me/">About Me</a>
+        <a href="../" class="home-link">Home</a>
+        <a href="../projects/" aria-current="page">Projects</a>
+        <a href="../about-me/">About Me</a>
       </nav>
       <div class="menu-overlay" id="menuOverlay">
         <button class="close-overlay" aria-label="Close menu">&times;</button>
         <nav class="overlay-nav">
-          <a href="/" class="home-link">Home</a>
-          <a href="/projects/" aria-current="page">Projects</a>
-          <a href="/about-me/">About Me</a>
+          <a href="../" class="home-link">Home</a>
+          <a href="../projects/" aria-current="page">Projects</a>
+          <a href="../about-me/">About Me</a>
         </nav>
       </div>
     </div>
@@ -44,17 +44,37 @@
 
 <article class="project">
   <div class="proj-text">
-    <h2 class="proj-title">Stippenkaart 1941</h2>
-    <p class="proj-desc">I like old maps. When digitizing them, I find myself drawn in by the subtle defects, like rips in the paper, typos, and squiggles in hand-drawn lines. The stippenkaart was different. It was created by an Amsterdam city employee to show where Jewish citizens were residing. The occupying authorities used it as a tool in the mass deportation and murder of approximately 60,000 people. When I came across it several years ago, I was struck by the symbology of using dots to represent people, and an idea to turn it into a memorial has been in the back of my mind ever since. With recent improvements in agentic A.I. tools, I was able to actualize the concept of using dots to symbolize human souls. I finished this project in about a two-week sprint, and at times, I was genuinely brought to tears.
-    </p>
+    <h2 class="proj-title">Antwerp's Partial Solar Eclipse</h2>
+    <p class="proj-desc">On August 12, 2026, a partial solar eclipse was visible from Antwerp. I wanted to know if trees and buildings would get in the way, and where I could get the best view. I spent two days combining lidar data, 3D building models, and solar-position calculations to reconstruct the skyline from five possible viewing spots. Then I turned it into a shareable webpage that's accessible enough to read on the toilet. The code and methodology are available on <a href="https://github.com/ptrues/eclipse_viewshed_2026">GitHub</a>.</p>
   </div>
   <figure class="proj-media">
     <a
-      href="/stippenkaart-1941/"
+      href="../eclipse-2026/"
+      aria-label="Open the Antwerp eclipse viewing guide"
+    >
+      <img
+        src="../eclipse-2026/figures/fig1_skyline_lead.png"
+        alt="The eclipsed Sun descending toward the reconstructed skyline seen from Wandelterras, Het Steen"
+        width="1666" height="1454"
+        loading="lazy" decoding="async"
+      />
+    </a>
+  </figure>
+</article>
+
+<article class="project">
+  <div class="proj-text">
+    <h2 class="proj-title">Stippenkaart 1941</h2>
+    <p class="proj-desc">I like old maps. When digitizing them, I find myself drawn in by the subtle defects, like rips in the paper, typos, and squiggles in hand-drawn lines. The stippenkaart was different. It was created by an Amsterdam city employee to show where Jewish citizens were residing. The occupying authorities used it as a tool in the mass deportation and murder of approximately 60,000 people.</p>
+    <p class="proj-desc">When I came across it several years ago, I was struck by the symbology of using dots to represent people, and an idea to turn it into a memorial has been in the back of my mind ever since. With recent improvements in agentic A.I. tools, I was able to actualize the concept of using dots to symbolize human souls. I finished this project in about a two-week sprint, and at times, I was genuinely brought to tears.</p>
+  </div>
+  <figure class="proj-media">
+    <a
+      href="../stippenkaart-1941/"
       aria-label="Open the Stippenkaart 1941 memorial"
     >
       <img
-        src="/stippenkaart-1941/data/stippenkaart-1941-georef.jpg"
+        src="../stippenkaart-1941/data/stippenkaart-1941-georef.jpg"
         alt="The 1941 Amsterdam stippenkaart showing the distribution of Jewish residents across the city"
         width="2048" height="2143"
         loading="lazy" decoding="async"
@@ -303,7 +323,7 @@
         </div>
         <figure class="proj-media">
           <a
-            href="/assets/Housing_Affordability_in_the_USA_simplified.png"
+            href="../assets/Housing_Affordability_in_the_USA_simplified.png"
             data-bp
             data-img="/assets/Housing_Affordability_in_the_USA_simplified.png 3497w"
             data-width="3497"
@@ -312,7 +332,7 @@
             aria-label="Open full-size map"
           >
             <img
-              src="/assets/Housing_Affordability_in_the_USA_simplified.png"
+              src="../assets/Housing_Affordability_in_the_USA_simplified.png"
               alt="Map showing housing affordability in the USA"
               width="3497" height="2465"
               loading="lazy" decoding="async"
@@ -336,7 +356,7 @@
         <div class="proj-media">
           <figure>
             <a
-              href="/assets/plan_de_paris.jpg"
+              href="../assets/plan_de_paris.jpg"
               data-bp
               data-img="/assets/plan_de_paris.jpg 2000w"
               data-width="2000"
@@ -345,7 +365,7 @@
               aria-label="Open full-size image"
             >
               <img
-                src="/assets/plan_de_paris.jpg"
+                src="../assets/plan_de_paris.jpg"
                 alt="Plan de Paris"
                 width="2000" height="1500"
                 loading="lazy" decoding="async"
@@ -354,7 +374,7 @@
           </figure>
           <figure>
             <a
-              href="/assets/Paris_Motorways.png"
+              href="../assets/Paris_Motorways.png"
               data-bp
               data-img="/assets/Paris_Motorways.png 2000w"
               data-width="2000"
@@ -363,7 +383,7 @@
               aria-label="Open full-size image"
             >
               <img
-                src="/assets/Paris_Motorways.png"
+                src="../assets/Paris_Motorways.png"
                 alt="Paris motorways"
                 width="2000" height="1500"
                 loading="lazy" decoding="async"
@@ -378,10 +398,10 @@
   <footer class="site-footer container" aria-label="Site footer">
     <small class="footer-note">© 2026 Site handcrafted by P. R. Truesdell</small>
   </footer>
-  <script src="/menu.js"></script>
-  <script type="module" src="/biggerpicture.js"></script>
-  <script type="module" src="/bp-inline.js"></script>
-  <script type="module" src="/bp-responsive.js"></script>
-  <script type="module" src="/bp-youtube.js"></script>
+  <script src="../menu.js"></script>
+  <script type="module" src="../biggerpicture.js"></script>
+  <script type="module" src="../bp-inline.js"></script>
+  <script type="module" src="../bp-responsive.js"></script>
+  <script type="module" src="../bp-youtube.js"></script>
 </body>
 </html>
