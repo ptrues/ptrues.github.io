@@ -54,11 +54,17 @@
 
 /* Crop the photographed border around the Stippenkaart. */
 .proj-media--stippenkaart a {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2048 / 2143;
   overflow: hidden;
 }
 
 .proj-media--stippenkaart img {
-  transform: scale(1.08);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.12);
   transform-origin: center;
 }
 
