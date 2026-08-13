@@ -35,6 +35,15 @@
   letter-spacing: -0.2px;
 }
 
+.proj-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.proj-title-link:hover {
+  text-decoration: underline;
+}
+
 .proj-desc {
   margin: 0;
   font-family: "Noto Sans", sans-serif;
