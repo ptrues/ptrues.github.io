@@ -42,6 +42,11 @@
    ============================================================================ */
 
 :root {
+  /* Light is the default; dark is opt-in through the toggle only. The UA
+     needs telling too, or a dark-mode phone paints its own scrollbars and
+     form controls dark around a light page. */
+  color-scheme: light;
+
   /* ---- CORE PALETTE (light) --------------------------------------------- */
   --paper:      #FAF8F3;   --paper-2:    #F1ECE1;
   --ink:        #201913;   --ink-soft:   #6B5F52;   --line: #E4DCCF;
@@ -81,19 +86,8 @@
   --shadow-float: 0 2px 10px rgba(32,25,19,.10);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #17120D; --paper-2: #201A13;
-    --ink: #EEE7DA; --ink-soft: #A99B88; --line: #33291E;
-    --scenic: #8FB06A; --heritage: #E0A64A; --noise: #D8735A;
-    --banner-bg: #2B211A; --banner-fg: #FAF6EE; --banner-mut: #CDBFAE; --banner-accent: #E0A64A;
-    --map-canopy: #8FB06A; --map-green: #798B5A; --map-conservation: #D9A85A;
-    --map-listed: #C79350; --map-road: #6A6053; --map-parking: #4A4236;
-    --map-noise: #D8735A; --map-water: #6E8AA0; --layer-a: 0.5;
-    --shadow: 0 1px 2px rgba(0,0,0,.35); --shadow-float: 0 3px 14px rgba(0,0,0,.5);
-  }
-}
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --paper: #17120D; --paper-2: #201A13;
   --ink: #EEE7DA; --ink-soft: #A99B88; --line: #33291E;
   --scenic: #8FB06A; --heritage: #E0A64A; --noise: #D8735A;
@@ -451,7 +445,7 @@ table.data tbody tr:last-child td { border-bottom: 0; }
     </svg>
     <div class="facts">
       <div class="fact"><span class="label">Destination</span><b>London</b></div>
-      <div class="fact key"><span class="label">Budget</span><b>375<span class="unit"> EUR/pp</span></b></div>
+      <div class="fact key"><span class="label">Budget</span><b>375<span class="unit">/pp</span></b></div>
       <div class="fact"><span class="label">Nights</span><b>3</b></div>
     </div>
   </section>
@@ -825,8 +819,7 @@ table.data tbody tr:last-child td { border-bottom: 0; }
        URL and come up correct on the first paint rather than flashing the OS
        theme and then being corrected by a message. The inline copies, which
        are never reloaded, get the postMessage path in the theme script below. */
-    var t = document.documentElement.getAttribute('data-theme')
-            || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var t = document.documentElement.getAttribute('data-theme') || 'light';
     frame.src = wrap.dataset.map + '?open=origin&theme=' + t;
     frame.title = title;
     overlay.appendChild(frame);
@@ -900,7 +893,7 @@ table.data tbody tr:last-child td { border-bottom: 0; }
   function isDark() {
     var t = root.getAttribute('data-theme');
     if (t) return t === 'dark';
-    return matchMedia('(prefers-color-scheme: dark)').matches;
+    return false;
   }
   function sync() {
     var dark = isDark();
@@ -936,7 +929,6 @@ table.data tbody tr:last-child td { border-bottom: 0; }
   });
   try { var saved = localStorage.getItem('wsk-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
   sync();
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sync);
   btn.addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
