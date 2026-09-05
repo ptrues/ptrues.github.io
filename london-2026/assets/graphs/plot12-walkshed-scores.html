@@ -1,0 +1,767 @@
+<title>Walkshed scores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap">
+
+<style>
+/* FIG 12. The tokens are walkshed-shortlist's, unchanged, so the two pages
+   sit in one system. Everything else here is subtraction: no title, no
+   legend, no tooltip, no prose, no reset. The story page does the
+   explaining; this figure only shows. */
+/* AUTUMN, not the cool grey-green this started as. The plate is embedded in
+   design/index.html by iframe, so its ground sits directly against the
+   article's --paper; the old #FAFAF7/#181C1B system read as a cool panel
+   dropped onto a warm page, and the teal --scenic had no relative anywhere in
+   the style kit. Every value below is design/style-guide.html's, and the two
+   move together from here.
+
+   Two tokens are DERIVED rather than lifted, because this plate uses a step
+   the guide does not have: --ink-2 and --ink-3 are two levels of secondary
+   text where the guide has one (--ink-soft). --ink-3 takes --ink-soft
+   unchanged and --ink-2 is one step nearer the ink; --rule-2 is likewise one
+   step stronger than --line. --surface resolves to --paper, which is what the
+   article's own .mapctl does: the 1px --rule-2 border is what lifts the
+   control, not a brighter fill. */
+:root{
+  --ground:#FAF8F3; --surface:#FAF8F3; --surface-2:#F1ECE1;
+  --ink:#201913; --ink-2:#544A3E; --ink-3:#6B5F52;
+  --rule:#E4DCCF; --rule-2:#CFC3AF;
+  --scenic:#4C6B3F; --heritage:#B5722A;
+  --region:rgba(32,25,19,.055);
+  --dot:#B3A695; --dot-sel:#201913;
+  --focus:#B5722A;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#17120D; --surface:#201A13; --surface-2:#201A13;
+    --ink:#EEE7DA; --ink-2:#C6BAA9; --ink-3:#A99B88;
+    --rule:#33291E; --rule-2:#4A3D2E;
+    --scenic:#8FB06A; --heritage:#E0A64A;
+    --region:rgba(238,231,218,.06);
+    --dot:#6B5F52; --dot-sel:#EEE7DA;
+    --focus:#E0A64A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#17120D; --surface:#201A13; --surface-2:#201A13;
+  --ink:#EEE7DA; --ink-2:#C6BAA9; --ink-3:#A99B88;
+  --rule:#33291E; --rule-2:#4A3D2E;
+  --scenic:#8FB06A; --heritage:#E0A64A;
+  --region:rgba(238,231,218,.06);
+  --dot:#6B5F52; --dot-sel:#EEE7DA;
+  --focus:#E0A64A;
+}
+
+*{box-sizing:border-box}
+/* height + overflow:hidden, not min-height. Giving the panel min-height:100%
+   made it AT LEAST the viewport, so anything that overran -- svg.scatter is
+   overflow:visible, and a label near the edge paints past its box -- grew the
+   document and produced a scrollbar inside the figure. A plate in an iframe
+   must never scroll: the parent already sized the box, and a scrollbar there
+   competes with the article's own scroll. Fixed height, clipped, and the plot
+   box flexes to whatever is left. */
+html,body{margin:0; height:100%; overflow:hidden;
+  background:var(--ground); color:var(--ink)}
+body{
+  font-family:"Noto Sans",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+
+/* THE PANEL FILLS ITS VIEWPORT, which for the inline plate is the iframe box
+   design/index.html sizes by aspect-ratio (5:4 on a wide page). It did not,
+   and the plot carried a hard 560 px cap: at the article's 62 rem the iframe
+   is about 992 x 794, the capped plot plus the slider came to roughly 614,
+   and the remaining ~180 px sat empty under the slider. The cap is not the
+   problem by itself -- an uncapped plot in a page-flow document would grow
+   without limit -- so the fix is to give the document a height to fill and let
+   the plot box take the slack, which is what .expanded and .full already did.
+   measure() now reads that height instead of guessing it. */
+/* TOP PADDING CLEARS THE EXPAND BUTTON. The button is absolutely positioned
+   at top:6px and is 30px tall, so it occupied y 6-36 of the panel's padding
+   box -- while the plot box started at 10px and drew underneath it. Any label
+   the placer put in the top-right corner went behind the control; "Cutty
+   Sark", one of the selected walksheds, is exactly that corner on a phone.
+   36 + 6 of clearance = 42. Widening the plot's own top margin (G.MT) would
+   have worked too, but this keeps the control in a band of its own rather
+   than reserving figure space that the button only sometimes covers. */
+.panel{position:relative; padding:42px 12px 14px;
+  height:100%; display:flex; flex-direction:column}
+.plotbox{position:relative; flex:1 1 auto; min-height:0}
+svg.scatter{display:block; width:100%; height:100%; overflow:visible;
+  touch-action:none}
+
+/* The only chrome. No text on it -- the four-corner glyph every video player
+   uses is the whole affordance, per the figure's brief. */
+.btn-icon{
+  position:absolute; top:6px; right:8px; z-index:3;
+  width:30px; height:30px; padding:6px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface); color:var(--ink-3);
+  border:1px solid var(--rule-2); border-radius:7px; cursor:pointer;
+}
+.btn-icon:hover{color:var(--ink); border-color:var(--ink-3)}
+.btn-icon svg{width:100%; height:100%; display:block}
+.btn-icon:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+
+/* Expanded: the panel takes the viewport and the plot takes what is left. */
+#scrim{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:40;
+  opacity:0; pointer-events:none; transition:opacity .15s}
+#scrim.on{opacity:1; pointer-events:auto}
+.panel.expanded{
+  position:fixed; inset:14px; z-index:50; margin:0;
+  background:var(--ground); border-radius:10px;
+  display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);
+}
+.panel.expanded .plotbox{flex:1 1 auto; min-height:0}
+.panel.expanded svg.scatter{width:100%; height:100%}
+
+/* The overlay copy is already full screen -- design/index.html gave it the
+   viewport -- so it needs the filling behaviour of .expanded without the
+   floating-card chrome. Without this the plot keeps the 560 px cap meant for
+   an article column and leaves half the overlay empty. */
+.panel.full{position:fixed; inset:0; display:flex; flex-direction:column;
+  padding:42px 16px 16px}
+.panel.full .plotbox{flex:1 1 auto; min-height:0}
+.panel.full svg.scatter{width:100%; height:100%}
+
+/* ---------- marks ---------- */
+.region{fill:var(--region)}
+.grid-line{stroke:var(--rule); stroke-width:1}
+.axis-line{stroke:var(--rule-2); stroke-width:1}
+/* TYPE SIZES. The viewBox is set to the plot's real pixel box (see measure()),
+   so one user unit is one CSS pixel and these are true rendered sizes -- they
+   do NOT scale up on a small screen, they just get proportionally more of it.
+   The first pass set ticks and labels at 10px, which is below what is
+   comfortable on a phone; the narrow-viewport block further down takes them up
+   again where the figure has least room. */
+.tick{font-family:"Source Code Pro",ui-monospace,monospace; font-size:12px;
+  fill:var(--ink-3)}
+.axis-title{font-family:"Source Code Pro",ui-monospace,monospace; font-size:13px;
+  font-weight:500; letter-spacing:.12em; fill:var(--ink-3)}
+/* Both axes here ARE this project's own measured scores, so both are coloured
+   -- unlike FIG 10, where the x axis is Scenic-Or-Not's rating and stays
+   neutral. The threshold line and its grip already carry these two colours
+   (.thr-s / .thr-h below), so the axis title is naming the thing the reader
+   is dragging rather than introducing a new code. */
+.axis-title.s{fill:var(--scenic)}
+.axis-title.h{fill:var(--heritage)}
+
+.dot{fill:var(--dot)}
+.dot.sel{fill:var(--dot-sel)}
+.hit{fill:transparent; cursor:pointer}
+.label{font-family:"Source Code Pro",ui-monospace,monospace; font-size:12px;
+  fill:var(--ink); cursor:pointer}
+.leader{stroke:var(--rule-2); stroke-width:1}
+.dot.hot, .label.hot{fill:var(--scenic)}
+.leader.hot{stroke:var(--scenic)}
+
+/* The two thresholds. Each line is dragged by the handle riding it on the
+   axis, and the pair sets selectivity and which score is favoured at once --
+   there is no separate control for either, by design. */
+.thr-s{stroke:var(--scenic); stroke-width:2; stroke-dasharray:5 4}
+.thr-h{stroke:var(--heritage); stroke-width:2; stroke-dasharray:5 4}
+.grip{cursor:grab}
+.grip:active{cursor:grabbing}
+.grip-hit{fill:transparent}
+.grip-s .grip-body{fill:var(--scenic)}
+.grip-h .grip-body{fill:var(--heritage)}
+.grip-body{stroke:var(--ground); stroke-width:1.5}
+.grip:focus-visible{outline:none}
+.grip:focus-visible .grip-body{stroke:var(--focus); stroke-width:2.5}
+
+/* ---------- the one slider ---------- */
+/* Three control rows on one grid rather than three independent flex rows.
+   The label column sizes itself to the longest label ("Proximity to park (m)")
+   and the other two follow it, so every track starts and ends at the same x
+   and the readouts form a column. Laid out as a grid of the CHILDREN --
+   .park is display:contents -- so each row stays one readable unit in the
+   markup while the three of them still align. */
+.controls{
+  display:grid; grid-template-columns:auto 1fr auto;
+  align-items:center; gap:6px 12px;
+  margin:2px 0 0 0; padding:0 4px;
+}
+.park{display:contents}
+.park label{
+  font-family:"Source Code Pro",ui-monospace,monospace; font-size:13px; color:var(--ink-3);
+  white-space:nowrap;
+}
+.park output{
+  font-family:"Source Code Pro",ui-monospace,monospace; font-size:13px; color:var(--ink);
+  font-variant-numeric:tabular-nums; min-width:5.5ch; text-align:right;
+}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; background:transparent;
+  flex:1 1 auto; min-width:0; height:22px; margin:0; cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{
+  height:5px; border-radius:3px; background:var(--rule-2)}
+input[type=range]::-moz-range-track{
+  height:5px; border-radius:3px; background:var(--rule-2)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:16px; height:16px;
+  border-radius:50%; background:var(--ink); border:2px solid var(--ground);
+  margin-top:-6px}
+input[type=range]::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%; background:var(--ink);
+  border:2px solid var(--ground)}
+input:focus-visible{outline:2px solid var(--focus); outline-offset:3px;
+  border-radius:4px}
+
+/* A phone gives this figure about 340 px of width, and the plate is the whole
+   screen's worth of attention rather than one item in a column. Take the type
+   up again where there is least room for it -- the label placer already drops
+   any name it cannot fit without collision, so fewer, legible names beat more
+   unreadable ones. */
+@media (max-width:480px){
+  .tick{font-size:13px}
+  .axis-title{font-size:14px}
+  .label{font-size:13px}
+  .park label, .park output{font-size:14px}
+  .park{gap:9px}
+}
+</style>
+
+<div id="scrim"></div>
+
+<div class="panel">
+  <button class="btn-icon" id="expand" type="button" aria-pressed="false"
+          aria-label="Expand the plot to full screen"
+          title="Expand to full screen"></button>
+
+  <div class="plotbox" id="plotbox">
+    <svg class="scatter" id="plot" viewBox="0 0 640 540" role="img"
+         aria-label="Scatter of scenic score against heritage score for the walksheds, with two draggable thresholds marking the selected corner"></svg>
+  </div>
+
+  <div class="controls">
+  <div class="park">
+    <label for="parkm">Proximity to park (m)</label>
+    <input type="range" id="parkm" min="0" max="3000" step="50" value="1000"
+           aria-label="Proximity to park in metres">
+    <output id="parkm-val" for="parkm">1000</output>
+  </div>
+
+  <!-- The two thresholds, as sliders. They are a SECOND way to reach the
+       controls already on the plate, not a third control: each is bound to the
+       same cutS / cutH the draggable axis grips move, and dragging a grip
+       writes back here. Some readers will never discover that a mark on an
+       axis can be dragged, and a labelled slider says "this is adjustable"
+       without having to be found. Range is 50-100 because the collapsed plate
+       starts its axes at the 50th percentile -- below that there is nothing to
+       select. -->
+  <div class="park">
+    <label for="cut-s">Scenic</label>
+    <input type="range" id="cut-s" min="50" max="100" step="1" value="75"
+           aria-label="Scenic score threshold, percentile">
+    <output id="cut-s-val" for="cut-s">75</output>
+  </div>
+
+  <div class="park">
+    <label for="cut-h">Heritage</label>
+    <input type="range" id="cut-h" min="50" max="100" step="1" value="85"
+           aria-label="Heritage score threshold, percentile">
+    <output id="cut-h-val" for="cut-h">85</output>
+  </div>
+  </div>
+</div>
+
+<script id="payload" type="application/json">{"population":264,"default_cut_scenic":0.75,"default_cut_heritage":0.85,"default_park_m":1000,"walksheds":[{"name":"Abbey Road","scenic":0.363636,"heritage":0.49053,"park_m":871,"lonlat":[0.003737,51.531926]},{"name":"Abbey Wood (London)","scenic":0.806818,"heritage":0.073864,"park_m":3481,"lonlat":[0.121394,51.491062]},{"name":"Aldgate","scenic":0.087121,"heritage":0.984848,"park_m":793,"lonlat":[-0.075689,51.514246]},{"name":"Aldgate East","scenic":0.034091,"heritage":0.965909,"park_m":970,"lonlat":[-0.072384,51.515037]},{"name":"All Saints","scenic":0.208333,"heritage":0.75,"park_m":2285,"lonlat":[-0.013135,51.511]},{"name":"Balham","scenic":0.219697,"heritage":0.390152,"park_m":1266,"lonlat":[-0.152424,51.443225]},{"name":"Barbican","scenic":0.223485,"heritage":0.988636,"park_m":52,"lonlat":[-0.097993,51.520275]},{"name":"Barking Riverside","scenic":0.492424,"heritage":0.024621,"park_m":5688,"lonlat":[0.11596,51.51953]},{"name":"Barnehurst","scenic":0.818182,"heritage":0.024621,"park_m":1818,"lonlat":[0.159646,51.464959]},{"name":"Barons Court","scenic":0.284091,"heritage":0.731061,"park_m":1093,"lonlat":[-0.213427,51.490311]},{"name":"Bayswater","scenic":0.753788,"heritage":0.954545,"park_m":243,"lonlat":[-0.187938,51.512284]},{"name":"Beckenham Junction","scenic":0.856061,"heritage":0.49053,"park_m":2639,"lonlat":[-0.025813,51.411035]},{"name":"Beckton","scenic":0.534091,"heritage":0.024621,"park_m":3194,"lonlat":[0.061453,51.514362]},{"name":"Becontree","scenic":0.810606,"heritage":0.024621,"park_m":4730,"lonlat":[0.127016,51.540331]},{"name":"Belgrave Walk","scenic":0.943182,"heritage":0.63447,"park_m":239,"lonlat":[-0.17774,51.4011]},{"name":"Bethnal Green","scenic":0.439394,"heritage":0.871212,"park_m":485,"lonlat":[-0.059568,51.523917]},{"name":"Bexley","scenic":0.912879,"heritage":0.539773,"park_m":949,"lonlat":[0.147903,51.440219]},{"name":"Blackheath","scenic":0.916667,"heritage":0.878788,"park_m":894,"lonlat":[0.008872,51.465796]},{"name":"Blackwall","scenic":0.204545,"heritage":0.753788,"park_m":2266,"lonlat":[-0.006969,51.507991]},{"name":"Boston Manor","scenic":0.962121,"heritage":0.348485,"park_m":1105,"lonlat":[-0.324939,51.495635]},{"name":"Brent Cross West Station","scenic":0.018939,"heritage":0.073864,"park_m":2059,"lonlat":[-0.225488,51.568429]},{"name":"Brentford","scenic":0.333333,"heritage":0.700758,"park_m":677,"lonlat":[-0.309651,51.487547]},{"name":"Brentwood","scenic":0.844697,"heritage":0.581439,"park_m":1771,"lonlat":[0.299586,51.613605]},{"name":"Brimsdown","scenic":0.314394,"heritage":0.073864,"park_m":2698,"lonlat":[-0.030817,51.655583]},{"name":"Brockley","scenic":0.886364,"heritage":0.314394,"park_m":778,"lonlat":[-0.037537,51.464649]},{"name":"Bromley North","scenic":0.643939,"heritage":0.592803,"park_m":785,"lonlat":[0.016993,51.408328]},{"name":"Bromley South","scenic":0.568182,"heritage":0.528409,"park_m":1573,"lonlat":[0.017344,51.399976]},{"name":"Burnt Oak","scenic":0.488636,"heritage":0.172348,"park_m":1578,"lonlat":[-0.264048,51.602774]},{"name":"Bushey","scenic":0.795455,"heritage":0.390152,"park_m":1633,"lonlat":[-0.384749,51.645582]},{"name":"Caledonian Road & Barnsbury","scenic":0.765152,"heritage":0.892045,"park_m":1209,"lonlat":[-0.116729,51.543041]},{"name":"Cambridge Heath (London)","scenic":0.80303,"heritage":0.840909,"park_m":395,"lonlat":[-0.057279,51.531973]},{"name":"Canary Wharf","scenic":0.162879,"heritage":0.75947,"park_m":2224,"lonlat":[-0.018834,51.506203]},{"name":"Canning Town","scenic":0.132576,"heritage":0.390152,"park_m":2590,"lonlat":[0.008101,51.514127]},{"name":"Canons Park","scenic":0.939394,"heritage":0.272727,"park_m":83,"lonlat":[-0.294693,51.607701]},{"name":"Carshalton","scenic":0.825758,"heritage":0.82197,"park_m":213,"lonlat":[-0.166368,51.368454]},{"name":"Centrale","scenic":0.045455,"heritage":0.647727,"park_m":3805,"lonlat":[-0.103917,51.375769]},{"name":"Chafford Hundred","scenic":0.109848,"heritage":0.024621,"park_m":2237,"lonlat":[0.287447,51.485557]},{"name":"Charlton","scenic":0.386364,"heritage":0.4375,"park_m":1271,"lonlat":[0.031258,51.486813]},{"name":"Chelsfield","scenic":0.969697,"heritage":0.073864,"park_m":2495,"lonlat":[0.10907,51.356256]},{"name":"Chiswick Park","scenic":0.42803,"heritage":0.75947,"park_m":966,"lonlat":[-0.267972,51.494627]},{"name":"Church Street","scenic":0.064394,"heritage":0.664773,"park_m":3737,"lonlat":[-0.104361,51.373708]},{"name":"Clapham High Street","scenic":0.257576,"heritage":0.861742,"park_m":1790,"lonlat":[-0.132522,51.465481]},{"name":"Clapham Junction","scenic":0.094697,"heritage":0.528409,"park_m":1283,"lonlat":[-0.170221,51.464187]},{"name":"Cockfosters","scenic":0.988636,"heritage":0.371212,"park_m":182,"lonlat":[-0.149171,51.65152]},{"name":"Colliers Wood","scenic":0.613636,"heritage":0.4375,"park_m":1385,"lonlat":[-0.178086,51.41816]},{"name":"Cricklewood","scenic":0.325758,"heritage":0.227273,"park_m":675,"lonlat":[-0.212677,51.558453]},{"name":"Custom House","scenic":0.359848,"heritage":0.172348,"park_m":3034,"lonlat":[0.02673,51.509769]},{"name":"Custom House (for ExCel)","scenic":0.348485,"heritage":0.172348,"park_m":3040,"lonlat":[0.026699,51.509716]},{"name":"Cutty Sark","scenic":0.958333,"heritage":0.905303,"park_m":342,"lonlat":[-0.01081,51.481671]},{"name":"Cyprus","scenic":0.431818,"heritage":0.172348,"park_m":2606,"lonlat":[0.063925,51.508473]},{"name":"Dagenham Dock","scenic":0.068182,"heritage":0.024621,"park_m":6764,"lonlat":[0.145904,51.526156]},{"name":"Dagenham East","scenic":0.674242,"heritage":0.314394,"park_m":6647,"lonlat":[0.166017,51.544096]},{"name":"Dalston Junction","scenic":0.268939,"heritage":0.848485,"park_m":1668,"lonlat":[-0.075137,51.546116]},{"name":"Dalston Kingsland","scenic":0.227273,"heritage":0.810606,"park_m":1467,"lonlat":[-0.075701,51.548148]},{"name":"Dartford","scenic":0.098485,"heritage":0.685606,"park_m":3824,"lonlat":[0.219248,51.447371]},{"name":"Denham","scenic":0.984848,"heritage":0.691288,"park_m":228,"lonlat":[-0.497437,51.578837]},{"name":"Deptford","scenic":0.511364,"heritage":0.746212,"park_m":1302,"lonlat":[-0.02627,51.478848]},{"name":"Deptford Bridge","scenic":0.329545,"heritage":0.804924,"park_m":1159,"lonlat":[-0.022438,51.474215]},{"name":"Devons Road","scenic":0.310606,"heritage":0.721591,"park_m":1459,"lonlat":[-0.017615,51.522667]},{"name":"Dundonald Road","scenic":0.295455,"heritage":0.49053,"park_m":695,"lonlat":[-0.207679,51.417555]},{"name":"Ealing Broadway","scenic":0.689394,"heritage":0.721591,"park_m":518,"lonlat":[-0.301752,51.514841]},{"name":"Ealing Common","scenic":0.859848,"heritage":0.551136,"park_m":1034,"lonlat":[-0.288265,51.51014]},{"name":"Earl's Court","scenic":0.416667,"heritage":0.844697,"park_m":400,"lonlat":[-0.193378,51.492063]},{"name":"East Croydon","scenic":0.022727,"heritage":0.592803,"park_m":3089,"lonlat":[-0.09278,51.375454]},{"name":"East Ham","scenic":0.159091,"heritage":0.407197,"park_m":1728,"lonlat":[0.051186,51.538948]},{"name":"East India","scenic":0.246212,"heritage":0.67803,"park_m":2440,"lonlat":[-0.002326,51.509359]},{"name":"East Putney","scenic":0.761364,"heritage":0.57197,"park_m":423,"lonlat":[-0.211,51.459205]},{"name":"Eden Park","scenic":1.0,"heritage":0.024621,"park_m":2656,"lonlat":[-0.026355,51.390091]},{"name":"Edgware","scenic":0.481061,"heritage":0.4375,"park_m":456,"lonlat":[-0.274928,51.613653]},{"name":"Elmstead Woods","scenic":0.992424,"heritage":0.272727,"park_m":58,"lonlat":[0.044274,51.417118]},{"name":"Elstree & Borehamwood","scenic":0.617424,"heritage":0.371212,"park_m":1276,"lonlat":[-0.280081,51.653069]},{"name":"Elverson Road","scenic":0.606061,"heritage":0.789773,"park_m":1153,"lonlat":[-0.016728,51.469074]},{"name":"Enfield Lock","scenic":0.693182,"heritage":0.172348,"park_m":2184,"lonlat":[-0.028532,51.670922]},{"name":"Enfield Town","scenic":0.746212,"heritage":0.714015,"park_m":1974,"lonlat":[-0.079328,51.652026]},{"name":"Erith","scenic":0.655303,"heritage":0.314394,"park_m":3784,"lonlat":[0.175055,51.481671]},{"name":"Euston","scenic":0.170455,"heritage":0.920455,"park_m":699,"lonlat":[-0.131846,51.527824]},{"name":"Euston Square","scenic":0.19697,"heritage":0.950758,"park_m":679,"lonlat":[-0.135829,51.525604]},{"name":"Ewell East","scenic":0.708333,"heritage":0.655303,"park_m":472,"lonlat":[-0.24153,51.3453]},{"name":"Feltham","scenic":0.261364,"heritage":0.227273,"park_m":4457,"lonlat":[-0.409838,51.447898]},{"name":"Finchley Central","scenic":0.867424,"heritage":0.57197,"park_m":306,"lonlat":[-0.192527,51.600921]},{"name":"Finsbury Park","scenic":0.787879,"heritage":0.49053,"park_m":187,"lonlat":[-0.106285,51.564302]},{"name":"Forest Gate","scenic":0.280303,"heritage":0.272727,"park_m":930,"lonlat":[0.024353,51.549432]},{"name":"Forest Hill","scenic":0.791667,"heritage":0.539773,"park_m":509,"lonlat":[-0.053157,51.43928]},{"name":"Fulham Broadway","scenic":0.409091,"heritage":0.778409,"park_m":469,"lonlat":[-0.195422,51.480081]},{"name":"Garston (Herts)","scenic":0.848485,"heritage":0.024621,"park_m":1045,"lonlat":[-0.381741,51.686616]},{"name":"George Street","scenic":0.049242,"heritage":0.691288,"park_m":3394,"lonlat":[-0.098746,51.373977]},{"name":"Gloucester Road","scenic":0.556818,"heritage":0.935606,"park_m":528,"lonlat":[-0.182658,51.494316]},{"name":"Golders Green","scenic":0.973485,"heritage":0.818182,"park_m":396,"lonlat":[-0.194039,51.572259]},{"name":"Goldhawk Road","scenic":0.041667,"heritage":0.560606,"park_m":1339,"lonlat":[-0.226715,51.502005]},{"name":"Goodmayes","scenic":0.420455,"heritage":0.121212,"park_m":2436,"lonlat":[0.110807,51.565579]},{"name":"Gordon Hill","scenic":0.829545,"heritage":0.407197,"park_m":1813,"lonlat":[-0.09499,51.663584]},{"name":"Grays","scenic":0.731061,"heritage":0.314394,"park_m":4567,"lonlat":[0.321832,51.476248]},{"name":"Great Portland Street","scenic":0.503788,"heritage":0.992424,"park_m":68,"lonlat":[-0.144262,51.52384]},{"name":"Greenford","scenic":0.344697,"heritage":0.172348,"park_m":2954,"lonlat":[-0.345837,51.542331]},{"name":"Greenwich","scenic":0.890152,"heritage":0.912879,"park_m":414,"lonlat":[-0.01334,51.478135]},{"name":"Gunnersbury","scenic":0.579545,"heritage":0.664773,"park_m":725,"lonlat":[-0.275286,51.491678]},{"name":"Haggerston","scenic":0.291667,"heritage":0.852273,"park_m":1381,"lonlat":[-0.075666,51.538705]},{"name":"Hainault","scenic":0.734848,"heritage":0.024621,"park_m":3675,"lonlat":[0.093482,51.603659]},{"name":"Hammersmith (Dist&Picc Line)","scenic":0.530303,"heritage":0.772727,"park_m":1392,"lonlat":[-0.22362,51.4923]},{"name":"Hammersmith (H&C Line)","scenic":0.382576,"heritage":0.778409,"park_m":1299,"lonlat":[-0.22503,51.49339]},{"name":"Hanger Lane","scenic":0.564394,"heritage":0.227273,"park_m":2308,"lonlat":[-0.292704,51.530177]},{"name":"Harlesden","scenic":0.306818,"heritage":0.227273,"park_m":1159,"lonlat":[-0.257667,51.536289]},{"name":"Harrow-on-the-Hill","scenic":0.69697,"heritage":0.731061,"park_m":816,"lonlat":[-0.337225,51.579186]},{"name":"Hatton Cross","scenic":0.352273,"heritage":0.121212,"park_m":4699,"lonlat":[-0.423191,51.466747]},{"name":"Haydons Road","scenic":0.772727,"heritage":0.172348,"park_m":661,"lonlat":[-0.188815,51.425448]},{"name":"Heathrow Terminal 4","scenic":0.026515,"heritage":0.172348,"park_m":5451,"lonlat":[-0.445463,51.458268]},{"name":"Hendon","scenic":0.67803,"heritage":0.172348,"park_m":2961,"lonlat":[-0.238674,51.580068]},{"name":"Hendon Central","scenic":0.496212,"heritage":0.513258,"park_m":2191,"lonlat":[-0.226424,51.583301]},{"name":"Heron Quays","scenic":0.231061,"heritage":0.592803,"park_m":2004,"lonlat":[-0.021421,51.503379]},{"name":"High Barnet","scenic":0.780303,"heritage":0.606061,"park_m":1966,"lonlat":[-0.194298,51.650541]},{"name":"Hillingdon","scenic":0.901515,"heritage":0.272727,"park_m":3900,"lonlat":[-0.449828,51.553715]},{"name":"Hither Green","scenic":0.82197,"heritage":0.4375,"park_m":454,"lonlat":[-0.000944,51.452025]},{"name":"Holland Park","scenic":0.833333,"heritage":0.943182,"park_m":155,"lonlat":[-0.205679,51.507143]},{"name":"Homerton","scenic":0.469697,"heritage":0.708333,"park_m":634,"lonlat":[-0.04236,51.547012]},{"name":"Hornchurch","scenic":0.113636,"heritage":0.073864,"park_m":2865,"lonlat":[0.219116,51.554093]},{"name":"Hounslow","scenic":0.378788,"heritage":0.227273,"park_m":2501,"lonlat":[-0.362277,51.461946]},{"name":"Hounslow Central","scenic":0.185606,"heritage":0.272727,"park_m":1615,"lonlat":[-0.366578,51.471295]},{"name":"Hounslow East","scenic":0.140152,"heritage":0.272727,"park_m":1202,"lonlat":[-0.356474,51.473213]},{"name":"Hoxton","scenic":0.276515,"heritage":0.875,"park_m":582,"lonlat":[-0.075681,51.531512]},{"name":"Ickenham","scenic":0.882576,"heritage":0.539773,"park_m":4204,"lonlat":[-0.442225,51.56177]},{"name":"Ilford","scenic":0.17803,"heritage":0.371212,"park_m":574,"lonlat":[0.06968,51.559118]},{"name":"Imperial Wharf","scenic":0.647727,"heritage":0.560606,"park_m":879,"lonlat":[-0.182823,51.474949]},{"name":"Isleworth","scenic":0.522727,"heritage":0.551136,"park_m":990,"lonlat":[-0.336907,51.474763]},{"name":"Iver","scenic":0.905303,"heritage":0.172348,"park_m":2625,"lonlat":[-0.506726,51.508503]},{"name":"Kenley","scenic":0.965909,"heritage":0.172348,"park_m":2771,"lonlat":[-0.100925,51.324777]},{"name":"Kensal Green","scenic":0.640152,"heritage":0.892045,"park_m":57,"lonlat":[-0.225088,51.53054]},{"name":"Kensington (Olympia)","scenic":0.443182,"heritage":0.804924,"park_m":465,"lonlat":[-0.210364,51.497899]},{"name":"Kew Bridge","scenic":0.897727,"heritage":0.789773,"park_m":414,"lonlat":[-0.287108,51.489513]},{"name":"Kidbrooke","scenic":0.621212,"heritage":0.371212,"park_m":1470,"lonlat":[0.027498,51.462121]},{"name":"King George V","scenic":0.545455,"heritage":0.121212,"park_m":1900,"lonlat":[0.062624,51.502003]},{"name":"King's Cross St. Pancras","scenic":0.609848,"heritage":0.931818,"park_m":470,"lonlat":[-0.123194,51.530663]},{"name":"Kingston","scenic":0.318182,"heritage":0.814394,"park_m":666,"lonlat":[-0.301166,51.412751]},{"name":"Langdon Park","scenic":0.143939,"heritage":0.738636,"park_m":1962,"lonlat":[-0.01415,51.515172]},{"name":"Lebanon Road","scenic":0.253788,"heritage":0.371212,"park_m":2572,"lonlat":[-0.085002,51.375201]},{"name":"Lee","scenic":0.662879,"heritage":0.348485,"park_m":721,"lonlat":[0.013493,51.449755]},{"name":"Lewisham","scenic":0.549242,"heritage":0.647727,"park_m":1208,"lonlat":[-0.014024,51.465692]},{"name":"Leyton Midland Road","scenic":0.193182,"heritage":0.348485,"park_m":1628,"lonlat":[-0.008051,51.569725]},{"name":"Liverpool Street","scenic":0.083333,"heritage":1.0,"park_m":178,"lonlat":[-0.083182,51.517372]},{"name":"Lloyd Park","scenic":0.931818,"heritage":0.314394,"park_m":1844,"lonlat":[-0.080775,51.364278]},{"name":"London City Airport","scenic":0.234848,"heritage":0.227273,"park_m":1923,"lonlat":[0.048739,51.503416]},{"name":"London Fenchurch Street","scenic":0.412879,"heritage":0.973485,"park_m":816,"lonlat":[-0.078897,51.511646]},{"name":"London King's Cross","scenic":0.602273,"heritage":0.92803,"park_m":486,"lonlat":[-0.122926,51.530883]},{"name":"London St Pancras International","scenic":0.299242,"heritage":0.882576,"park_m":300,"lonlat":[-0.127189,51.53239]},{"name":"Lower Sydenham","scenic":0.837121,"heritage":0.121212,"park_m":2065,"lonlat":[-0.033345,51.424831]},{"name":"Manor House","scenic":0.954545,"heritage":0.348485,"park_m":17,"lonlat":[-0.096118,51.570738]},{"name":"Merton Park","scenic":0.55303,"heritage":0.458333,"park_m":908,"lonlat":[-0.201219,51.413589]},{"name":"Mill Hill Broadway","scenic":0.814394,"heritage":0.121212,"park_m":2208,"lonlat":[-0.24924,51.613093]},{"name":"Mitcham","scenic":0.935606,"heritage":0.619318,"park_m":781,"lonlat":[-0.1709,51.39749]},{"name":"Mornington Crescent","scenic":0.401515,"heritage":0.901515,"park_m":472,"lonlat":[-0.138789,51.534679]},{"name":"Neasden","scenic":0.242424,"heritage":0.121212,"park_m":857,"lonlat":[-0.249837,51.553986]},{"name":"New Barnet","scenic":0.636364,"heritage":0.073864,"park_m":1602,"lonlat":[-0.172997,51.648575]},{"name":"New Beckenham","scenic":0.981061,"heritage":0.073864,"park_m":1850,"lonlat":[-0.035273,51.41677]},{"name":"New Cross ELL","scenic":0.484848,"heritage":0.700758,"park_m":1718,"lonlat":[-0.032441,51.476344]},{"name":"New Eltham","scenic":0.712121,"heritage":0.073864,"park_m":1546,"lonlat":[0.070533,51.43806]},{"name":"Newbury Park","scenic":0.189394,"heritage":0.172348,"park_m":1049,"lonlat":[0.090004,51.575726]},{"name":"Nine Elms","scenic":0.393939,"heritage":0.768939,"park_m":706,"lonlat":[-0.128476,51.479912]},{"name":"North Acton","scenic":0.147727,"heritage":0.024621,"park_m":2006,"lonlat":[-0.259755,51.523524]},{"name":"North Ealing","scenic":0.742424,"heritage":0.560606,"park_m":1412,"lonlat":[-0.288868,51.517505]},{"name":"North Sheen","scenic":0.723485,"heritage":0.507576,"park_m":619,"lonlat":[-0.287876,51.465155]},{"name":"Northfields","scenic":0.670455,"heritage":0.458333,"park_m":886,"lonlat":[-0.314719,51.499319]},{"name":"Northolt","scenic":0.700758,"heritage":0.073864,"park_m":3124,"lonlat":[-0.368699,51.548236]},{"name":"Northolt Park","scenic":0.715909,"heritage":0.121212,"park_m":1945,"lonlat":[-0.359466,51.55754]},{"name":"Notting Hill Gate","scenic":0.757576,"heritage":0.962121,"park_m":351,"lonlat":[-0.196104,51.509128]},{"name":"Nunhead","scenic":0.950758,"heritage":0.63447,"park_m":151,"lonlat":[-0.052273,51.466828]},{"name":"Old Street","scenic":0.079545,"heritage":0.924242,"park_m":170,"lonlat":[-0.088535,51.525832]},{"name":"Osterley","scenic":0.863636,"heritage":0.272727,"park_m":287,"lonlat":[-0.352224,51.481274]},{"name":"Oval","scenic":0.5,"heritage":0.897727,"park_m":86,"lonlat":[-0.112439,51.48185]},{"name":"Palmers Green","scenic":0.75,"heritage":0.424242,"park_m":149,"lonlat":[-0.110437,51.618314]},{"name":"Park Royal","scenic":0.340909,"heritage":0.073864,"park_m":2342,"lonlat":[-0.284341,51.527123]},{"name":"Parsons Green","scenic":0.356061,"heritage":0.664773,"park_m":811,"lonlat":[-0.20117,51.475277]},{"name":"Peckham Rye","scenic":0.30303,"heritage":0.799242,"park_m":1255,"lonlat":[-0.069414,51.470034]},{"name":"Perivale","scenic":0.893939,"heritage":0.418561,"park_m":2727,"lonlat":[-0.323446,51.536717]},{"name":"Plumstead","scenic":0.007576,"heritage":0.348485,"park_m":2215,"lonlat":[0.084257,51.489795]},{"name":"Ponders End","scenic":0.507576,"heritage":0.314394,"park_m":3659,"lonlat":[-0.03508,51.642256]},{"name":"Poplar","scenic":0.121212,"heritage":0.765152,"park_m":2334,"lonlat":[-0.017384,51.507744]},{"name":"Potters Bar","scenic":0.685606,"heritage":0.227273,"park_m":1627,"lonlat":[-0.192605,51.697067]},{"name":"Prince Regent","scenic":0.136364,"heritage":0.227273,"park_m":2845,"lonlat":[0.034158,51.509263]},{"name":"Purfleet","scenic":0.920455,"heritage":0.314394,"park_m":2953,"lonlat":[0.236767,51.481013]},{"name":"Putney","scenic":0.583333,"heritage":0.581439,"park_m":628,"lonlat":[-0.216475,51.461303]},{"name":"Queensbury","scenic":0.106061,"heritage":0.024621,"park_m":1535,"lonlat":[-0.286219,51.594188]},{"name":"Queenstown Road (Battersea)","scenic":0.526515,"heritage":0.619318,"park_m":356,"lonlat":[-0.146678,51.474968]},{"name":"Queensway","scenic":0.909091,"heritage":0.94697,"park_m":18,"lonlat":[-0.187152,51.510312]},{"name":"Ravensbourne","scenic":0.996212,"heritage":0.073864,"park_m":2249,"lonlat":[-0.007557,51.414188]},{"name":"Raynes Park","scenic":0.462121,"heritage":0.172348,"park_m":1286,"lonlat":[-0.230151,51.409173]},{"name":"Reeves Corner","scenic":0.056818,"heritage":0.63447,"park_m":3938,"lonlat":[-0.106408,51.375279]},{"name":"Riddlesdown","scenic":0.977273,"heritage":0.073864,"park_m":2583,"lonlat":[-0.099387,51.332486]},{"name":"Romford","scenic":0.030303,"heritage":0.407197,"park_m":4870,"lonlat":[0.183237,51.574829]},{"name":"Royal Albert","scenic":0.594697,"heritage":0.272727,"park_m":2495,"lonlat":[0.045935,51.508357]},{"name":"Royal Oak","scenic":0.390152,"heritage":0.909091,"park_m":434,"lonlat":[-0.188748,51.519113]},{"name":"Royal Victoria","scenic":0.174242,"heritage":0.314394,"park_m":2995,"lonlat":[0.018497,51.509336]},{"name":"Ruislip","scenic":0.625,"heritage":0.520833,"park_m":4637,"lonlat":[-0.421898,51.571354]},{"name":"Russell Square","scenic":0.560606,"heritage":0.996212,"park_m":111,"lonlat":[-0.124285,51.523073]},{"name":"Selhurst","scenic":0.632576,"heritage":0.227273,"park_m":3092,"lonlat":[-0.0883,51.391927]},{"name":"Seven Kings","scenic":0.44697,"heritage":0.121212,"park_m":1547,"lonlat":[0.0971,51.564026]},{"name":"Shepherd's Bush (Central)","scenic":0.125,"heritage":0.825758,"park_m":776,"lonlat":[-0.218813,51.504376]},{"name":"Shepherd's Bush Market","scenic":0.07197,"heritage":0.606061,"park_m":1313,"lonlat":[-0.226375,51.505579]},{"name":"Shepherds Bush","scenic":0.151515,"heritage":0.861742,"park_m":712,"lonlat":[-0.217654,51.505285]},{"name":"Shoreditch High Street","scenic":0.05303,"heritage":0.958333,"park_m":270,"lonlat":[-0.075246,51.523375]},{"name":"Sidcup","scenic":0.784091,"heritage":0.348485,"park_m":209,"lonlat":[0.103795,51.43387]},{"name":"Slade Green","scenic":0.424242,"heritage":0.073864,"park_m":2901,"lonlat":[0.190491,51.467786]},{"name":"Sloane Square","scenic":0.458333,"heritage":0.981061,"park_m":281,"lonlat":[-0.156377,51.49227]},{"name":"South Croydon","scenic":0.681818,"heritage":0.418561,"park_m":2694,"lonlat":[-0.093457,51.362965]},{"name":"South Greenford","scenic":0.871212,"heritage":0.024621,"park_m":2412,"lonlat":[-0.336704,51.533749]},{"name":"South Kensington","scenic":0.587121,"heritage":0.969697,"park_m":566,"lonlat":[-0.174138,51.494094]},{"name":"South Wimbledon","scenic":0.166667,"heritage":0.458333,"park_m":801,"lonlat":[-0.192005,51.415309]},{"name":"South Woodford","scenic":0.575758,"heritage":0.390152,"park_m":2182,"lonlat":[0.027338,51.591907]},{"name":"Southall","scenic":0.075758,"heritage":0.272727,"park_m":1360,"lonlat":[-0.37861,51.505957]},{"name":"Southbury","scenic":0.003788,"heritage":0.121212,"park_m":2408,"lonlat":[-0.052437,51.648705]},{"name":"Southgate","scenic":0.92803,"heritage":0.520833,"park_m":314,"lonlat":[-0.127816,51.632315]},{"name":"St Johns (London)","scenic":0.659091,"heritage":0.67803,"park_m":1452,"lonlat":[-0.022719,51.469391]},{"name":"Staines","scenic":0.666667,"heritage":0.458333,"park_m":3062,"lonlat":[-0.503164,51.432455]},{"name":"Star Lane","scenic":0.155303,"heritage":0.4375,"park_m":1927,"lonlat":[0.004156,51.520786]},{"name":"Stockwell","scenic":0.651515,"heritage":0.886364,"park_m":1166,"lonlat":[-0.122644,51.472184]},{"name":"Stoneleigh","scenic":0.727273,"heritage":0.121212,"park_m":754,"lonlat":[-0.248665,51.363401]},{"name":"Stratford","scenic":0.090909,"heritage":0.49053,"park_m":1176,"lonlat":[-0.003458,51.541806]},{"name":"Stratford High Street","scenic":0.117424,"heritage":0.57197,"park_m":974,"lonlat":[-0.001078,51.538196]},{"name":"Sudbury Hill","scenic":0.840909,"heritage":0.227273,"park_m":1249,"lonlat":[-0.336435,51.556946]},{"name":"Sudbury Hill Harrow","scenic":0.878788,"heritage":0.314394,"park_m":1080,"lonlat":[-0.335803,51.558465]},{"name":"Sutton (London)","scenic":0.272727,"heritage":0.471591,"park_m":1498,"lonlat":[-0.191215,51.359533]},{"name":"Sydenham","scenic":0.799242,"heritage":0.49053,"park_m":794,"lonlat":[-0.054244,51.427248]},{"name":"Thornton Heath","scenic":0.375,"heritage":0.172348,"park_m":2213,"lonlat":[-0.100306,51.398777]},{"name":"Tooting","scenic":0.473485,"heritage":0.390152,"park_m":1847,"lonlat":[-0.161278,51.419848]},{"name":"Tooting Bec","scenic":0.238636,"heritage":0.471591,"park_m":541,"lonlat":[-0.159736,51.435678]},{"name":"Tooting Broadway","scenic":0.128788,"heritage":0.49053,"park_m":873,"lonlat":[-0.168374,51.42763]},{"name":"Tower Gateway","scenic":0.465909,"heritage":0.916667,"park_m":1088,"lonlat":[-0.074818,51.510617]},{"name":"Tower Hill","scenic":0.515152,"heritage":0.939394,"park_m":1063,"lonlat":[-0.076546,51.509971]},{"name":"Tulse Hill","scenic":0.719697,"heritage":0.49053,"park_m":703,"lonlat":[-0.105077,51.439861]},{"name":"Vauxhall","scenic":0.435606,"heritage":0.867424,"park_m":715,"lonlat":[-0.122889,51.48619]},{"name":"Waddon","scenic":0.265152,"heritage":0.172348,"park_m":3342,"lonlat":[-0.117336,51.367398]},{"name":"Wandsworth Road","scenic":0.454545,"heritage":0.831439,"park_m":1119,"lonlat":[-0.13852,51.470216]},{"name":"Wandsworth Town","scenic":0.397727,"heritage":0.619318,"park_m":876,"lonlat":[-0.188125,51.461048]},{"name":"Wanstead","scenic":0.875,"heritage":0.606061,"park_m":500,"lonlat":[0.028527,51.575501]},{"name":"Warren Street","scenic":0.287879,"heritage":0.977273,"park_m":495,"lonlat":[-0.138321,51.524951]},{"name":"Watford High Street","scenic":0.518939,"heritage":0.742424,"park_m":1135,"lonlat":[-0.391711,51.652655]},{"name":"Watford Junction","scenic":0.450758,"heritage":0.4375,"park_m":962,"lonlat":[-0.395925,51.663908]},{"name":"Wellesley Road","scenic":0.011364,"heritage":0.647727,"park_m":3392,"lonlat":[-0.097554,51.37537]},{"name":"Wembley Central","scenic":0.405303,"heritage":0.272727,"park_m":3038,"lonlat":[-0.296433,51.552325]},{"name":"Wembley Park","scenic":0.215909,"heritage":0.172348,"park_m":3046,"lonlat":[-0.279262,51.563198]},{"name":"Wembley Stadium","scenic":0.200758,"heritage":0.227273,"park_m":3032,"lonlat":[-0.285608,51.554416]},{"name":"West Brompton","scenic":0.477273,"heritage":0.789773,"park_m":44,"lonlat":[-0.195593,51.487061]},{"name":"West Byfleet","scenic":0.852273,"heritage":0.227273,"park_m":2261,"lonlat":[-0.505485,51.339226]},{"name":"West Croydon","scenic":0.015152,"heritage":0.63447,"park_m":3843,"lonlat":[-0.102585,51.378428]},{"name":"West Drayton","scenic":0.598485,"heritage":0.619318,"park_m":1015,"lonlat":[-0.472234,51.510055]},{"name":"West Dulwich","scenic":0.94697,"heritage":0.664773,"park_m":56,"lonlat":[-0.091371,51.440718]},{"name":"West Ealing","scenic":0.337121,"heritage":0.314394,"park_m":649,"lonlat":[-0.320133,51.513506]},{"name":"West Ham","scenic":0.537879,"heritage":0.539773,"park_m":1150,"lonlat":[0.005055,51.528136]},{"name":"West Harrow","scenic":0.768939,"heritage":0.073864,"park_m":1364,"lonlat":[-0.3534,51.57971]},{"name":"West India Quay","scenic":0.212121,"heritage":0.789773,"park_m":2276,"lonlat":[-0.020311,51.50703]},{"name":"West Norwood","scenic":0.738636,"heritage":0.831439,"park_m":105,"lonlat":[-0.10383,51.431748]},{"name":"West Ruislip","scenic":0.924242,"heritage":0.513258,"park_m":3892,"lonlat":[-0.437768,51.569758]},{"name":"West Silvertown","scenic":0.628788,"heritage":0.227273,"park_m":2655,"lonlat":[0.02246,51.502838]},{"name":"West Sutton","scenic":0.776515,"heritage":0.272727,"park_m":1513,"lonlat":[-0.205173,51.365854]},{"name":"Westcombe Park","scenic":0.181818,"heritage":0.407197,"park_m":1053,"lonlat":[0.018395,51.484203]},{"name":"Westferry","scenic":0.541667,"heritage":0.837121,"park_m":1816,"lonlat":[-0.02675,51.509431]},{"name":"White City","scenic":0.037879,"heritage":0.458333,"park_m":931,"lonlat":[-0.224297,51.511959]},{"name":"Whitechapel","scenic":0.102273,"heritage":0.856061,"park_m":943,"lonlat":[-0.059971,51.519518]},{"name":"Whitton","scenic":0.590909,"heritage":0.121212,"park_m":1722,"lonlat":[-0.357681,51.449607]},{"name":"Willesden Junction","scenic":0.25,"heritage":0.314394,"park_m":887,"lonlat":[-0.244548,51.532497]},{"name":"Wimbledon","scenic":0.371212,"heritage":0.592803,"park_m":414,"lonlat":[-0.206385,51.421222]},{"name":"Wood Lane","scenic":0.060606,"heritage":0.67803,"park_m":1015,"lonlat":[-0.22453,51.509669]},{"name":"Woodgrange Park","scenic":0.704545,"heritage":0.348485,"park_m":769,"lonlat":[0.044423,51.549264]},{"name":"Woolwich","scenic":0.367424,"heritage":0.714015,"park_m":1418,"lonlat":[0.070593,51.492168]},{"name":"Woolwich Arsenal","scenic":0.32197,"heritage":0.731061,"park_m":1217,"lonlat":[0.069194,51.489909]},{"name":"Woolwich Dockyard","scenic":0.57197,"heritage":0.700758,"park_m":571,"lonlat":[0.054642,51.491127]}]}</script>
+<script>
+var DATA = JSON.parse(document.getElementById("payload").textContent);
+var W = DATA.walksheds;
+W.forEach(function(d, i){ d._i = i; });
+
+var svg = document.getElementById("plot"), NS = "http://www.w3.org/2000/svg";
+var plotbox = document.getElementById("plotbox");
+var panel = document.querySelector(".panel");
+var scrim = document.getElementById("scrim");
+var expanded = false;
+
+var elPark = document.getElementById("parkm");
+var elParkVal = document.getElementById("parkm-val");
+var PARK_MAX = +elPark.max;
+
+/* Both thresholds open on the top 15%, and both are free to move
+   independently from there. Favouring one score over the other is not a
+   separate dial: it is what dragging one line further than the other DOES. */
+var cutS = DATA.default_cut_scenic, cutH = DATA.default_cut_heritage;
+elPark.value = DATA.default_park_m;
+
+/* The same two thresholds, reachable from a slider as well as from the grip on
+   the axis. Bound to cutS / cutH directly, so the two controls cannot drift
+   apart: input here writes the cut and redraws, and render() writes back here
+   after a grip drag. */
+var elCutS = document.getElementById("cut-s");
+var elCutH = document.getElementById("cut-h");
+var elCutSVal = document.getElementById("cut-s-val");
+var elCutHVal = document.getElementById("cut-h-val");
+
+/* Geometry is measured, not fixed: the viewBox is the plot's real pixel box,
+   so one user unit is one CSS pixel and marks keep their size at any panel
+   size. Bottom margin leaves room for the axis title under the ticks. */
+/* Margins are sized to the TYPE, so they moved when the type did: ticks went
+   10 -> 12 px and the axis titles 11 -> 13 (and 13/14 under 480 px). The left
+   gutter carries a right-aligned tick plus the rotated y title, the bottom one
+   a tick row plus the x title. */
+var G = {W:640, H:540, ML:62, MR:20, MT:18, MB:62};
+
+function fillsScreen(){
+  return expanded || panel.classList.contains("full");
+}
+
+function measure(){
+  var w = plotbox.clientWidth;
+  if (!(w > 0)) w = 640;
+  /* The plot box now always has a real height -- .panel is a flex column
+     filling the viewport and .plotbox takes the slack -- so measure it in both
+     states rather than guessing in one of them. fillsScreen() still decides
+     the DOMAIN below; it no longer decides the height, which is why the two
+     used to disagree and leave a gap. The old formulae stay as the fallback
+     for a first paint before layout has settled. */
+  var h = plotbox.clientHeight;
+  if (!(h > 0)) {
+    h = fillsScreen() ? Math.round(w * 0.55)
+                      : Math.round(Math.min(560, Math.max(320, w * 0.86)));
+  }
+  G.W = Math.round(w); G.H = Math.round(h);
+  svg.setAttribute("viewBox", "0 0 " + G.W + " " + G.H);
+}
+
+/* THE DOMAIN DEPENDS ON HOW MUCH SCREEN THE FIGURE HAS.
+
+   Collapsed, both axes start at the 50th percentile: in an article column
+   nothing below it is under consideration, and plotting it only compresses
+   the half that matters.
+
+   Full screen on a wide display, the axes open out to the whole 0-100 range
+   and every walkshed appears -- there is room for eleven ticks and for the
+   189 of 264 that sit below the 50th percentile on one score or the other.
+
+   Two ways the figure comes to be full screen, and it has to recognise both:
+     - standalone, the reader pressed the expand button      -> `expanded`
+     - embedded, design/index.html opened its overlay copy, whose src that
+       page builds as `<map>?open=origin` (see open() there) -> the query
+
+   The width guard keeps a phone at 50-100 even in the overlay, where eleven
+   ticks would collide. */
+var COLLAPSED_MIN = 0.5;
+var FULL_MIN_W = 640;
+var OVERLAY_COPY = /(^|[?&])(open=origin|full=1)/.test(location.search);
+if (OVERLAY_COPY) panel.classList.add("full");
+
+/* THEME. This document is an iframe, so it has its own documentElement and the
+   story page's data-theme never reached it -- the plate followed the OS
+   prefers-color-scheme alone and ignored the page's own light/dark toggle
+   entirely. The tokens were always there for both; nothing was ever told to
+   switch.
+
+   Two ways in, because an iframe can be opened either way:
+     ?theme=      for the overlay copy, which index.html builds fresh with a
+                  query string already;
+     postMessage  for the inline copy, which is never reloaded -- the parent
+                  posts on every toggle and once on load.
+   Cross-origin-safe by design: no parent DOM is touched from here, and file://
+   pages cannot read each other's documents but can still post. */
+function setTheme(t){
+  if (t === "dark" || t === "light") {
+    document.documentElement.setAttribute("data-theme", t);
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+}
+var themeParam = /(^|[?&])theme=(dark|light)/.exec(location.search);
+if (themeParam) setTheme(themeParam[2]);
+
+addEventListener("message", function(e){
+  var d = e.data;
+  if (d && d.type === "wsk-theme") setTheme(d.theme);
+});
+
+function isFull(){ return fillsScreen() && G.W >= FULL_MIN_W; }
+function domMin(){ return isFull() ? 0 : COLLAPSED_MIN; }
+
+function PW(){ return G.W - G.ML - G.MR; }
+function PH(){ return G.H - G.MT - G.MB; }
+function nx(v){ var m = domMin(); return (v - m) / (1 - m); }
+function sx(v){ return G.ML + nx(v) * PW(); }
+function sy(v){ return G.MT + (1 - nx(v)) * PH(); }
+function invx(px){ var m = domMin();
+  return m + (px - G.ML) / PW() * (1 - m); }
+function invy(py){ var m = domMin();
+  return m + (G.MT + PH() - py) / PH() * (1 - m); }
+/* Floored at the domain, so a threshold dragged low while full screen is
+   lifted back onto the plate when the figure collapses to 50-100 rather than
+   vanishing off its bottom-left corner. */
+function clampCut(v){ return Math.min(0.98, Math.max(domMin(), v)); }
+
+function ticks(){
+  var out = [], m = domMin();
+  for (var v = m; v <= 1.0001; v += 0.1) out.push(Math.round(v * 10) / 10);
+  return out;
+}
+
+function el(n, a){
+  var e = document.createElementNS(NS, n);
+  for (var k in a) e.setAttribute(k, a[k]);
+  return e;
+}
+
+/* Satellite, and nowhere on the figure does it say so. Finding it is the
+   reward for poking at a dot -- the brief asks for it to be discoverable by
+   exploration and by nothing else. */
+function mapsUrl(d){
+  return "https://www.google.com/maps/@?api=1&map_action=map&center="
+    + d.lonlat[1] + "," + d.lonlat[0] + "&zoom=17&basemap=satellite";
+}
+function openMaps(d){ window.open(mapsUrl(d), "_blank", "noopener"); }
+
+function state(){
+  var pk = +elPark.value;
+  return {cutS:cutS, cutH:cutH, parkM:pk};
+}
+
+/* A walkshed with no measured park travels as null and is treated as further
+   than any limit the slider can set, so it only ever appears at the maximum,
+   where the gate is off. */
+function gated(d, st){
+  if (st.parkM >= PARK_MAX) return true;
+  return d.park_m !== null && d.park_m <= st.parkM;
+}
+function selected(st){
+  return W.filter(function(d){
+    return d.scenic >= st.cutS && d.heritage >= st.cutH && gated(d, st);
+  });
+}
+
+/* ---------- labels ----------
+   Same collision search the shortlist page uses: try candidate positions in
+   three rings around the point, take the first that clashes with neither an
+   already-placed label nor any selected point nor the plot edge. Anything
+   with no free slot is left unlabelled rather than drawn over a neighbour --
+   overlapping names is the one thing the brief rules out. */
+var CHAR_W = 6.15, ASC = 8, DESC = 4, RING_FREE = 8;
+var SLOTS = (function(){
+  var out = [];
+  [13, 28, 44].forEach(function(R){
+    out.push([ R,  3.5, "start"]);
+    out.push([-R,  3.5, "end"]);
+    out.push([ 0, -R + 1, "middle"]);
+    out.push([ 0,  R + 9, "middle"]);
+    out.push([ R * 0.78, -R * 0.62, "start"]);
+    out.push([-R * 0.78, -R * 0.62, "end"]);
+    out.push([ R * 0.78,  R * 0.72, "start"]);
+    out.push([-R * 0.78,  R * 0.72, "end"]);
+  });
+  return out;
+})();
+
+function hits(r, list){
+  for (var i = 0; i < list.length; i++){
+    var q = list[i];
+    if (!(r.x1 < q.x0 || r.x0 > q.x1 || r.y1 < q.y0 || r.y0 > q.y1)) return true;
+  }
+  return false;
+}
+
+function placeLabels(sel, st){
+  var blocked = sel.map(function(d){
+    var x = sx(d.scenic), y = sy(d.heritage);
+    return {x0:x-7, y0:y-7, x1:x+7, y1:y+7};
+  });
+  // The two dashed thresholds are obstacles too. A name laid across one reads
+  // as a label FOR the line rather than for its walkshed, which is how
+  // "Cutty Sark (for Maritime Greenwich)" ended up captioning the heritage
+  // cut. A 6 px band each way is enough to push the search to another slot.
+  var cx = sx(st.cutS), cy = sy(st.cutH);
+  blocked.push({x0:cx - 6, y0:G.MT, x1:cx + 6, y1:G.MT + PH()});
+  blocked.push({x0:G.ML, y0:cy - 6, x1:G.ML + PW(), y1:cy + 6});
+  var out = [];
+  sel.slice().sort(function(a, b){ return b.scenic - a.scenic; })
+     .forEach(function(d){
+    var px = sx(d.scenic), py = sy(d.heritage);
+    var w = d.name.length * CHAR_W;
+    for (var i = 0; i < SLOTS.length; i++){
+      var o = SLOTS[i], tx = px + o[0], ty = py + o[1], an = o[2];
+      var x0 = an === "start" ? tx : (an === "end" ? tx - w : tx - w/2);
+      var r = {x0:x0, y0:ty - ASC, x1:x0 + w, y1:ty + DESC};
+      if (r.x0 < G.ML - 6 || r.x1 > G.W - G.MR + 6) continue;
+      if (r.y0 < G.MT - 6 || r.y1 > G.MT + PH() + 6) continue;
+      if (hits(r, blocked)) continue;
+      blocked.push(r);
+      out.push({d:d, x:tx, y:ty, anchor:an, px:px, py:py, slot:i});
+      return;
+    }
+  });
+  return out;
+}
+
+var marks = {};
+function mark(name){
+  if (!marks[name]) marks[name] = {};
+  return marks[name];
+}
+function highlight(name, on){
+  var m = marks[name];
+  if (!m) return;
+  ["dot", "label", "leader"].forEach(function(k){
+    if (m[k]) m[k].classList[on ? "add" : "remove"]("hot");
+  });
+}
+
+/* ---------- draw ---------- */
+function drawPlot(st){
+  measure();
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  marks = {};
+
+  var sel = selected(st);
+  var selNames = {};
+  sel.forEach(function(d){ selNames[d.name] = 1; });
+
+  svg.appendChild(el("rect", {
+    x:sx(st.cutS), y:sy(1),
+    width:Math.max(0, sx(1) - sx(st.cutS)),
+    height:Math.max(0, sy(st.cutH) - sy(1)),
+    "class":"region"}));
+
+  ticks().forEach(function(v){
+    svg.appendChild(el("line", {x1:G.ML, x2:G.ML + PW(),
+      y1:sy(v), y2:sy(v), "class":"grid-line"}));
+    svg.appendChild(el("line", {x1:sx(v), x2:sx(v),
+      y1:G.MT, y2:G.MT + PH(), "class":"grid-line"}));
+    var ty = el("text", {x:G.ML - 10, y:sy(v) + 3.5,
+      "text-anchor":"end", "class":"tick"});
+    ty.textContent = Math.round(v * 100); svg.appendChild(ty);
+    var tx = el("text", {x:sx(v), y:G.MT + PH() + 19,
+      "text-anchor":"middle", "class":"tick"});
+    tx.textContent = Math.round(v * 100); svg.appendChild(tx);
+  });
+
+  svg.appendChild(el("line", {x1:G.ML, x2:G.ML + PW(),
+    y1:G.MT + PH(), y2:G.MT + PH(), "class":"axis-line"}));
+  svg.appendChild(el("line", {x1:G.ML, x2:G.ML,
+    y1:G.MT, y2:G.MT + PH(), "class":"axis-line"}));
+
+  // The only words on the plate.
+  var xt = el("text", {x:G.ML + PW() / 2, y:G.MT + PH() + 45,
+    "text-anchor":"middle", "class":"axis-title s"});
+  xt.textContent = "SCENIC"; svg.appendChild(xt);
+  var yt = el("text", {x:0, y:0, "text-anchor":"middle", "class":"axis-title h",
+    transform:"translate(" + (G.ML - 42) + "," + (G.MT + PH() / 2)
+              + ") rotate(-90)"});
+  yt.textContent = "HERITAGE"; svg.appendChild(yt);
+
+  W.forEach(function(d){
+    if (!gated(d, st)) return;
+    // Off the bottom or the left of the domain. Both axes start at the 50th
+    // percentile, so a walkshed under it has no position on this plate --
+    // and the SVG is overflow:visible, so an unclipped dot would be drawn
+    // outside the frame rather than disappear.
+    if (d.scenic < domMin() || d.heritage < domMin()) return;
+    var isSel = !!selNames[d.name];
+    var c = el("circle", {cx:sx(d.scenic), cy:sy(d.heritage),
+      r:isSel ? 4.2 : 3, "class":"dot" + (isSel ? " sel" : "")});
+    svg.appendChild(c);
+    mark(d.name).dot = c;
+
+    // A generous invisible target over each dot: 3 px of ink is not a tap.
+    var hit = el("circle", {cx:sx(d.scenic), cy:sy(d.heritage), r:13,
+      "class":"hit"});
+    hit.addEventListener("click", function(){ openMaps(d); });
+    hit.addEventListener("pointerenter", function(){ highlight(d.name, true); });
+    hit.addEventListener("pointerleave", function(){ highlight(d.name, false); });
+    svg.appendChild(hit);
+  });
+
+  placeLabels(sel, st).forEach(function(p){
+    if (p.slot >= RING_FREE){
+      var ld = el("line", {x1:p.px, y1:p.py, x2:p.x, y2:p.y, "class":"leader"});
+      svg.appendChild(ld);
+      mark(p.d.name).leader = ld;
+    }
+    var t = el("text", {x:p.x, y:p.y, "text-anchor":p.anchor, "class":"label"});
+    t.textContent = p.d.name;
+    t.addEventListener("click", function(){ openMaps(p.d); });
+    t.addEventListener("pointerenter", function(){ highlight(p.d.name, true); });
+    t.addEventListener("pointerleave", function(){ highlight(p.d.name, false); });
+    svg.appendChild(t);
+    mark(p.d.name).label = t;
+  });
+
+  drawGrips(st);
+}
+
+function drawGrips(st){
+  var x = sx(st.cutS), y = sy(st.cutH);
+  var bottom = G.MT + PH();
+
+  svg.appendChild(el("line", {x1:x, x2:x, y1:G.MT, y2:bottom, "class":"thr-s"}));
+  svg.appendChild(el("line", {x1:G.ML, x2:G.ML + PW(), y1:y, y2:y,
+    "class":"thr-h"}));
+
+  // Scenic grip rides the x axis; heritage grip rides the y axis. Each is a
+  // 44 px invisible target around a small mark, so a finger can catch it.
+  var gs = el("g", {"class":"grip grip-s", tabindex:"0", role:"slider",
+    "aria-label":"Scenic threshold",
+    "aria-valuemin":"50", "aria-valuemax":"98",
+    "aria-valuenow":Math.round(st.cutS * 100)});
+  gs.appendChild(el("rect", {x:x - 22, y:bottom - 16, width:44, height:38,
+    "class":"grip-hit"}));
+  gs.appendChild(el("path", {"class":"grip-body",
+    d:"M " + x + " " + (bottom - 7) + " l 6.5 11 l -13 0 Z"}));
+  svg.appendChild(gs);
+
+  var gh = el("g", {"class":"grip grip-h", tabindex:"0", role:"slider",
+    "aria-label":"Heritage threshold",
+    "aria-valuemin":"50", "aria-valuemax":"98",
+    "aria-valuenow":Math.round(st.cutH * 100)});
+  gh.appendChild(el("rect", {x:G.ML - 22, y:y - 22, width:38, height:44,
+    "class":"grip-hit"}));
+  gh.appendChild(el("path", {"class":"grip-body",
+    d:"M " + (G.ML + 7) + " " + y + " l -11 6.5 l 0 -13 Z"}));
+  svg.appendChild(gh);
+
+  dragging(gs, "s");
+  dragging(gh, "h");
+}
+
+/* Pointer events, not mouse events: one code path covers mouse, pen and touch.
+   THE MOVE AND UP LISTENERS GO ON `window`, NOT ON THE GRIP. Dragging calls
+   render(), render() empties the SVG and rebuilds every node, so the grip the
+   drag started on is destroyed on the first move -- setPointerCapture on it
+   was silently lost with it and the drag stopped dead after one pixel. The
+   window outlives every redraw, so the drag survives the thing it redraws.
+   `dragged` is module-level so the rebuilt grip does not restart it. */
+var dragged = null;
+
+function dragging(g, axis){
+  g.addEventListener("pointerdown", function(ev){
+    ev.preventDefault();
+    dragged = axis;
+    moveTo(ev);
+  });
+
+  // Keyboard, because a drag-only control is unreachable without a pointer.
+  g.addEventListener("keydown", function(ev){
+    var step = ev.shiftKey ? 0.05 : 0.01, d = 0;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowUp") d = step;
+    else if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") d = -step;
+    else return;
+    ev.preventDefault();
+    if (axis === "s") cutS = clampCut(cutS + d);
+    else cutH = clampCut(cutH + d);
+    render();
+    // The grip that had focus was just destroyed by the redraw; hand focus to
+    // its replacement so a second arrow key keeps working.
+    var next = svg.querySelector(".grip-" + axis);
+    if (next) next.focus();
+  });
+}
+
+function moveTo(ev){
+  if (!dragged) return;
+  var pt = svgPoint(ev);
+  if (dragged === "s") cutS = clampCut(invx(pt.x));
+  else cutH = clampCut(invy(pt.y));
+  render();
+}
+
+window.addEventListener("pointermove", function(ev){
+  if (!dragged) return;
+  ev.preventDefault();
+  moveTo(ev);
+});
+window.addEventListener("pointerup", function(){ dragged = null; });
+window.addEventListener("pointercancel", function(){ dragged = null; });
+
+/* Client pixels are not user units once the SVG is scaled to its box, and it
+   always is -- width:100% with a measured viewBox. Convert through the
+   element's own bounding rect rather than assuming 1:1. */
+function svgPoint(ev){
+  var r = svg.getBoundingClientRect();
+  return {
+    x: (ev.clientX - r.left) * (G.W / r.width),
+    y: (ev.clientY - r.top) * (G.H / r.height)
+  };
+}
+
+function render(){
+  var st = state();
+  elParkVal.textContent = st.parkM >= PARK_MAX ? "off" : st.parkM;
+  /* Write the cuts back to the sliders. This is what keeps a grip drag and a
+     slider showing the same number; setting .value on a range the user is not
+     touching is inert, so there is no feedback loop with the input handlers
+     below. */
+  var ps = Math.round(st.cutS * 100), ph = Math.round(st.cutH * 100);
+  if (+elCutS.value !== ps) elCutS.value = ps;
+  if (+elCutH.value !== ph) elCutH.value = ph;
+  elCutSVal.textContent = ps;
+  elCutHVal.textContent = ph;
+  drawPlot(st);
+}
+
+elPark.addEventListener("input", render);
+elCutS.addEventListener("input", function(){
+  cutS = clampCut(+elCutS.value / 100); render();
+});
+elCutH.addEventListener("input", function(){
+  cutH = clampCut(+elCutH.value / 100); render();
+});
+
+/* ---- expand to full screen ---- */
+var ICON_EXPAND =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"' +
+  ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/>' +
+  '<path d="M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/></svg>';
+var ICON_COLLAPSE =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"' +
+  ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M3 8h3a2 2 0 0 0 2-2V3"/><path d="M16 3v3a2 2 0 0 0 2 2h3"/>' +
+  '<path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M8 21v-3a2 2 0 0 0-2-2H3"/></svg>';
+
+var btnExpand = document.getElementById("expand");
+function setExpanded(on){
+  expanded = on;
+  panel.classList.toggle("expanded", on);
+  scrim.classList.toggle("on", on);
+  btnExpand.setAttribute("aria-pressed", on ? "true" : "false");
+  btnExpand.innerHTML = on ? ICON_COLLAPSE : ICON_EXPAND;
+  var lab = on ? "Close full screen" : "Expand the plot to full screen";
+  btnExpand.setAttribute("aria-label", lab);
+  btnExpand.setAttribute("title", on ? "Close full screen"
+                                     : "Expand to full screen");
+  document.body.style.overflow = on ? "hidden" : "";
+  // The domain changes with `expanded`, so cuts set in one view have to be
+  // pulled back inside the other before the next draw.
+  requestAnimationFrame(function(){
+    cutS = clampCut(cutS); cutH = clampCut(cutH);
+    render();
+  });
+}
+/* Embedded in design/index.html, the PARENT owns expansion: its .mapctl opens
+   a full-viewport overlay, exactly as it does for the live maps. A second
+   button in the same corner -- one that could only ever fill the iframe, not
+   the page -- would be both redundant and wrong, so it stands down whenever
+   this document is not the top one. Standalone, it is the only control there
+   is and it stays. */
+if (window.top !== window.self) {
+  btnExpand.parentNode.removeChild(btnExpand);
+} else {
+  btnExpand.innerHTML = ICON_EXPAND;
+  btnExpand.addEventListener("click", function(){ setExpanded(!expanded); });
+}
+scrim.addEventListener("click", function(){ setExpanded(false); });
+document.addEventListener("keydown", function(ev){
+  if (ev.key === "Escape" && expanded) setExpanded(false);
+});
+
+var rt;
+window.addEventListener("resize", function(){
+  clearTimeout(rt);
+  rt = setTimeout(render, 120);
+});
+
+render();
+</script>
