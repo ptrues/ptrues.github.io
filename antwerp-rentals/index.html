@@ -132,15 +132,13 @@
     margin: clamp(7px, 1.2vh, 10px) 0 0; font-size: 14px; font-weight: 400; color: var(--ash);
     line-height: 1.5;
   }
-  /* The three criteria are the whole brief, so they get to be a list rather
-     than a sentence -- but a quiet one: a hanging en dash, no discs, no
-     colour of their own. */
-  #criteria { margin: clamp(6px, 1.1vh, 9px) 0 0; padding: 0; list-style: none; }
+  /* The three criteria are the whole brief, so they get to be a proper list. */
+  #criteria { margin: clamp(6px, 1.1vh, 9px) 0 0; padding-left: 19px; }
   #criteria li {
-    position: relative; padding-left: 16px; color: var(--ash);
+    padding-left: 2px; color: var(--ash);
     font-size: 14px; line-height: 1.5;
   }
-  #criteria li::before { content: "–"; position: absolute; left: 0; color: var(--ash-2); }
+  #criteria li::marker { color: var(--ash-2); }
 
   /* the count is the sidebar's anchor, and says how old it is in the same breath */
   #tally { margin-top: clamp(12px, 2.4vh, 20px); }
@@ -463,10 +461,10 @@
 
 <aside id="rail">
   <h1>Rentals in Antwerp</h1>
-  <p id="story">The landlord is ignoring our request to fix the oven. So I made
-    this dashboard to check for apartment rentals that fit my criteria:</p>
+  <p id="story">Our landlord is ignoring our request to fix the oven, so I built
+    this dashboard to find a new apartment:</p>
   <ul id="criteria">
-    <li>under €1,100/mo</li>
+    <li>under €1,100 per month</li>
     <li>on a convenient tram line</li>
     <li>on a quiet street</li>
   </ul>
@@ -520,6 +518,7 @@
   </div>
 
   <div class="sect" id="legend">
+    <h2>Legend</h2>
     <span class="key"><i class="swatch-dot"></i>apartment</span>
     <span class="key"><i class="swatch-line"></i>tram line</span>
     <span class="key">
