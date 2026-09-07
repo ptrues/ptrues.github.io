@@ -2,8 +2,8 @@
 # which commits its output daily. Pinning LF keeps those commits to real
 # content changes instead of whole-file line-ending churn.
 tools/antwerp-rentals/** text eol=lf
-antwerp-rentals/**.json  text eol=lf
-antwerp-rentals/**.html  text eol=lf
+projects/antwerp-rentals/**.json text eol=lf
+projects/antwerp-rentals/**.html text eol=lf
 
 # The workflows are edited on Windows and read by Linux runners.
 .github/workflows/*.yml text eol=lf

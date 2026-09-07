@@ -4,7 +4,7 @@ Two-bedroom apartments to rent in Antwerp under €1,100/month, filtered to thos
 within an 800 m buffer of a De Lijn tram or premetro stop, on a map you can
 filter by line.
 
-Published at <https://prtruesdell.com/antwerp-rentals/>.
+Published at <https://prtruesdell.com/projects/antwerp-rentals/>.
 
 ## Layout
 
@@ -20,7 +20,7 @@ tools/antwerp-rentals/
   scripts/          the pipeline, numbered in run order
   requirements.txt  what the scheduled refresh installs (not this machine)
 
-antwerp-rentals/    <- the published page; `_env.WEB` points here
+projects/antwerp-rentals/    <- the published page; `_env.WEB` points here
   index.html            the shell: chrome, CSS, JS, no data
   data/network.json     stops, colours, routes, noise bounds
   data/listings.json    the apartments -- the only file a refresh rewrites
@@ -97,7 +97,7 @@ five years, and its PNG is committed.
 `--force` overrides both, for a genuine market drop or a deliberately narrowed
 `--postcodes` / `--max-price`.
 
-Every run writes `antwerp-rentals/data/status.json`, **including a run that
+Every run writes `projects/antwerp-rentals/data/status.json`, **including a run that
 fails** — that is the whole point of it, and why `03` writes it rather than
 `05`, which a failed run never reaches. `fetched_at` moves only on a successful
 fetch; `checked_at` moves on every attempt. The page reads both and shows a
@@ -115,7 +115,7 @@ rather than a map. Serve the repo root instead:
 
 ```
 python -m http.server 8000        # from the repo root, then
-                                  # http://localhost:8000/antwerp-rentals/
+                                  # http://localhost:8000/projects/antwerp-rentals/
 ```
 
 For a copy that does work off disk — on a plane, or to mail to someone — build
@@ -141,8 +141,8 @@ pyproj / geopandas / rasterio import.
 | `02_buffer_stops.py` | 800 m buffers, in EPSG:31370 | `processed/stop_buffers_800m.geojson`, `tram_catchment_800m.geojson`, `line_catchments_800m.geojson` |
 | `03_fetch_immoweb.py` | Rental listings as points | `raw/immoweb_rentals.geojson`, `raw/immoweb_pages.json` |
 | `04_filter_listings.py` | Keeps listings inside a buffer, tags them with reachable lines | `processed/apartments_near_tram.geojson` |
-| `06_fetch_noise_map.py` | Flemish road-noise rasters, composited and reprojected | `raw/noise_lden_2021_31370.tif`, `processed/..._3857.tif`, `antwerp-rentals/noise_lden_2021.png` |
-| `05_build_map.py` | The web map | `antwerp-rentals/index.html`, `antwerp-rentals/data/network.json`, `antwerp-rentals/data/listings.json` |
+| `06_fetch_noise_map.py` | Flemish road-noise rasters, composited and reprojected | `raw/noise_lden_2021_31370.tif`, `processed/..._3857.tif`, `projects/antwerp-rentals/noise_lden_2021.png` |
+| `05_build_map.py` | The web map | `projects/antwerp-rentals/index.html`, `projects/antwerp-rentals/data/network.json`, `projects/antwerp-rentals/data/listings.json` |
 
 Current run: 310 stops on 12 lines → 148 listings matching the attribute
 filters → **109 within 800 m of a stop**, €450–€1,100, median €995.
@@ -200,7 +200,7 @@ That takes the tram catchment from 62.9% covered to 68.9%, the walksheds with no
 data at all from 17 of 310 to none, and the listings with nothing within 300 m
 from 7 to 1. It is **not** seamless data: inside the city a blank pixel means
 below the 55 dB Lden contour, outside it means unmapped. `06` measures the two
-separately and records them in `antwerp-rentals/noise_bounds.json` — `coverage.full_area` vs
+separately and records them in `projects/antwerp-rentals/noise_bounds.json` — `coverage.full_area` vs
 `coverage.corridor_only`, plus each layer's `role` and `extent`.
 
 Pass `--layers` for a different stack, bottom-to-top, or `--layer` for a single

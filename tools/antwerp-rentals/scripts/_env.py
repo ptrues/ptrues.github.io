@@ -26,7 +26,7 @@ HISTORY = DATA / "history"
 
 # The published page. Everything under ROOT is pipeline-only and is pruned from
 # the Pages artifact by .github/workflows/deploy.yml; only WEB is served.
-WEB = SITE / "antwerp-rentals"
+WEB = SITE / "projects" / "antwerp-rentals"
 WEB_DATA = WEB / "data"
 
 # Written by 03 (and topped up by 04) rather than by 05, because a run that
