@@ -4,6 +4,17 @@
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     
+<!-- Site favicon. Root-relative, not ../../: this page has already moved once
+     (antwerp-rentals/ -> projects/antwerp-rentals/) and nothing else in it
+     knows its own depth, so hard-coding one here would be the single thing
+     that silently broke on the next move. The site is served from the apex of
+     prtruesdell.com, so / is the site root. The --inline build opened over
+     file:// is the one case this does not resolve; it loses the icon and
+     nothing else. -->
+<link rel="icon" href="/favicon-tight.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-tight-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-tight-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-tight-180x180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
@@ -27,7 +38,7 @@
   html, body { margin: 0; height: 100%; font-family: var(--sans); color: var(--blade); }
   body { overflow: hidden; }
   /* folium writes the map div's geometry inline, so pin it by id */
-  #map_1ec99597661a08e9f4de5a6a91564460 {
+  #map_605430e475b4309e7652c252dcf95def {
     position: absolute !important;
     top: calc(var(--blade-h) + var(--stale-h)) !important; right: 0 !important;
     bottom: 0 !important; left: 0 !important;
@@ -258,7 +269,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_1ec99597661a08e9f4de5a6a91564460 {
+                #map_605430e475b4309e7652c252dcf95def {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -334,7 +345,7 @@
   </div>
 </aside>
     
-            <div class="folium-map" id="map_1ec99597661a08e9f4de5a6a91564460" ></div>
+            <div class="folium-map" id="map_605430e475b4309e7652c252dcf95def" ></div>
         
 </body>
 <script>
@@ -770,7 +781,7 @@ function showStatus(map, status) {
 }
 
 window.addEventListener('load', function () {
-  var map = map_1ec99597661a08e9f4de5a6a91564460;
+  var map = map_605430e475b4309e7652c252dcf95def;
   var INLINE = null;
 
   if (INLINE) {
@@ -808,10 +819,10 @@ window.addEventListener('load', function () {
     .then(function (status) { showStatus(map, status); });
 });
     
-            var map_1ec99597661a08e9f4de5a6a91564460 = L.map(
-                "map_1ec99597661a08e9f4de5a6a91564460",
+            var map_605430e475b4309e7652c252dcf95def = L.map(
+                "map_605430e475b4309e7652c252dcf95def",
                 {
-                    center: [51.207151909768115, 4.4328091069372455],
+                    center: [51.2066316506744, 4.432616798559643],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 13,
@@ -827,7 +838,7 @@ window.addEventListener('load', function () {
 
         
     
-            var tile_layer_a497a3885314b795c788eb88d52dcbfe = L.tileLayer(
+            var tile_layer_9a75ac4a0075c7c42aa9139db7519883 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -844,10 +855,10 @@ window.addEventListener('load', function () {
             );
         
     
-            tile_layer_a497a3885314b795c788eb88d52dcbfe.addTo(map_1ec99597661a08e9f4de5a6a91564460);
+            tile_layer_9a75ac4a0075c7c42aa9139db7519883.addTo(map_605430e475b4309e7652c252dcf95def);
         
     
-            map_1ec99597661a08e9f4de5a6a91564460.fitBounds(
+            map_605430e475b4309e7652c252dcf95def.fitBounds(
                 [[51.163891102447636, 4.369850195941408], [51.2490273024192, 4.504201995906425]],
                 {"padding": [40, 40]}
             );

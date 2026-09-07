@@ -66,6 +66,17 @@ FIELDS = [
 NOISE_BOUNDS = _env.WEB / "noise_bounds.json"
 
 CSS = """
+<!-- Site favicon. Root-relative, not ../../: this page has already moved once
+     (antwerp-rentals/ -> projects/antwerp-rentals/) and nothing else in it
+     knows its own depth, so hard-coding one here would be the single thing
+     that silently broke on the next move. The site is served from the apex of
+     prtruesdell.com, so / is the site root. The --inline build opened over
+     file:// is the one case this does not resolve; it loses the icon and
+     nothing else. -->
+<link rel="icon" href="/favicon-tight.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-tight-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-tight-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-tight-180x180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
