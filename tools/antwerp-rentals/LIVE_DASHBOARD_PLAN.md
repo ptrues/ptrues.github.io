@@ -152,10 +152,15 @@ JSON, so it still loads. A directory with no `data/` shows the error panel; the
 
 ---
 
-## Phase 2 — Make `03` safe to run unattended
+## Phase 2 — Make `03` safe to run unattended *(done)*
 
 **Why:** a scheduled job that can silently destroy good data is worse than no
 scheduled job.
+
+**Result:** the hazard below is closed, plus a second one it turned out to
+share a root with. `_publish.py` holds the guards; `03` and `04` use them;
+the page reads `status.json` and says how old it is. See "What actually
+happened".
 
 **The specific hazard.** `03_fetch_immoweb.py:201-202`:
 
@@ -220,6 +225,53 @@ def publish(path, payload, floor=0.6, force=False):
 **Done when:** a simulated mid-pagination empty response leaves the previous
 `listings.json` intact, exits non-zero, and the served page shows a staleness
 banner.
+
+### What actually happened
+
+**One timestamp was not enough.** The schema above has only `fetched_at`, and a
+failed run has nowhere good to put it. Stamp it with the time of a run that
+fetched nothing and the page insists stale data is fresh — the exact lie this
+phase exists to prevent, reintroduced by the fix for it. Leave it alone and you
+cannot tell a job that has been broken for a week from one nobody has run.
+
+So there are two: `fetched_at` moves only on a successful fetch, `checked_at`
+on every attempt. The gap between them is how long the thing has been broken.
+By the same rule, the count fields (`total_items`, `unique`, `within_800m`)
+describe the data that is currently *published*, so a failed run does not touch
+them either — only `checked_at`, `complete` and `error` move.
+
+**The refusal is better than the floor.** The plan reaches truncation through
+the 60% floor, but the floor is a backstop, not the mechanism: a truncation
+that drops 30% of listings sails straight through it. `03` now tracks
+completeness directly — a run is complete only when it has paged through
+`totalItems`, and a mid-pagination empty page is recorded as truncation, never
+as the end of the list. A truncated run publishes nothing at all. The floor
+stays as the second line of defence for everything that is not truncation.
+
+**`04` needed the same guard.** The phase is titled for `03`, but `04` writes
+the file the page actually reads. `03`'s floor cannot see a break on the
+spatial side — a buffers file rebuilt wrong, a CRS mishap dropping most of the
+join — which would sail through `03` and gut `apartments_near_tram.geojson`.
+Both steps now share `_publish.check_collapse` and both take `--force`.
+
+**Also added:** `--fetched-at`, because `--from-cache` cannot know when its
+pages were pulled and must not guess; a `.partial.json` dump of the pages a
+truncated run did get, so the failure is diagnosable the next morning; and an
+"age unknown" banner when `status.json` is missing entirely, since silence
+about age is the one thing this phase must not do.
+
+**Verified**, by emptying page 3 of the cached pages and replaying:
+
+```
+! incomplete fetch: page 3 returned 0 results after 60 of 154 items
+! recorded in status.json; published data left untouched      (exit 1)
+```
+
+`immoweb_rentals.geojson` still held its 148 features afterwards. The page was
+then checked in all four states — fresh (an "as of 7 Sept" line, no banner),
+3 days stale, last-run-failed, and `status.json` missing — with the banner
+correctly reflowing the map in each. Ordering is error, then incomplete, then
+unknown age, then plain staleness.
 
 *Effort: ~2 hours.*
 

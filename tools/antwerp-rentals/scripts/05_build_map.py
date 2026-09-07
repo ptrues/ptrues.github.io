@@ -40,6 +40,7 @@ import argparse
 import json
 
 import _env  # noqa: F401 - must precede pyproj/geopandas (PROJ path fix)
+import _publish
 
 import folium
 import geopandas as gpd
@@ -76,17 +77,21 @@ CSS = """
     --ash:     #6A7784;
     --rule:    #DCE1E6;
     --signal:  #FFCE00;   /* De Lijn yellow - used once, for the open listing */
+    --alert:   #B4361F;   /* staleness banner - the only other loud colour */
     --sans: "Noto Sans", system-ui, sans-serif;
     --mono: "Source Code Pro", ui-monospace, monospace;
     --blade-h: 46px;
     --side-w: 380px;
+    --stale-h: 0px;   /* the staleness banner takes no room until it is shown */
   }
+  /* Set on <body> so it cascades to the map div and the banner alike. */
+  body.is-stale { --stale-h: 32px; }
   html, body { margin: 0; height: 100%; font-family: var(--sans); color: var(--blade); }
   body { overflow: hidden; }
   /* folium writes the map div's geometry inline, so pin it by id */
   #{{MAP}} {
     position: absolute !important;
-    top: var(--blade-h) !important; right: 0 !important;
+    top: calc(var(--blade-h) + var(--stale-h)) !important; right: 0 !important;
     bottom: 0 !important; left: 0 !important;
     width: auto !important; height: auto !important;
   }
@@ -130,6 +135,27 @@ CSS = """
     color: #fff;
   }
   #count s { color: #6E7F8E; text-decoration: none; }
+  /* Always present once status.json is read, stale or not: a dashboard that
+     never says how old it is invites you to assume it is current. */
+  #asof {
+    flex: none; display: flex; align-items: center; padding: 0 14px;
+    border-left: 1px solid #24313D;
+    font-family: var(--sans); font-size: 12px; color: #8B99A6;
+    white-space: nowrap;
+  }
+  #asof:empty { display: none; }
+  body.is-stale #asof { color: #F0B7AA; }
+  /* Sits between the blade and the map rather than over it: an overlay can be
+     dismissed or scrolled away from, and this must not be. */
+  #stale {
+    position: absolute; top: var(--blade-h); left: 0; right: 0;
+    height: var(--stale-h); z-index: 1150;
+    display: flex; align-items: center; gap: 8px; padding: 0 14px;
+    background: var(--alert); color: #fff;
+    font-family: var(--sans); font-size: 12px; line-height: 1.2;
+    overflow: hidden;
+  }
+  #stale b { font-weight: 600; }
   #blade :focus-visible, #sidebar :focus-visible {
     outline: 2px solid var(--signal); outline-offset: -2px;
   }
@@ -287,8 +313,10 @@ BODY_HTML = """
 <header id="blade">
   <button id="toggle-all" type="button"></button>
   <div id="bullets"></div>
+  <div id="asof"></div>
   <div id="count"></div>
 </header>
+<div id="stale" role="status" hidden></div>
 <div id="layers">
   <div id="basemap">
     <button type="button" data-base="osm" class="on">Map</button>
@@ -699,11 +727,69 @@ function init(map, network, listings) {
   render();
 }
 
+/* Anything past this is treated as stale. Comfortably longer than the daily
+   refresh interval, so one late or skipped run does not cry wolf, but short
+   enough that two missed runs always do. */
+var STALE_HOURS = 36;
+
+/* status.json is written by 03 and 04, not by 05, so it survives a failed run
+   -- which is the only run that really needs it. Everything here is about
+   saying plainly how old the listings are. A dashboard that shows yesterday's
+   market as today's is worse than the honest static snapshot it replaced. */
+function showStatus(map, status) {
+  var asof = document.getElementById('asof');
+  var banner = document.getElementById('stale');
+
+  if (!status) {
+    warn('Could not read the refresh status, so the age of this data is '
+         + 'unknown.');
+    return;
+  }
+
+  var when = status.fetched_at ? new Date(status.fetched_at) : null;
+  var ageH = when ? (Date.now() - when.getTime()) / 3600000 : null;
+
+  if (when) {
+    asof.textContent = 'as of ' + when.toLocaleDateString('en-GB',
+      { day: 'numeric', month: 'short' });
+    asof.title = 'Listings fetched ' + when.toLocaleString('en-GB')
+      + (status.checked_at ? '\\nLast checked ' + new Date(status.checked_at)
+          .toLocaleString('en-GB') : '');
+  }
+
+  if (status.error) {
+    warn('The last refresh failed: ' + status.error);
+  } else if (status.complete === false) {
+    warn('The last refresh was cut short, so listings may be missing.');
+  } else if (!when) {
+    warn('This data has no recorded fetch time, so its age is unknown.');
+  } else if (ageH > STALE_HOURS) {
+    warn('The daily refresh has not run for '
+         + Math.floor(ageH / 24) + ' days.');
+  }
+
+  function warn(why) {
+    asof.textContent = asof.textContent || 'age unknown';
+    banner.innerHTML = '<b>Out of date.</b> ';
+    banner.appendChild(document.createTextNode(
+      why + (when ? ' Showing the last good snapshot, from '
+        + when.toLocaleString('en-GB') + '.' : '')
+    ));
+    banner.hidden = false;
+    document.body.classList.add('is-stale');
+    map.invalidateSize();   /* the banner just took 32px off the map */
+  }
+}
+
 window.addEventListener('load', function () {
   var map = {{MAP}};
   var INLINE = {{INLINE}};
 
-  if (INLINE) { init(map, INLINE.network, INLINE.listings); return; }
+  if (INLINE) {
+    init(map, INLINE.network, INLINE.listings);
+    showStatus(map, INLINE.status);
+    return;
+  }
 
   /* Relative to the document, so the page does not care where it is mounted.
      no-cache because listings.json is refreshed daily and a cached copy is a
@@ -725,6 +811,13 @@ window.addEventListener('load', function () {
         + 'over HTTP, or rebuild with 05_build_map.py --inline.';
     }
   });
+
+  /* Fetched separately and never allowed to block the map: a missing
+     status.json should cost you the freshness line, not the listings. */
+  fetch('data/status.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+    .then(function (status) { showStatus(map, status); });
 });
 """
 
@@ -853,7 +946,11 @@ def main(inline=False):
     for token, value in [
         ("{{MAP}}", m.get_name()),
         ("{{INLINE}}", json.dumps(
-            {"network": network, "listings": listings} if inline else None,
+            {
+                "network": network,
+                "listings": listings,
+                "status": _publish.read_status() or None,
+            } if inline else None,
             ensure_ascii=False,
         )),
     ]:

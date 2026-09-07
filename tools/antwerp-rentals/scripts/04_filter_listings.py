@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 
 import _env  # noqa: F401 - must precede pyproj/geopandas (PROJ path fix)
+import _publish
 
 import geopandas as gpd
 import pandas as pd
@@ -34,8 +35,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-price", type=int, default=1100)
     ap.add_argument("--bedrooms", type=int, default=2)
+    ap.add_argument(
+        "--force",
+        action="store_true",
+        help="publish even if the count collapses against the previous run",
+    )
     args = ap.parse_args()
 
+    try:
+        return run(args)
+    except Exception as exc:                      # noqa: BLE001
+        # Same reasoning as 03: this runs unattended, so a failure has to leave
+        # a status.json behind or the page cannot tell anyone it is stale.
+        return _publish.fail(exc)
+
+
+def run(args):
     listings = gpd.read_file(LISTINGS).to_crs(_env.METRIC_CRS)
     buffers = gpd.read_file(BUFFERS).to_crs(_env.METRIC_CRS)
     stops = gpd.read_file(STOPS).to_crs(_env.METRIC_CRS)
@@ -96,7 +111,17 @@ def main():
     out = out.sort_values(["rent_eur", "nearest_stop_m"])
     print("{} listings within {} m of a tram stop".format(len(out), _env.BUFFER_M))
 
-    out.to_crs(4326).to_file(OUT, driver="GeoJSON")
+    # Same collapse guard as 03. 03's floor protects against a truncated
+    # fetch; this one catches a break on the spatial side -- a buffers file
+    # rebuilt wrong, or a CRS mishap that drops most of the join.
+    _publish.check_collapse(OUT, len(out), force=args.force)
+    tmp = OUT.with_suffix(".tmp.geojson")
+    # layer= is not optional: the GeoJSON driver derives the file's "name"
+    # member from the filename, so without it the temp name is what ends up
+    # published.
+    out.to_crs(4326).to_file(tmp, driver="GeoJSON", layer=OUT.stem)
+    tmp.replace(OUT)
+    _publish.write_status(within_800m=len(out))
     print("-> {}".format(OUT))
 
     per_line = (

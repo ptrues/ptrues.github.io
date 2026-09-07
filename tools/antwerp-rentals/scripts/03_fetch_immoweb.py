@@ -36,6 +36,7 @@ import sys
 import time
 
 import _env
+import _publish
 import requests
 
 SEARCH_URL = "https://www.immoweb.be/en/search-results/apartment/for-rent"
@@ -160,8 +161,33 @@ def main():
         help="rebuild the GeoJSON from the saved JSON pages instead of "
              "re-querying Immoweb",
     )
+    ap.add_argument(
+        "--fetched-at",
+        metavar="ISO8601",
+        help="with --from-cache: record this as the fetch time. A replay "
+             "cannot know when its pages were pulled, so it normally leaves "
+             "fetched_at alone; use this when you do know",
+    )
+    ap.add_argument(
+        "--force",
+        action="store_true",
+        help="publish even if the run looks truncated or the listing count "
+             "collapses -- for a genuine market drop, or a narrowed "
+             "--postcodes / --max-price",
+    )
     args = ap.parse_args()
 
+    try:
+        return run(args)
+    except Exception as exc:                      # noqa: BLE001 - see below
+        # Deliberately broad. This is the top of an unattended job: a network
+        # error, a changed JSON shape breaking flatten(), a refused publish --
+        # all of them must still leave a status.json saying the data is stale,
+        # because that file is the only way the page can tell anyone.
+        return _publish.fail(exc)
+
+
+def run(args):
     codes = [c.strip() for c in args.postcodes.split(",") if c.strip()]
     params = {
         "countries": "BE",
@@ -184,10 +210,12 @@ def main():
         session.get("https://www.immoweb.be/en", headers=HEADERS, timeout=60)  # cookies
 
     records, pages, seen = {}, [], set()
+    seen_results, total, complete, truncation = 0, 0, False, None
     page = 1
     while page <= args.max_pages:
         if cached is not None:
             if page > len(cached):
+                truncation = "cache holds only {} pages".format(len(cached))
                 break
             data = cached[page - 1]
         else:
@@ -199,7 +227,18 @@ def main():
         if page == 1:
             print("{} listings match, {} per page".format(total, per_page))
         if not results:
+            # HTTP 200 carrying an empty results array is what soft rate
+            # limiting looks like from this side: no error code, no exception,
+            # just nothing. It is NOT how a complete run ends -- that is the
+            # page*per_page test below -- so it must never be read as the end
+            # of the list. Breaking here and falling through to the write is
+            # how a good snapshot used to get overwritten by a truncated one,
+            # invisibly, at 6am.
+            truncation = "page {} returned 0 results after {} of {} items".format(
+                page, seen_results, total
+            )
             break
+        seen_results += len(results)
 
         new = 0
         for res in results:
@@ -216,14 +255,29 @@ def main():
         ))
 
         if page * per_page >= total:
+            complete = True   # the one exit that means "got the whole list"
             break
         page += 1
         if cached is None:
             time.sleep(1.5)  # be gentle
+    else:
+        truncation = "stopped at --max-pages {} with {} of {} items".format(
+            args.max_pages, seen_results, total
+        )
+
+    if truncation and not args.force:
+        # Keep the pages for diagnosis under a name that cannot be mistaken for
+        # a good cache, then leave every published file exactly as it was.
+        partial = RAW_PAGES.with_name(RAW_PAGES.stem + ".partial.json")
+        partial.write_text(json.dumps(pages, ensure_ascii=False), encoding="utf-8")
+        print("  partial pages kept at {}".format(partial.name), file=sys.stderr)
+        # No counts written here on purpose: total_items / unique / within_800m
+        # describe the data that is currently *published*, and this run
+        # published nothing. Only checked_at / complete / error move.
+        return _publish.fail("incomplete fetch: {}".format(truncation))
 
     if not records:
-        print("! no listings retrieved", file=sys.stderr)
-        return 1
+        return _publish.fail("no listings retrieved")
 
     features = []
     for rec in sorted(records.values(), key=lambda r: r["rent_eur"] or 0):
@@ -237,8 +291,26 @@ def main():
             }
         )
     gj = {"type": "FeatureCollection", "features": features}
-    OUT.write_text(json.dumps(gj, ensure_ascii=False, indent=1), encoding="utf-8")
+    _publish.publish(OUT, gj, force=args.force)
     RAW_PAGES.write_text(json.dumps(pages, ensure_ascii=False), encoding="utf-8")
+
+    # A replay is not a fetch: --from-cache rebuilds from pages that may be
+    # days old, so it must not restamp fetched_at and claim the data is new.
+    # Left absent, the page says "age unknown" rather than guessing.
+    if args.fetched_at:
+        stamp = {"fetched_at": args.fetched_at}
+    elif args.from_cache:
+        stamp = {}
+    else:
+        stamp = {"fetched_at": _publish.now_utc()}
+    _publish.write_status(
+        checked_at=_publish.now_utc(),
+        total_items=total,
+        unique=len(features),
+        complete=complete,
+        error=None,
+        **stamp
+    )
 
     rents = [f["properties"]["rent_eur"] for f in features if f["properties"]["rent_eur"]]
     print("\n{} listings -> {}".format(len(features), OUT))

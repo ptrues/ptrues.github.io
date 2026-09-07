@@ -23,6 +23,7 @@ antwerp-rentals/    <- the published page; `_env.WEB` points here
   index.html            the shell: chrome, CSS, JS, no data
   data/network.json     stops, colours, routes, noise bounds
   data/listings.json    the apartments -- the only file a refresh rewrites
+  data/status.json      when the data is from, and whether the run worked
   noise_lden_2021.png, noise_bounds.json
 ```
 
@@ -39,6 +40,34 @@ C:/anaconda/envs/geospatial/python.exe tools/antwerp-rentals/scripts/run_all.py
 Or a single step, e.g. `scripts/02_buffer_stops.py`. `run_all.py --from 4`
 resumes partway. `03_fetch_immoweb.py --from-cache` rebuilds the listing
 GeoJSON from the saved API pages without re-querying Immoweb.
+
+### Refusing to publish
+
+`03` and `04` are built to run unattended, which means their job is as much to
+*not* write as to write. Both refuse to publish when the result looks wrong:
+
+- **A truncated fetch.** Immoweb answers a soft rate-limit with HTTP 200 and an
+  empty `results` array. `03` treats a mid-pagination empty page as truncation,
+  never as the end of the list, and only counts a run complete when it has
+  paged through `totalItems`. A truncated run leaves every published file
+  untouched, drops the pages it did get into `immoweb_pages.partial.json`, and
+  exits non-zero.
+- **A collapse in count.** Either step refuses to overwrite its GeoJSON when
+  the feature count falls below 60% of the previous run — the shape a broken
+  run has, as against the few percent a real market moves in a day.
+
+`--force` overrides both, for a genuine market drop or a deliberately narrowed
+`--postcodes` / `--max-price`.
+
+Every run writes `antwerp-rentals/data/status.json`, **including a run that
+fails** — that is the whole point of it, and why `03` writes it rather than
+`05`, which a failed run never reaches. `fetched_at` moves only on a successful
+fetch; `checked_at` moves on every attempt. The page reads both and shows a
+banner when the data is over 36 h old, incomplete, or errored. A dashboard that
+shows last week's market as today's is worse than an honest static snapshot.
+
+`--from-cache` deliberately leaves `fetched_at` alone, since a replay cannot
+know when its pages were pulled; pass `--fetched-at` when you do know.
 
 ### Looking at the result
 

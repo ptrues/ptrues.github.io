@@ -27,8 +27,14 @@ HISTORY = DATA / "history"
 # The published page. Everything under ROOT is pipeline-only and is pruned from
 # the Pages artifact by .github/workflows/deploy.yml; only WEB is served.
 WEB = SITE / "antwerp-rentals"
+WEB_DATA = WEB / "data"
 
-for _d in (RAW, PROCESSED, HISTORY, WEB):
+# Written by 03 (and topped up by 04) rather than by 05, because a run that
+# fails never reaches 05 -- and a failed run is exactly when the page most
+# needs to be able to say so.
+STATUS_JSON = WEB_DATA / "status.json"
+
+for _d in (RAW, PROCESSED, HISTORY, WEB, WEB_DATA):
     _d.mkdir(parents=True, exist_ok=True)
 
 

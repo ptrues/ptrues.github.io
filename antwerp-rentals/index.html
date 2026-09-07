@@ -15,17 +15,21 @@
     --ash:     #6A7784;
     --rule:    #DCE1E6;
     --signal:  #FFCE00;   /* De Lijn yellow - used once, for the open listing */
+    --alert:   #B4361F;   /* staleness banner - the only other loud colour */
     --sans: "Noto Sans", system-ui, sans-serif;
     --mono: "Source Code Pro", ui-monospace, monospace;
     --blade-h: 46px;
     --side-w: 380px;
+    --stale-h: 0px;   /* the staleness banner takes no room until it is shown */
   }
+  /* Set on <body> so it cascades to the map div and the banner alike. */
+  body.is-stale { --stale-h: 32px; }
   html, body { margin: 0; height: 100%; font-family: var(--sans); color: var(--blade); }
   body { overflow: hidden; }
   /* folium writes the map div's geometry inline, so pin it by id */
-  #map_a62e93c7bcbd0a7b8e7ec6276227d01e {
+  #map_1ec99597661a08e9f4de5a6a91564460 {
     position: absolute !important;
-    top: var(--blade-h) !important; right: 0 !important;
+    top: calc(var(--blade-h) + var(--stale-h)) !important; right: 0 !important;
     bottom: 0 !important; left: 0 !important;
     width: auto !important; height: auto !important;
   }
@@ -69,6 +73,27 @@
     color: #fff;
   }
   #count s { color: #6E7F8E; text-decoration: none; }
+  /* Always present once status.json is read, stale or not: a dashboard that
+     never says how old it is invites you to assume it is current. */
+  #asof {
+    flex: none; display: flex; align-items: center; padding: 0 14px;
+    border-left: 1px solid #24313D;
+    font-family: var(--sans); font-size: 12px; color: #8B99A6;
+    white-space: nowrap;
+  }
+  #asof:empty { display: none; }
+  body.is-stale #asof { color: #F0B7AA; }
+  /* Sits between the blade and the map rather than over it: an overlay can be
+     dismissed or scrolled away from, and this must not be. */
+  #stale {
+    position: absolute; top: var(--blade-h); left: 0; right: 0;
+    height: var(--stale-h); z-index: 1150;
+    display: flex; align-items: center; gap: 8px; padding: 0 14px;
+    background: var(--alert); color: #fff;
+    font-family: var(--sans); font-size: 12px; line-height: 1.2;
+    overflow: hidden;
+  }
+  #stale b { font-weight: 600; }
   #blade :focus-visible, #sidebar :focus-visible {
     outline: 2px solid var(--signal); outline-offset: -2px;
   }
@@ -233,7 +258,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a62e93c7bcbd0a7b8e7ec6276227d01e {
+                #map_1ec99597661a08e9f4de5a6a91564460 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -274,8 +299,10 @@
 <header id="blade">
   <button id="toggle-all" type="button"></button>
   <div id="bullets"></div>
+  <div id="asof"></div>
   <div id="count"></div>
 </header>
+<div id="stale" role="status" hidden></div>
 <div id="layers">
   <div id="basemap">
     <button type="button" data-base="osm" class="on">Map</button>
@@ -307,7 +334,7 @@
   </div>
 </aside>
     
-            <div class="folium-map" id="map_a62e93c7bcbd0a7b8e7ec6276227d01e" ></div>
+            <div class="folium-map" id="map_1ec99597661a08e9f4de5a6a91564460" ></div>
         
 </body>
 <script>
@@ -688,11 +715,69 @@ function init(map, network, listings) {
   render();
 }
 
+/* Anything past this is treated as stale. Comfortably longer than the daily
+   refresh interval, so one late or skipped run does not cry wolf, but short
+   enough that two missed runs always do. */
+var STALE_HOURS = 36;
+
+/* status.json is written by 03 and 04, not by 05, so it survives a failed run
+   -- which is the only run that really needs it. Everything here is about
+   saying plainly how old the listings are. A dashboard that shows yesterday's
+   market as today's is worse than the honest static snapshot it replaced. */
+function showStatus(map, status) {
+  var asof = document.getElementById('asof');
+  var banner = document.getElementById('stale');
+
+  if (!status) {
+    warn('Could not read the refresh status, so the age of this data is '
+         + 'unknown.');
+    return;
+  }
+
+  var when = status.fetched_at ? new Date(status.fetched_at) : null;
+  var ageH = when ? (Date.now() - when.getTime()) / 3600000 : null;
+
+  if (when) {
+    asof.textContent = 'as of ' + when.toLocaleDateString('en-GB',
+      { day: 'numeric', month: 'short' });
+    asof.title = 'Listings fetched ' + when.toLocaleString('en-GB')
+      + (status.checked_at ? '\nLast checked ' + new Date(status.checked_at)
+          .toLocaleString('en-GB') : '');
+  }
+
+  if (status.error) {
+    warn('The last refresh failed: ' + status.error);
+  } else if (status.complete === false) {
+    warn('The last refresh was cut short, so listings may be missing.');
+  } else if (!when) {
+    warn('This data has no recorded fetch time, so its age is unknown.');
+  } else if (ageH > STALE_HOURS) {
+    warn('The daily refresh has not run for '
+         + Math.floor(ageH / 24) + ' days.');
+  }
+
+  function warn(why) {
+    asof.textContent = asof.textContent || 'age unknown';
+    banner.innerHTML = '<b>Out of date.</b> ';
+    banner.appendChild(document.createTextNode(
+      why + (when ? ' Showing the last good snapshot, from '
+        + when.toLocaleString('en-GB') + '.' : '')
+    ));
+    banner.hidden = false;
+    document.body.classList.add('is-stale');
+    map.invalidateSize();   /* the banner just took 32px off the map */
+  }
+}
+
 window.addEventListener('load', function () {
-  var map = map_a62e93c7bcbd0a7b8e7ec6276227d01e;
+  var map = map_1ec99597661a08e9f4de5a6a91564460;
   var INLINE = null;
 
-  if (INLINE) { init(map, INLINE.network, INLINE.listings); return; }
+  if (INLINE) {
+    init(map, INLINE.network, INLINE.listings);
+    showStatus(map, INLINE.status);
+    return;
+  }
 
   /* Relative to the document, so the page does not care where it is mounted.
      no-cache because listings.json is refreshed daily and a cached copy is a
@@ -714,10 +799,17 @@ window.addEventListener('load', function () {
         + 'over HTTP, or rebuild with 05_build_map.py --inline.';
     }
   });
+
+  /* Fetched separately and never allowed to block the map: a missing
+     status.json should cost you the freshness line, not the listings. */
+  fetch('data/status.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+    .then(function (status) { showStatus(map, status); });
 });
     
-            var map_a62e93c7bcbd0a7b8e7ec6276227d01e = L.map(
-                "map_a62e93c7bcbd0a7b8e7ec6276227d01e",
+            var map_1ec99597661a08e9f4de5a6a91564460 = L.map(
+                "map_1ec99597661a08e9f4de5a6a91564460",
                 {
                     center: [51.207151909768115, 4.4328091069372455],
                     crs: L.CRS.EPSG3857,
@@ -735,7 +827,7 @@ window.addEventListener('load', function () {
 
         
     
-            var tile_layer_92856493e5cdf0eb2701a571cfbcf21d = L.tileLayer(
+            var tile_layer_a497a3885314b795c788eb88d52dcbfe = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -752,10 +844,10 @@ window.addEventListener('load', function () {
             );
         
     
-            tile_layer_92856493e5cdf0eb2701a571cfbcf21d.addTo(map_a62e93c7bcbd0a7b8e7ec6276227d01e);
+            tile_layer_a497a3885314b795c788eb88d52dcbfe.addTo(map_1ec99597661a08e9f4de5a6a91564460);
         
     
-            map_a62e93c7bcbd0a7b8e7ec6276227d01e.fitBounds(
+            map_1ec99597661a08e9f4de5a6a91564460.fitBounds(
                 [[51.163891102447636, 4.369850195941408], [51.2490273024192, 4.504201995906425]],
                 {"padding": [40, 40]}
             );
