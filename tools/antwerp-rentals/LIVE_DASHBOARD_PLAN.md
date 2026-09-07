@@ -4,7 +4,8 @@ A phased plan for turning the current build-once map into something that
 refreshes itself and tracks the market over time.
 
 Each phase stands alone, ships something useful, and can be reverted without
-touching the ones before it. `web/index.html` keeps working throughout.
+touching the ones before it. `antwerp-rentals/index.html` keeps working
+throughout.
 
 ## The premise
 
@@ -37,6 +38,22 @@ attribute filters, 109 within 800 m.
 
 ---
 
+## Phase 0 — Move into the site repo *(done)*
+
+The project used to sit outside version control in `C:/projects/antwerp-real-estate`.
+Phase 3 needs it in a repo with Pages, so it now lives in `ptrues/ptrues.github.io`:
+
+```
+antwerp-rentals/          the published page -> prtruesdell.com/antwerp-rentals/
+tools/antwerp-rentals/    the pipeline; pruned from the Pages artifact
+```
+
+`scripts/_env.py` holds both paths (`ROOT` for pipeline data, `WEB` for the
+page), so nothing else in the pipeline knows where it is. Paths below are
+written relative to the repo root.
+
+---
+
 ## Phase 1 — Decouple the data from the HTML
 
 **Why first:** until this lands, refreshing data means regenerating a 247 KB
@@ -60,7 +77,7 @@ seams, so this is a mechanical change, not a rewrite.
 
 **Do:**
 
-1. Split the emit into two files under `web/data/`:
+1. Split the emit into two files under `antwerp-rentals/data/`:
    - `network.json` — `STOPS`, `LINES`, `COLOURS`, `NOISE`, `SHAPES`. Rewritten
      only when `01`/`07`/`02`/`06` are re-run.
    - `listings.json` — `APTS`. Rewritten by every refresh.
@@ -68,14 +85,15 @@ seams, so this is a mechanical change, not a rewrite.
    the existing init code. Keep the marker/sidebar/filter JS exactly as is —
    it already works off in-memory arrays.
 3. Add `--inline` to `05_build_map.py` that restores the current baked-in
-   behaviour, so `web/index.html` stays openable as a `file://` page for
-   offline use. (`fetch()` of a relative path fails under `file://`, so the
-   split version needs a local server: `python -m http.server` from `web/`.)
+   behaviour, so the page stays openable as a `file://` page for offline use.
+   (`fetch()` of a relative path fails under `file://`, so the split version
+   needs a local server: `python -m http.server` from the repo root, then
+   <http://localhost:8000/antwerp-rentals/>.)
 
 **Validate:** `03_fetch_immoweb.py --from-cache` replays `immoweb_pages.json`
 without touching the network, so Phases 1, 2 and 4 can all be developed and
-tested offline. Re-run `04` then `05`, serve `web/`, confirm the map is
-identical to the current one.
+tested offline. Re-run `04` then `05`, serve the repo root, confirm the map
+is identical to the current one.
 
 **Done when:** `index.html` contains no listing data, the served map is
 visually identical, and re-running `04` changes what the page shows on reload
@@ -131,7 +149,7 @@ def publish(path, payload, floor=0.6, force=False):
    Add `--force` to override deliberately (a genuine market collapse, or a
    changed `--postcodes`).
 
-3. Emit `web/data/status.json` every run:
+3. Emit `antwerp-rentals/data/status.json` every run:
 
 ```json
 {
@@ -160,54 +178,97 @@ banner.
 
 ## Phase 3 — Schedule it
 
-**Recommended:** GitHub Actions on a daily cron, committing the refreshed JSON,
-with `web/` published by GitHub Pages. No server to run, no hosting bill, and
-the commit history becomes a free record of the market — which Phase 4 then
-mines.
+**Where it runs:** GitHub Actions on a daily cron in `ptrues/ptrues.github.io`,
+committing the refreshed JSON to `main`. No server, no hosting bill, and the
+commit history becomes a free record of the market — which Phase 4 then mines.
 
 Daily is the right cadence. These listings do not move hourly, and a low rate
 is also the best protection against the risk below.
+
+### The trap: a bot commit will not deploy the site
+
+The repo already has `deploy.yml`, which publishes Pages on push to `main`. The
+obvious design — let the refresh job commit, and let that push trigger the
+existing deploy — **does not work.** Pushes made with the default `GITHUB_TOKEN`
+do not trigger other workflows; it is GitHub's loop protection and it fails
+silently. The commit lands, no deploy runs, and the site keeps serving
+yesterday's `listings.json` while `status.json` in the repo says it is fresh.
+
+That is precisely the failure Phase 2 exists to make visible, arriving through a
+channel Phase 2 cannot see: the staleness banner is computed from the *deployed*
+`status.json`, so a stuck deploy shows no banner at all. **Do not rely on the
+push trigger.** Have the refresh workflow deploy Pages itself, in the same run:
 
 ```yaml
 name: refresh-listings
 on:
   schedule: [{ cron: "0 4 * * *" }]   # 06:00 Brussels
   workflow_dispatch:
+
+# Same group as deploy.yml, so a refresh and a hand-edit push cannot race.
+concurrency: { group: pages, cancel-in-progress: false }
+
+permissions: { contents: write, pages: write, id-token: write }
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    permissions: { contents: write }
+    environment:
+      name: github-pages
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
-      - run: pip install -r requirements.txt
-      - run: python scripts/03_fetch_immoweb.py
-      - run: python scripts/04_filter_listings.py
-      - run: python scripts/05_build_map.py --data-only
-      - name: commit
+      - run: pip install -r tools/antwerp-rentals/requirements.txt
+
+      - run: python tools/antwerp-rentals/scripts/03_fetch_immoweb.py
+      - run: python tools/antwerp-rentals/scripts/04_filter_listings.py
+      - run: python tools/antwerp-rentals/scripts/08_update_history.py
+      - run: python tools/antwerp-rentals/scripts/05_build_map.py --data-only
+
+      - name: Commit
         run: |
           git config user.name  "listings-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add web/data data/raw/immoweb_rentals.geojson \
-                  data/processed/apartments_near_tram.geojson data/history
+          git add antwerp-rentals/data tools/antwerp-rentals/data
           git diff --staged --quiet || git commit -m "listings $(date -u +%F)"
           git push
+
+      # Deploy in this run. A GITHUB_TOKEN push will not trigger deploy.yml.
+      - uses: actions/configure-pages@v5
+      - run: rm -rf tools
+      - uses: actions/upload-pages-artifact@v5
+        with: { path: . }
+      - uses: actions/deploy-pages@v4
 ```
+
+Note `cancel-in-progress: false` here, against `true` in `deploy.yml`. Sharing
+the group serialises the two workflows, but the refresh job pushes commits — a
+cancelled refresh could leave a commit on `main` with nothing deployed, which is
+the same silent staleness by another route. Let it finish.
+
+The duplicated deploy tail is the price of not splitting `deploy.yml` into a
+reusable workflow. If it drifts, factor it out with `workflow_call` — but three
+steps duplicated is cheaper than the indirection until it actually drifts.
 
 **Do:**
 
-1. Write `requirements.txt` — the pipeline currently assumes the local
-   `geospatial` conda env and pins nothing.
-2. Commit the build-time constants so CI has them: `delijn_tram_stops.geojson`,
-   `delijn_lines.json`, `delijn_line_shapes.geojson`, `stop_buffers_800m.geojson`,
-   plus `web/noise_lden_2021.png` and `web/noise_bounds.json`.
-3. Add `--data-only` to `05_build_map.py`, writing `web/data/*.json` without
-   re-rendering the shell.
-4. Keep `immoweb_pages.json` out of the repo — 4.8 MB of raw API responses per
-   run. Keep it local for auditing; add it to `.gitignore`.
-5. `_env.py`'s PROJ/GDAL fix is a no-op off this machine, but harmless — leave
-   it. It only rewrites paths when it finds a `proj.db`.
+1. Write `tools/antwerp-rentals/requirements.txt` — the pipeline currently
+   assumes the local `geospatial` conda env and pins nothing. This is the bulk
+   of the phase.
+2. Add `--data-only` to `05_build_map.py`, writing `antwerp-rentals/data/*.json`
+   without re-rendering the shell.
+3. Add the refresh workflow above. Run it once with `workflow_dispatch` before
+   trusting the cron.
+4. Add a card to `projects/index.html`, matching the existing entries.
+
+Already handled by Phase 0: the build-time constants are committed
+(`delijn_tram_stops.geojson`, `delijn_lines.json`, `delijn_line_shapes.geojson`,
+`stop_buffers_800m.geojson`, plus the noise PNG and bounds), `immoweb_pages.json`
+is gitignored, and `deploy.yml` prunes `tools/` from the artifact.
+
+`_env.py`'s PROJ/GDAL fix is a no-op off this machine, but harmless — leave it.
+It only rewrites paths when it finds a `proj.db`.
 
 **On slimming `04`:** it pulls geopandas for a spatial join against precomputed
 buffers, which is the slowest install in the job (~40 s). It could be rewritten
@@ -215,8 +276,13 @@ with shapely + an STRtree. **Don't, initially.** Divergent code paths between
 your machine and CI is a worse problem than 40 seconds of install time, and the
 `geospatial` env is how you debug locally.
 
-**Done when:** the workflow runs green on `workflow_dispatch`, commits a
-changed `listings.json`, and the Pages site reflects it within a minute.
+**On the shared history:** this repo is otherwise hand-edited, so a daily bot
+commit will dominate `git log`. `git log --author=listings-bot --invert-grep`
+keeps the human history readable.
+
+**Done when:** the workflow runs green on `workflow_dispatch`, commits a changed
+`listings.json`, **and the deployed page reflects it** — check the live URL, not
+the repo, since the whole point of this phase is that those two can diverge.
 
 *Effort: ~half a day, most of it pinning dependencies.*
 
@@ -231,7 +297,7 @@ Listings carry a stable `id` and a `lastModificationDate` (surfaced as
 `updated` at `03_fetch_immoweb.py:134`), so consecutive snapshots diff cleanly.
 
 **Storage.** Append one slim row per listing per run to
-`data/history/listings.jsonl`:
+`tools/antwerp-rentals/data/history/listings.jsonl`:
 
 ```json
 {"date":"2026-09-06","id":21544592,"rent":995,"costs":50,"m2":78,"pc":"2018","lines":"4,7","updated":"2026-09-04T13:00:00Z"}
@@ -255,9 +321,11 @@ JSONL produces clean git diffs. Compact to Parquet if it ever matters.
 **Do:**
 
 1. New step `08_update_history.py`: read `apartments_near_tram.geojson`, append
-   today's rows, emit `web/data/history.json` (pre-aggregated series — do not
-   ship the raw JSONL to the browser).
-2. Add it to `run_all.py` and to the workflow, after `04`.
+   today's rows, emit `antwerp-rentals/data/history.json` (pre-aggregated series
+   — do not ship the raw JSONL to the browser). The JSONL stays under `tools/`,
+   which the artifact prune drops, so it never reaches the site.
+2. Add it to `run_all.py` and to the workflow, after `04`. The Phase 3 workflow
+   above already has the step; it is a no-op until this lands.
 3. Add a collapsible panel to the page: the change list, and a rent-trend
    sparkline.
 
@@ -283,10 +351,17 @@ thing; running it on a schedule from a datacenter IP is materially different:
 Mitigations, in order: keep the cadence at daily; keep the existing backoff and
 the 1.5 s inter-page pause; make Phase 2's staleness surfacing non-optional.
 
+One more consideration now that this runs from the site repo: a blocked or
+rate-limited scrape is a failure in the repo that also serves prtruesdell.com.
+It cannot take the site down — `deploy.yml` is independent and the refresh job
+leaves `listings.json` untouched on failure — but a red X on the repo will be
+from this job most of the time.
+
 **Fallback if CI gets blocked:** run the same job from this machine on Task
-Scheduler and push the results. Phases 1, 2 and 4 are unaffected — only the
-*where* of Phase 3 changes, which is why the scheduling is deliberately the
-thinnest layer in the plan.
+Scheduler and push the results — which is now just `run_all.py --from 4`
+followed by a commit, since the pipeline already lives in the repo. Phases 1, 2
+and 4 are unaffected — only the *where* of Phase 3 changes, which is why the
+scheduling is deliberately the thinnest layer in the plan.
 
 **Secondary benefit:** the sidebar hot-links photos from Immoweb's CDN, so they
 404 as listings come off the market. A live refresh fixes that rot; the current
@@ -301,7 +376,7 @@ Until Phase 3 lands, refreshing by hand means `03` → `04` → `05`. Note that
 run order is `01, 07, 02, 03, 04, 06, 05`, so `03` is position **4**:
 
 ```
-C:/anaconda/envs/geospatial/python.exe scripts/run_all.py --from 4
+C:/anaconda/envs/geospatial/python.exe tools/antwerp-rentals/scripts/run_all.py --from 4
 ```
 
 That also re-runs `06`, which re-downloads the noise raster unnecessarily.
