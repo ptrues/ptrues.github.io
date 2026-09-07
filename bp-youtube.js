@@ -18,15 +18,11 @@ document.addEventListener('click', async (e) => {
       }
     }
 
-    // Reverting back to onClosed for scroll restoration
-    const previousScrollPosition = window.scrollY;
-
+    /* No scroll save/restore: the jump it compensated for came from Bigger
+       Picture's `.bp-lock body` rule, neutralised in style.css. */
     ytOverlay.open({
       items: [link],
       el: link,
-      onClosed: () => {
-        window.scrollTo(0, previousScrollPosition);
-      },
     });
   } catch (err) {
     console.error('bp-youtube init/open error:', err);

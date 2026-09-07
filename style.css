@@ -16,6 +16,19 @@ body {
 /* Prevent horizontal shift when a vertical scrollbar appears */
 html { scrollbar-gutter: stable; }
 
+/* Bigger Picture locks the page with `html { overflow-y: hidden }` plus
+   `body { overflow: scroll }`. That body rule exists only to hold the scrollbar
+   gutter open so the page does not shift when the scrollbar goes away -- which
+   `scrollbar-gutter: stable` above already does, natively and better.
+
+   Left in place it is destructive: it makes body its own scroll container, and
+   because body is `height: 100%` that container is exactly one viewport tall and
+   starts at offset 0, so the page snaps to the top the moment the lightbox
+   opens. Neutralising it keeps the lock (html still hides overflow) while the
+   scroll position survives, so no scroll-restoring hack is needed on close.
+   `html.bp-lock` outranks the library's `.bp-lock`, which loads after this. */
+html.bp-lock body { overflow: visible; }
+
 /* Fluid scale variables: use a shared vw slope so title and lede scale together.
    Adjust --fluid-slope or multipliers to tune relative sizes. */
 :root {
