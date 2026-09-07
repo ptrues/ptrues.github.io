@@ -77,9 +77,14 @@
   transform-origin: center;
 }
 
+/* Block, with a definite width, so `width: 100%` on the image is not a cyclic
+   percentage. An inline-block shrink-wraps, which leaves the image no container
+   width to resolve against, so the aspect-ratio box from the width/height
+   attributes never applies and the thumbnail reserves 1px until it loads. */
 .proj-media a {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
 }
 
 .proj-media a::after {
