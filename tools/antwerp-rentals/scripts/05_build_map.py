@@ -77,7 +77,7 @@ FIELDS = [
 NOISE_BOUNDS = _env.WEB / "noise_bounds.json"
 
 CSS = r"""
-<title>Rentals in Antwerp — two beds, near a tram, on a quiet street</title>
+<title>Rentals in Antwerp</title>
 <!-- Site favicon. Root-relative, not ../: this page has moved twice already
      (antwerp-rentals/ -> projects/antwerp-rentals/ -> antwerp-rentals/) and
      nothing else in it knows its own depth, so a relative path here would be
