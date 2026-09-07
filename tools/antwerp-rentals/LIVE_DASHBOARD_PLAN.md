@@ -54,11 +54,15 @@ written relative to the repo root.
 
 ---
 
-## Phase 1 — Decouple the data from the HTML
+## Phase 1 — Decouple the data from the HTML *(done)*
 
 **Why first:** until this lands, refreshing data means regenerating a 247 KB
 HTML file. Afterwards the page is a fixed shell and a refresh is one small JSON
 write. Every later phase depends on it.
+
+**Result:** `index.html` 247 KB → 29 KB, plus `data/network.json` (61 KB) and
+`data/listings.json` (170 KB). Two things came out differently from the sketch
+below; both are under "What actually happened".
 
 **What's there now.** `05_build_map.py:750-756` substitutes six JSON blobs into
 the JS template before writing the page:
@@ -66,28 +70,31 @@ the JS template before writing the page:
 ```
 {{APTS}}     the listings          <- live
 {{STOPS}}    tram stops            <- constant
-{{LINES}}    line list             <- constant
-{{COLOURS}}  line colours          <- constant
+{{LINES}}    line list             <- derived from {{APTS}}, not constant
+{{COLOURS}}  line colours          <- derived from {{LINES}}, not constant
 {{NOISE}}    noise overlay bounds  <- constant
-{{SHAPES}}   route geometry        <- constant
+{{SHAPES}}   route geometry        <- filtered by {{LINES}}, not constant
 ```
 
-Five of the six never change between runs. The template already has clean
-seams, so this is a mechanical change, not a rewrite.
+Three of the six never change between runs; the annotations above are corrected
+from the original draft, which had all five non-`APTS` blobs down as constants.
+See "What actually happened". The template does have clean seams, so this was
+still a mechanical change rather than a rewrite.
 
 **Do:**
 
 1. Split the emit into two files under `antwerp-rentals/data/`:
-   - `network.json` — `STOPS`, `LINES`, `COLOURS`, `NOISE`, `SHAPES`. Rewritten
-     only when `01`/`07`/`02`/`06` are re-run.
+   - `network.json` — `STOPS`, `COLOURS`, `NOISE`, `SHAPES`, all widened to the
+     whole network. Rewritten only when `01`/`07`/`02`/`06` are re-run.
    - `listings.json` — `APTS`. Rewritten by every refresh.
 2. Replace the six substitutions with a `fetch()` of those two files, then run
    the existing init code. Keep the marker/sidebar/filter JS exactly as is —
-   it already works off in-memory arrays.
-3. Add `--inline` to `05_build_map.py` that restores the current baked-in
-   behaviour, so the page stays openable as a `file://` page for offline use.
-   (`fetch()` of a relative path fails under `file://`, so the split version
-   needs a local server: `python -m http.server` from the repo root, then
+   it already works off in-memory arrays. Derive `LINES`, and narrow `SHAPES`,
+   at the top of `init()`.
+3. Add `--inline` to `05_build_map.py` that restores the baked-in behaviour,
+   writing `index-offline.html` for `file://` use. (`fetch()` of a relative
+   path fails under `file://`, so the split version needs a local server:
+   `python -m http.server` from the repo root, then
    <http://localhost:8000/antwerp-rentals/>.)
 
 **Validate:** `03_fetch_immoweb.py --from-cache` replays `immoweb_pages.json`
@@ -98,6 +105,48 @@ is identical to the current one.
 **Done when:** `index.html` contains no listing data, the served map is
 visually identical, and re-running `04` changes what the page shows on reload
 with no HTML rebuild.
+
+### What actually happened
+
+**`LINES` and `COLOURS` were not constants.** The table above says five of the
+six blobs never change between runs. Two of them did: `05_build_map.py` derived
+`all_lines` from the *apartment records*, then derived `colours` from that and
+filtered `SHAPES` by it. Shipping those in `network.json` would have made the
+"constant" file a function of the daily listings — the exact coupling this
+phase exists to break, hidden behind a name that said otherwise.
+
+It reads as a constant today only by coincidence: the network has 12 lines and
+all 12 happen to have a listing on them right now. The first day a line has
+nothing for rent, the sets diverge.
+
+So `network.json` now carries every line the *network* has (from the stops and
+route-shape files), and the page narrows that to the lines with a listing, in
+JS, at load. Same bullets, same routes, same order — but `network.json` no
+longer moves when the listings do.
+
+**`--inline` writes `index-offline.html`, not `index.html`.** Writing the
+inlined page over `index.html` as sketched sets a trap: an inlined page ignores
+`listings.json` entirely, so one committed by accident would freeze the
+dashboard at that snapshot and still look completely healthy — no banner, no
+error, right up until someone noticed the rents were months old. A separate
+filename, gitignored, cannot be published by mistake.
+
+**Also added:** a `#loaderr` panel. A failed `fetch()` would otherwise leave a
+working basemap with no markers and no explanation, which reads as "nothing for
+rent" rather than "broken". It names the file and the HTTP status, and adds a
+hint about `--inline` when the page is on a `file://` URL.
+
+`listings.json` is written with `indent=1` and `network.json` compact — the
+first is committed daily and its diffs get read, the second is machine-only and
+mostly route coordinates that one-per-line indentation would inflate badly.
+
+**Verified:** served from the repo root — map identical, bullet order identical
+(`1 2 4 6 7 8 10 11 12 24 A3 A9`), 109/109, line filter, sidebar, photo
+gallery, and the noise overlay all working. The overlay was the one real risk:
+its `png` is a bare filename that now travels inside `data/network.json`, one
+directory below the page. It resolves against the document rather than the
+JSON, so it still loads. A directory with no `data/` shows the error panel; the
+`--inline` build renders fully in that same directory.
 
 *Effort: ~half a day.*
 

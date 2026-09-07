@@ -1,9 +1,21 @@
-r"""Render the filtered listings to web/index.html as a folium map.
+r"""Render the filtered listings to a folium map.
 
 Reads  data/processed/apartments_near_tram.geojson
        data/raw/delijn_tram_stops.geojson
        data/raw/delijn_lines.json
-Writes web/index.html  (single self-contained file, data embedded)
+Writes antwerp-rentals/index.html        the shell: chrome, CSS, JS, no data
+       antwerp-rentals/data/network.json  stops, colours, routes, noise bounds
+       antwerp-rentals/data/listings.json the apartments
+
+The split is what makes a refresh cheap: network.json changes only when
+01/07/02/06 are re-run, so a daily refresh rewrites listings.json alone and the
+247 KB shell is never regenerated. The page fetches both at load.
+
+`--inline` writes a single self-contained page to index-offline.html instead,
+with the data baked back in, because fetch() of a relative path is blocked
+under file://. It is deliberately a different filename: an inlined page
+committed over index.html would ignore listings.json and freeze the dashboard
+at that snapshot without any visible error.
 
 folium supplies the Leaflet scaffold and the OSM Standard basemap; the marker
 layer, the per-line filter and the detail sidebar are added as custom CSS/JS
@@ -24,6 +36,7 @@ figure appears on hover.
 """
 from __future__ import annotations
 
+import argparse
 import json
 
 import _env  # noqa: F401 - must precede pyproj/geopandas (PROJ path fix)
@@ -35,7 +48,12 @@ APARTMENTS = _env.PROCESSED / "apartments_near_tram.geojson"
 STOPS = _env.RAW / "delijn_tram_stops.geojson"
 LINES_META = _env.RAW / "delijn_lines.json"
 SHAPES = _env.RAW / "delijn_line_shapes.geojson"
+
 OUT = _env.WEB / "index.html"
+OFFLINE_OUT = _env.WEB / "index-offline.html"
+DATA_DIR = _env.WEB / "data"
+NETWORK_JSON = DATA_DIR / "network.json"
+LISTINGS_JSON = DATA_DIR / "listings.json"
 
 FIELDS = [
     "id", "title", "street", "postal_code", "locality", "place", "floor",
@@ -253,10 +271,19 @@ CSS = """
   @media (prefers-reduced-motion: reduce) {
     #sidebar, .apt-dot, .bullet { transition: none; }
   }
+  /* Shown only if data/*.json cannot be loaded. Without this a fetch failure
+     leaves an empty basemap with no explanation. */
+  #loaderr {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 1200; max-width: 30rem; padding: 1rem 1.25rem;
+    background: var(--blade); color: var(--paper);
+    font: 400 0.875rem/1.5 'Noto Sans', system-ui, sans-serif;
+  }
 </style>
 """
 
 BODY_HTML = """
+<div id="loaderr" hidden></div>
 <header id="blade">
   <button id="toggle-all" type="button"></button>
   <div id="bullets"></div>
@@ -297,14 +324,40 @@ BODY_HTML = """
 # folium renders this block above its own map constructor, so the code waits for
 # window load -- by then the map variable exists as a global.
 JS = """
-window.addEventListener('load', function () {
-  var map = {{MAP}};
-  var APTS = {{APTS}};
-  var STOPS = {{STOPS}};
-  var LINES = {{LINES}};
-  var COLOURS = {{COLOURS}};
-  var NOISE = {{NOISE}};
-  var SHAPES = {{SHAPES}};
+/* The data arrives either baked into the page (--inline) or fetched from
+   data/*.json; the loader at the bottom decides which. Either way init() is
+   handed the same two objects, so nothing below this line knows the
+   difference. */
+function init(map, network, listings) {
+  var APTS = listings.apts;
+  var STOPS = network.stops;
+  var COLOURS = network.colours;
+  var NOISE = network.noise;
+
+  /* '0'-'9' is 48-57; the only non-numbered lines are A3 and A9. */
+  function numbered(x) { var c = x.charCodeAt(0); return c >= 48 && c <= 57; }
+
+  /* LINES and SHAPES are narrowed here rather than shipped ready-made. The
+     bullet bar and the drawn routes have always covered the lines that
+     currently have an apartment on them, not the whole network -- but that
+     makes them a function of the listings, which is exactly what network.json
+     must not be. So network.json carries every line the network has and this
+     narrows it to today's. Sort order matches sort_lines() in 04: numbered
+     lines first, then by length, then lexicographically. */
+  var LINES = Object.keys(APTS.reduce(function (seen, a) {
+    a.lines.forEach(function (l) { seen[l] = 1; });
+    return seen;
+  }, {})).sort(function (a, b) {
+    var na = numbered(a), nb = numbered(b);
+    if (na !== nb) { return na ? -1 : 1; }
+    if (a.length !== b.length) { return a.length - b.length; }
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
+
+  var SHAPES = {};
+  LINES.forEach(function (l) {
+    if (network.shapes[l]) { SHAPES[l] = network.shapes[l]; }
+  });
 
   map.invalidateSize();
 
@@ -644,11 +697,47 @@ window.addEventListener('load', function () {
   });
 
   render();
+}
+
+window.addEventListener('load', function () {
+  var map = {{MAP}};
+  var INLINE = {{INLINE}};
+
+  if (INLINE) { init(map, INLINE.network, INLINE.listings); return; }
+
+  /* Relative to the document, so the page does not care where it is mounted.
+     no-cache because listings.json is refreshed daily and a cached copy is a
+     silently stale dashboard. Under file:// fetch() of a relative path is
+     blocked outright -- that is what --inline is for. */
+  Promise.all(['data/network.json', 'data/listings.json'].map(function (url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) { throw new Error(url + ' -> HTTP ' + r.status); }
+      return r.json();
+    });
+  })).then(function (d) {
+    init(map, d[0], d[1]);
+  }).catch(function (err) {
+    var box = document.getElementById('loaderr');
+    box.textContent = 'Could not load the map data — ' + err.message;
+    box.hidden = false;
+    if (window.location.protocol === 'file:') {
+      box.textContent += '. Opened from a file:// path; serve the directory '
+        + 'over HTTP, or rebuild with 05_build_map.py --inline.';
+    }
+  });
 });
 """
 
 
-def main():
+def write_json(path, payload, indent):
+    """Write JSON with a trailing newline, so the files stay diff-friendly."""
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=indent) + "\n",
+        encoding="utf-8",
+    )
+
+
+def main(inline=False):
     apartments = gpd.read_file(APARTMENTS).to_crs(4326)
     stops = gpd.read_file(STOPS).to_crs(4326)
     osm_lines = json.loads(LINES_META.read_text(encoding="utf-8"))
@@ -682,18 +771,24 @@ def main():
         for _, row in stops.iterrows()
     ]
 
-    all_lines = sorted(
+    # Lines that have an apartment on them today. Only used for the summary
+    # printed below -- the page derives the same set in JS, from listings.json.
+    listed_lines = sorted(
         {ln for r in apt_records for ln in r["lines"]},
         key=lambda r: (not r[:1].isdigit(), len(r), r),
     )
+
+    # Every line the network has, whether or not anything is for rent on it.
+    # This is the difference that makes network.json hold still between daily
+    # refreshes: filtering to the listed lines here would make the "constant"
+    # file a function of the listings.
+    network_lines = {ln for r in stop_records for ln in r["lines"]}
 
     # Route geometry from 07_fetch_line_shapes.py, as [lat, lon] paths per line
     shapes = {}
     if SHAPES.exists():
         for feature in json.loads(SHAPES.read_text(encoding="utf-8"))["features"]:
             line = feature["properties"]["line"]
-            if line not in all_lines:
-                continue
             geom = feature["geometry"]
             parts = (
                 geom["coordinates"]
@@ -703,6 +798,7 @@ def main():
             shapes[line] = [
                 [[round(lat, 6), round(lon, 6)] for lon, lat in part] for part in parts
             ]
+        network_lines |= set(shapes)
         print("route geometry for {} lines".format(len(shapes)))
     else:
         print("no route geometry ({} missing) -- run 07_fetch_line_shapes.py".format(
@@ -712,7 +808,7 @@ def main():
     # Line colours: the curated table first, the line's own OSM `colour` tag as
     # fallback, then a neutral so a new line is never invisible.
     colours, fallbacks = {}, []
-    for line in all_lines:
+    for line in sorted(network_lines):
         colour = _env.LINE_COLOURS.get(line)
         if not colour:
             colour = (osm_lines.get(line) or {}).get("colour")
@@ -720,8 +816,9 @@ def main():
                 fallbacks.append(line)
         colours[line] = colour or "#6A7784"
 
-    # Noise overlay, if 06_fetch_noise_map.py has been run. The bounds are
-    # inlined rather than fetched so the page also works from file://.
+    # Noise overlay, if 06_fetch_noise_map.py has been run. `png` stays a bare
+    # filename: it is resolved against the document, not against network.json,
+    # so it keeps working from data/ one level down.
     noise = None
     if NOISE_BOUNDS.exists():
         meta = json.loads(NOISE_BOUNDS.read_text(encoding="utf-8"))
@@ -738,6 +835,14 @@ def main():
     bounds = apartments.total_bounds  # minx, miny, maxx, maxy
     m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]], padding=(40, 40))
 
+    network = {
+        "stops": stop_records,
+        "colours": colours,
+        "noise": noise,
+        "shapes": shapes,
+    }
+    listings = {"apts": apt_records}
+
     root = m.get_root()
     # plain substitution, not %-formatting -- the CSS is full of literal '%'
     root.header.add_child(folium.Element(CSS.replace("{{MAP}}", m.get_name())))
@@ -747,24 +852,46 @@ def main():
     js = JS
     for token, value in [
         ("{{MAP}}", m.get_name()),
-        ("{{APTS}}", json.dumps(apt_records, ensure_ascii=False)),
-        ("{{STOPS}}", json.dumps(stop_records, ensure_ascii=False)),
-        ("{{LINES}}", json.dumps(all_lines)),
-        ("{{COLOURS}}", json.dumps(colours)),
-        ("{{NOISE}}", json.dumps(noise)),
-        ("{{SHAPES}}", json.dumps(shapes)),
+        ("{{INLINE}}", json.dumps(
+            {"network": network, "listings": listings} if inline else None,
+            ensure_ascii=False,
+        )),
     ]:
         js = js.replace(token, value)
     root.script.add_child(folium.Element(js))
 
-    m.save(str(OUT))
+    out = OFFLINE_OUT if inline else OUT
+    m.save(str(out))
+    if not inline:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        # network.json compact: it is machine-only, rarely rewritten, and mostly
+        # route coordinates that one-per-line indentation would inflate badly.
+        # listings.json indented: it is committed daily, so diffs are read.
+        write_json(NETWORK_JSON, network, indent=None)
+        write_json(LISTINGS_JSON, listings, indent=1)
+
     print("{} apartments, {} stops".format(len(apt_records), len(stop_records)))
-    print("lines: " + ", ".join("{} {}".format(l, colours[l]) for l in all_lines))
+    print("lines: " + ", ".join("{} {}".format(l, colours[l]) for l in listed_lines))
     if fallbacks:
         print("OSM colour fallback used for: " + ", ".join(fallbacks))
-    print("-> {}".format(OUT))
+    print("-> {}".format(out))
+    if not inline:
+        print("-> {}".format(NETWORK_JSON))
+        print("-> {}".format(LISTINGS_JSON))
     return 0
 
 
+def cli():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument(
+        "--inline",
+        action="store_true",
+        help="bake the data into a self-contained {} for file:// use".format(
+            OFFLINE_OUT.name
+        ),
+    )
+    return main(**vars(ap.parse_args()))
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(cli())

@@ -20,7 +20,9 @@ tools/antwerp-rentals/
   scripts/          the pipeline, numbered in run order
 
 antwerp-rentals/    <- the published page; `_env.WEB` points here
-  index.html
+  index.html            the shell: chrome, CSS, JS, no data
+  data/network.json     stops, colours, routes, noise bounds
+  data/listings.json    the apartments -- the only file a refresh rewrites
   noise_lden_2021.png, noise_bounds.json
 ```
 
@@ -37,6 +39,22 @@ C:/anaconda/envs/geospatial/python.exe tools/antwerp-rentals/scripts/run_all.py
 Or a single step, e.g. `scripts/02_buffer_stops.py`. `run_all.py --from 4`
 resumes partway. `03_fetch_immoweb.py --from-cache` rebuilds the listing
 GeoJSON from the saved API pages without re-querying Immoweb.
+
+### Looking at the result
+
+The page fetches its data, and `fetch()` of a relative path is blocked under
+`file://`, so opening `index.html` off disk shows a "could not load" panel
+rather than a map. Serve the repo root instead:
+
+```
+python -m http.server 8000        # from the repo root, then
+                                  # http://localhost:8000/antwerp-rentals/
+```
+
+For a copy that does work off disk — on a plane, or to mail to someone — build
+`05_build_map.py --inline`, which bakes the data into `index-offline.html`.
+That file is gitignored on purpose: an inlined page ignores `listings.json`, so
+a published one would sit frozen at its snapshot and still look healthy.
 
 ### PROJ and the PostGIS conflict
 
@@ -57,7 +75,7 @@ pyproj / geopandas / rasterio import.
 | `03_fetch_immoweb.py` | Rental listings as points | `raw/immoweb_rentals.geojson`, `raw/immoweb_pages.json` |
 | `04_filter_listings.py` | Keeps listings inside a buffer, tags them with reachable lines | `processed/apartments_near_tram.geojson` |
 | `06_fetch_noise_map.py` | Flemish road-noise rasters, composited and reprojected | `raw/noise_lden_2021_31370.tif`, `processed/..._3857.tif`, `antwerp-rentals/noise_lden_2021.png` |
-| `05_build_map.py` | The web map | `antwerp-rentals/index.html` |
+| `05_build_map.py` | The web map | `antwerp-rentals/index.html`, `antwerp-rentals/data/network.json`, `antwerp-rentals/data/listings.json` |
 
 Current run: 310 stops on 12 lines → 148 listings matching the attribute
 filters → **109 within 800 m of a stop**, €450–€1,100, median €995.

@@ -18,8 +18,8 @@ STEPS = [
     ("02_buffer_stops.py", "800 m buffers -> data/processed"),
     ("03_fetch_immoweb.py", "Immoweb rentals -> data/raw"),
     ("04_filter_listings.py", "spatial filter + line tagging -> data/processed"),
-    ("06_fetch_noise_map.py", "Flemish noise map -> data/raw, reprojected -> web"),
-    ("05_build_map.py", "folium map -> web/index.html"),
+    ("06_fetch_noise_map.py", "Flemish noise map -> data/raw, reprojected -> antwerp-rentals"),
+    ("05_build_map.py", "page shell + data -> antwerp-rentals/"),
 ]
 
 
@@ -38,7 +38,8 @@ def main():
         if rc != 0:
             print("\n! {} exited {}".format(script, rc), file=sys.stderr)
             return rc
-    print("\nDone. Open web/index.html")
+    print("\nDone. Serve the repo root and open /antwerp-rentals/,")
+    print("or rebuild with 05_build_map.py --inline to open it from disk.")
     return 0
 
 
