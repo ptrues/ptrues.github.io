@@ -11,10 +11,10 @@ tools/antwerp-rentals/data/raw/immoweb_pages*.json
 
 # Noise-raster intermediates (5.4 MB). Only 06_fetch_noise_map.py needs them,
 # and it is not part of the scheduled refresh; the served PNG it produces
-# (projects/antwerp-rentals/noise_lden_2021.png) is committed instead.
+# (antwerp-rentals/noise_lden_2021.png) is committed instead.
 tools/antwerp-rentals/data/**/*.tif
 
 # Local convenience build from 05_build_map.py --inline: the whole snapshot
 # baked into one file for file:// use. Never publish it -- an inlined page
 # ignores listings.json, so a deployed copy would sit frozen and look fine.
-projects/antwerp-rentals/index-offline.html
+antwerp-rentals/index-offline.html

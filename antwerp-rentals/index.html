@@ -1,82 +1,9 @@
-r"""Render the filtered listings to a folium map.
-
-Reads  data/processed/apartments_near_tram.geojson
-       data/raw/delijn_tram_stops.geojson
-       data/raw/delijn_lines.json
-Writes antwerp-rentals/index.html        the shell: chrome, CSS, JS, no data
-       antwerp-rentals/data/network.json  stops, colours, routes, noise bounds
-       antwerp-rentals/data/listings.json the apartments
-
-The split is what makes a refresh cheap: network.json changes only when
-01/07/02/06 are re-run, so a daily refresh rewrites listings.json alone and the
-247 KB shell is never regenerated. The page fetches both at load.
-
-`--inline` writes a single self-contained page to index-offline.html instead,
-with the data baked back in, because fetch() of a relative path is blocked
-under file://. It is deliberately a different filename: an inlined page
-committed over index.html would ignore listings.json and freeze the dashboard
-at that snapshot without any visible error.
-
-folium supplies the Leaflet scaffold and the OSM Standard basemap; the marker
-layer, the per-line filter and the detail sidebar are added as custom CSS/JS
-injected into the same document.
-
-Design notes
-------------
-The page is a plate, not a dashboard: a sidebar carrying every word and every
-control, and a framed map beside it. It tells one story -- two beds under
-EUR 1100, walkable to a tram that reaches her work, on a quiet street -- so
-there are no summary figures, no charts and no listings table.
-
-The central move is that road noise is the *ground* rather than an overlay. The
-city is drawn dark and quiet and the traffic corridors glow through it, which is
-what makes the question legible at a glance: put your dot in the dark, near a
-line. Getting there needs the raster inverted before it is recoloured, because
-the Flemish Lden palette runs pale-yellow (quiet) to dark-red (loud) and so its
-luminance runs backwards to loudness; the CSS block explains that at length.
-
-Three layers, three registers, and nothing else carries colour: a warm field
-(noise), cool line work (the network, one colour, its real De Lijn colour only
-on hover), and the only white marks on the page (the apartments). Price is not
-encoded at all -- under EUR 1100 is a precondition, not a variable, so every dot
-on the map has already passed it and position is the only thing to judge.
-
-Lines 1, 4, 7 and 10 are selected by default: the ones that reach her work.
-Numbers are set in Source Code Pro and words in Noto Sans, matching the rest of
-prtruesdell.com.
-"""
-from __future__ import annotations
-
-import argparse
-import json
-
-import _env  # noqa: F401 - must precede pyproj/geopandas (PROJ path fix)
-import _publish
-
-import folium
-import geopandas as gpd
-
-APARTMENTS = _env.PROCESSED / "apartments_near_tram.geojson"
-STOPS = _env.RAW / "delijn_tram_stops.geojson"
-LINES_META = _env.RAW / "delijn_lines.json"
-SHAPES = _env.RAW / "delijn_line_shapes.geojson"
-
-OUT = _env.WEB / "index.html"
-OFFLINE_OUT = _env.WEB / "index-offline.html"
-DATA_DIR = _env.WEB / "data"
-NETWORK_JSON = DATA_DIR / "network.json"
-LISTINGS_JSON = DATA_DIR / "listings.json"
-
-FIELDS = [
-    "id", "title", "street", "postal_code", "locality", "place", "floor",
-    "bedrooms", "surface_m2", "rent_eur", "costs_eur", "total_eur", "eur_per_m2",
-    "agency", "updated", "image", "image_large", "photos", "url", "lines",
-    "nearest_stop", "nearest_stop_m", "stop_count", "stops",
-]
-
-NOISE_BOUNDS = _env.WEB / "noise_bounds.json"
-
-CSS = r"""
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
 <title>Rentals in Antwerp — two beds, near a tram, on a quiet street</title>
 <!-- Site favicon. Root-relative, not ../: this page has moved twice already
      (antwerp-rentals/ -> projects/antwerp-rentals/ -> antwerp-rentals/) and
@@ -92,7 +19,57 @@ CSS = r"""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6f5f493095df517ae1bdfff3d46f2ca0 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    <style>
   :root {
     --ground:  #0B131B;   /* the page, and the quiet city */
     --plate:   #101A24;   /* the map's own ground */
@@ -257,7 +234,7 @@ CSS = r"""
     position: relative; overflow: hidden;
     background: var(--plate); border: 1px solid var(--rule);
   }
-  #{{MAP}} {
+  #map_6f5f493095df517ae1bdfff3d46f2ca0 {
     position: absolute !important; inset: 0 !important;
     width: auto !important; height: auto !important; background: var(--plate);
   }
@@ -449,9 +426,7 @@ CSS = r"""
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
-"""
 
-BODY_HTML = r"""
 <aside id="rail">
   <h1>Rentals in Antwerp</h1>
   <p id="story">The landlord is ignoring our request to fix the oven. So I made
@@ -521,11 +496,13 @@ BODY_HTML = r"""
   </aside>
 </div>
 
-"""
-
-# folium renders this block above its own map constructor, so the code waits for
-# window load -- by then the map variable exists as a global.
-JS = r"""
+    
+            <div class="folium-map" id="map_6f5f493095df517ae1bdfff3d46f2ca0" ></div>
+        
+</body>
+<script>
+    
+    
 
 /* The lines that reach my wife's work. Everything else starts hidden -- that
    filter is the story, not a default someone forgot to change. */
@@ -1021,8 +998,8 @@ function showStatus(map, status) {
 }
 
 window.addEventListener('load', function () {
-  var map = {{MAP}};
-  var INLINE = {{INLINE}};
+  var map = map_6f5f493095df517ae1bdfff3d46f2ca0;
+  var INLINE = null;
 
   /* folium writes its map div straight into <body>. The plate needs it inside
      the framed cell instead, so it is re-parented here -- safe at this point
@@ -1064,220 +1041,24 @@ window.addEventListener('load', function () {
     .catch(function () { return null; })
     .then(function (status) { showStatus(map, status); });
 });
-"""
+    
+            var map_6f5f493095df517ae1bdfff3d46f2ca0 = L.map(
+                "map_6f5f493095df517ae1bdfff3d46f2ca0",
+                {
+                    center: [51.2066316506744, 4.432616798559643],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "zoomControl": true,
+}
 
+                }
+            );
 
-def write_json(path, payload, indent):
-    """Write JSON with a trailing newline, so the files stay diff-friendly."""
-    path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=indent) + "\n",
-        encoding="utf-8",
-    )
+            
 
-
-def write_data(network, listings):
-    """The two files under antwerp-rentals/data/ that a refresh rewrites."""
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    # network.json compact: it is machine-only, rarely rewritten, and mostly
-    # route coordinates that one-per-line indentation would inflate badly.
-    # listings.json indented: it is committed daily, so diffs are read.
-    write_json(NETWORK_JSON, network, indent=None)
-    write_json(LISTINGS_JSON, listings, indent=1)
-    print("-> {}".format(NETWORK_JSON))
-    print("-> {}".format(LISTINGS_JSON))
-
-
-def summarise(apt_records, stop_records, listed_lines, colours, fallbacks):
-    print("{} apartments, {} stops".format(len(apt_records), len(stop_records)))
-    print("lines: " + ", ".join("{} {}".format(l, colours[l]) for l in listed_lines))
-    if fallbacks:
-        print("OSM colour fallback used for: " + ", ".join(fallbacks))
-
-
-def main(inline=False, data_only=False):
-    apartments = gpd.read_file(APARTMENTS).to_crs(4326)
-    stops = gpd.read_file(STOPS).to_crs(4326)
-    osm_lines = json.loads(LINES_META.read_text(encoding="utf-8"))
-
-    apt_records = []
-    for _, row in apartments.iterrows():
-        rec = {}
-        for k in FIELDS:
-            if k not in row:
-                continue
-            v = row[k]
-            if v is None or (isinstance(v, float) and v != v):  # None / NaN
-                v = None
-            elif hasattr(v, "item"):  # numpy scalar -> python scalar
-                v = v.item()
-            elif not isinstance(v, (str, int, float, bool)):  # Timestamp etc.
-                v = str(v)
-            rec[k] = v
-        rec["lines"] = [s for s in str(row["lines"]).split(",") if s]
-        rec["lat"] = row.geometry.y
-        rec["lon"] = row.geometry.x
-        apt_records.append(rec)
-
-    stop_records = [
-        {
-            "name": row["name"],
-            "lines": [s for s in str(row["lines"]).split(",") if s],
-            "lat": row.geometry.y,
-            "lon": row.geometry.x,
-        }
-        for _, row in stops.iterrows()
-    ]
-
-    # Lines that have an apartment on them today. Only used for the summary
-    # printed below -- the page derives the same set in JS, from listings.json.
-    listed_lines = sorted(
-        {ln for r in apt_records for ln in r["lines"]},
-        key=lambda r: (not r[:1].isdigit(), len(r), r),
-    )
-
-    # Every line the network has, whether or not anything is for rent on it.
-    # This is the difference that makes network.json hold still between daily
-    # refreshes: filtering to the listed lines here would make the "constant"
-    # file a function of the listings.
-    network_lines = {ln for r in stop_records for ln in r["lines"]}
-
-    # Route geometry from 07_fetch_line_shapes.py, as [lat, lon] paths per line
-    shapes = {}
-    if SHAPES.exists():
-        for feature in json.loads(SHAPES.read_text(encoding="utf-8"))["features"]:
-            line = feature["properties"]["line"]
-            geom = feature["geometry"]
-            parts = (
-                geom["coordinates"]
-                if geom["type"] == "MultiLineString"
-                else [geom["coordinates"]]
-            )
-            shapes[line] = [
-                [[round(lat, 6), round(lon, 6)] for lon, lat in part] for part in parts
-            ]
-        network_lines |= set(shapes)
-        print("route geometry for {} lines".format(len(shapes)))
-    else:
-        print("no route geometry ({} missing) -- run 07_fetch_line_shapes.py".format(
-            SHAPES.name
-        ))
-
-    # Line colours: the curated table first, the line's own OSM `colour` tag as
-    # fallback, then a neutral so a new line is never invisible.
-    colours, fallbacks = {}, []
-    for line in sorted(network_lines):
-        colour = _env.LINE_COLOURS.get(line)
-        if not colour:
-            colour = (osm_lines.get(line) or {}).get("colour")
-            if colour:
-                fallbacks.append(line)
-        colours[line] = colour or "#6A7784"
-
-    # Noise overlay, if 06_fetch_noise_map.py has been run. `png` stays a bare
-    # filename: it is resolved against the document, not against network.json,
-    # so it keeps working from data/ one level down.
-    noise = None
-    if NOISE_BOUNDS.exists():
-        meta = json.loads(NOISE_BOUNDS.read_text(encoding="utf-8"))
-        if (_env.WEB / meta["png"]).exists():
-            noise = {"png": meta["png"], "bounds": meta["bounds"]}
-
-    network = {
-        "stops": stop_records,
-        "colours": colours,
-        "noise": noise,
-        "shapes": shapes,
-    }
-    listings = {"apts": apt_records}
-
-    if data_only:
-        # What the daily refresh runs. Re-rendering the shell would churn
-        # folium's random element ids into every bot commit, and would put the
-        # page's markup at the mercy of whichever folium CI resolved that
-        # morning -- for a file whose content had not changed. index.html is
-        # reviewed by hand; only the data moves on a schedule.
-        write_data(network, listings)
-        summarise(apt_records, stop_records, listed_lines, colours, fallbacks)
-        return 0
-
-    # tiles=None on purpose: the page carries three grounds (dark, OSM
-    # Standard, aerial) and swaps between them in JS, so folium must not add a
-    # fourth of its own underneath them.
-    #
-    # No fit_bounds either. The framing is computed in the browser from the
-    # listings that are actually showing -- a build-time extent is baked into
-    # the shell, and the shell is not re-rendered by the daily --data-only
-    # refresh, so it would slowly drift as listings come and go.
-    m = folium.Map(
-        location=[apartments.geometry.y.mean(), apartments.geometry.x.mean()],
-        zoom_start=12,
-        tiles=None,
-        control_scale=False,
-        zoomControl=True,
-    )
-
-    root = m.get_root()
-    # plain substitution, not %-formatting -- the CSS is full of literal '%'
-    css = CSS.replace("{{MAP}}", m.get_name())
-    head_tags, _, style = css.partition("<style>")
-
-    # The <title>, favicon and font links go in the header where they belong.
-    root.header.add_child(folium.Element(head_tags))
-
-    # The stylesheet does not. folium appends its own CDN stylesheets --
-    # leaflet.css, and Bootstrap 5 -- *after* anything added to the header, so
-    # a header stylesheet loses every specificity tie to them. Bootstrap's
-    # Reboot sets `body { background-color: #fff }`, which turned the dark
-    # ground white, and leaflet.css likewise beat the zoom-control styling.
-    # Putting it at the top of the body puts it last in document order, which
-    # is where it needs to be to win.
-    root.html.add_child(folium.Element("<style>" + style + BODY_HTML))
-    # token substitution, not %-formatting: the JS contains literal '%'
-    # (modulo, percent labels) that %-formatting would try to interpret
-    js = JS
-    for token, value in [
-        ("{{MAP}}", m.get_name()),
-        ("{{INLINE}}", json.dumps(
-            {
-                "network": network,
-                "listings": listings,
-                "status": _publish.read_status() or None,
-            } if inline else None,
-            ensure_ascii=False,
-        )),
-    ]:
-        js = js.replace(token, value)
-    root.script.add_child(folium.Element(js))
-
-    out = OFFLINE_OUT if inline else OUT
-    m.save(str(out))
-    summarise(apt_records, stop_records, listed_lines, colours, fallbacks)
-    print("-> {}".format(out))
-    if not inline:
-        write_data(network, listings)
-    return 0
-
-
-def cli():
-    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    # Mutually exclusive: --inline bakes the data in and writes no data/ files,
-    # --data-only writes nothing but them.
-    mode = ap.add_mutually_exclusive_group()
-    mode.add_argument(
-        "--inline",
-        action="store_true",
-        help="bake the data into a self-contained {} for file:// use".format(
-            OFFLINE_OUT.name
-        ),
-    )
-    mode.add_argument(
-        "--data-only",
-        action="store_true",
-        help="rewrite data/network.json and data/listings.json without "
-             "re-rendering {} -- what the scheduled refresh runs".format(OUT.name),
-    )
-    return main(**vars(ap.parse_args()))
-
-
-if __name__ == "__main__":
-    raise SystemExit(cli())
+        
+</script>
+</html>

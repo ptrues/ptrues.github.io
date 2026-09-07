@@ -4,7 +4,7 @@ A phased plan for turning the current build-once map into something that
 refreshes itself and tracks the market over time.
 
 Each phase stands alone, ships something useful, and can be reverted without
-touching the ones before it. `projects/antwerp-rentals/index.html` keeps working
+touching the ones before it. `antwerp-rentals/index.html` keeps working
 throughout.
 
 ## The premise
@@ -44,7 +44,7 @@ The project used to sit outside version control in `C:/projects/antwerp-real-est
 Phase 3 needs it in a repo with Pages, so it now lives in `ptrues/ptrues.github.io`:
 
 ```
-projects/antwerp-rentals/          the published page -> prtruesdell.com/projects/antwerp-rentals/
+antwerp-rentals/          the published page -> prtruesdell.com/antwerp-rentals/
 tools/antwerp-rentals/    the pipeline; pruned from the Pages artifact
 ```
 
@@ -83,7 +83,7 @@ still a mechanical change rather than a rewrite.
 
 **Do:**
 
-1. Split the emit into two files under `projects/antwerp-rentals/data/`:
+1. Split the emit into two files under `antwerp-rentals/data/`:
    - `network.json` — `STOPS`, `COLOURS`, `NOISE`, `SHAPES`, all widened to the
      whole network. Rewritten only when `01`/`07`/`02`/`06` are re-run.
    - `listings.json` — `APTS`. Rewritten by every refresh.
@@ -95,7 +95,7 @@ still a mechanical change rather than a rewrite.
    writing `index-offline.html` for `file://` use. (`fetch()` of a relative
    path fails under `file://`, so the split version needs a local server:
    `python -m http.server` from the repo root, then
-   <http://localhost:8000/projects/antwerp-rentals/>.)
+   <http://localhost:8000/antwerp-rentals/>.)
 
 **Validate:** `03_fetch_immoweb.py --from-cache` replays `immoweb_pages.json`
 without touching the network, so Phases 1, 2 and 4 can all be developed and
@@ -203,7 +203,7 @@ def publish(path, payload, floor=0.6, force=False):
    Add `--force` to override deliberately (a genuine market collapse, or a
    changed `--postcodes`).
 
-3. Emit `projects/antwerp-rentals/data/status.json` every run:
+3. Emit `antwerp-rentals/data/status.json` every run:
 
 ```json
 {
@@ -331,7 +331,7 @@ jobs:
         run: |
           git config user.name  "listings-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add projects/antwerp-rentals/data tools/antwerp-rentals/data
+          git add antwerp-rentals/data tools/antwerp-rentals/data
           git diff --staged --quiet || git commit -m "listings $(date -u +%F)"
           git push
 
@@ -357,7 +357,7 @@ steps duplicated is cheaper than the indirection until it actually drifts.
 1. Write `tools/antwerp-rentals/requirements.txt` — the pipeline currently
    assumes the local `geospatial` conda env and pins nothing. This is the bulk
    of the phase.
-2. Add `--data-only` to `05_build_map.py`, writing `projects/antwerp-rentals/data/*.json`
+2. Add `--data-only` to `05_build_map.py`, writing `antwerp-rentals/data/*.json`
    without re-rendering the shell.
 3. Add the refresh workflow above. Run it once with `workflow_dispatch` before
    trusting the cron.
@@ -489,7 +489,7 @@ JSONL produces clean git diffs. Compact to Parquet if it ever matters.
 **Do:**
 
 1. New step `08_update_history.py`: read `apartments_near_tram.geojson`, append
-   today's rows, emit `projects/antwerp-rentals/data/history.json` (pre-aggregated series
+   today's rows, emit `antwerp-rentals/data/history.json` (pre-aggregated series
    — do not ship the raw JSONL to the browser). The JSONL stays under `tools/`,
    which the artifact prune drops, so it never reaches the site.
 2. Add it to `run_all.py` and to the workflow, after `04`. The Phase 3 workflow
