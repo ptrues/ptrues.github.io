@@ -487,7 +487,7 @@ BODY_HTML = r"""
 <aside id="rail">
   <h1>Rentals in Antwerp</h1>
   <p id="story">Our landlord is ignoring our request to fix the oven, so I slapped together
-    this dashboard to find a new apartment:</p>
+    this daily rental tracker to find a new apartment:</p>
   <ul id="criteria">
     <li>under €1,100 per month</li>
     <li>on a convenient tram line</li>
