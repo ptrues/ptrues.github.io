@@ -188,15 +188,49 @@
   /* Set from the map: hovering a route lights its bullet, and vice versa. */
   .bullet.lit { transform: scale(1.1); }
   .bullet:not(.on).lit { color: var(--ink); border-color: var(--ash-2); }
-  #line-note { margin-top: 12px; font-size: 13px; color: var(--ash-2); line-height: 1.45; }
-  #line-note button {
-    border: 0; background: transparent; padding: 0; color: var(--ash);
-    font: inherit; cursor: pointer;
-    text-decoration: underline; text-underline-offset: 3px;
+  #line-actions { display: flex; gap: 8px; margin-top: 12px; }
+  #line-actions button {
+    border: 1px solid var(--rule); border-radius: 4px;
+    background: transparent; padding: 5px 9px; color: var(--ash);
+    font: inherit; font-size: 13px; cursor: pointer;
   }
-  #line-note button:hover { color: var(--ink); }
+  #line-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--ash-2); }
+  #line-actions button:disabled { opacity: .4; cursor: default; }
 
-  /* ---- layer switches --------------------------------------------------- */
+  /* ---- basemap and layer controls -------------------------------------- */
+  .basemap-options { display: flex; gap: 9px; }
+  .basemap-choice {
+    display: flex; flex: 1 1 0; min-width: 0; flex-direction: column;
+    align-items: center; gap: 6px; color: var(--ash-2);
+    font-size: 11px; line-height: 1.2; text-align: center; cursor: pointer;
+  }
+  .basemap-choice input {
+    position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;
+  }
+  .basemap-preview {
+    display: block; width: 58px; height: 58px; max-width: 100%;
+    border: 2px solid transparent; border-radius: 3px;
+    background-position: center; background-repeat: no-repeat;
+    box-shadow: 0 0 0 1px var(--rule);
+    transition: border-color .12s, box-shadow .12s;
+  }
+  .basemap-preview.dark {
+    background-image: url('https://a.basemaps.cartocdn.com/dark_all/15/16784/10938.png?key=cb1_285a_1_5e8cbaef4cdfb8b0ad088914');
+  }
+  .basemap-preview.osm {
+    background-image: url('https://tile.openstreetmap.org/15/16784/10938.png');
+  }
+  .basemap-preview.aerial {
+    background-image: url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/15/10938/16784');
+  }
+  .basemap-choice:hover .basemap-preview { box-shadow: 0 0 0 1px var(--ash-2); }
+  .basemap-choice input:checked + .basemap-preview {
+    border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent);
+  }
+  .basemap-choice input:focus-visible + .basemap-preview {
+    outline: 2px solid var(--ink); outline-offset: 3px;
+  }
+  .basemap-choice input:checked ~ .basemap-name { color: var(--ink); }
   .toggle {
     display: flex; align-items: center; gap: 9px; cursor: pointer;
     font-size: 14px; user-select: none; padding: 2px 0;
@@ -446,19 +480,40 @@
   <div class="sect">
     <h2>Tram lines</h2>
     <div id="bullets"></div>
-    <p id="line-note"></p>
+    <div id="line-actions">
+      <button id="select-all" type="button">Select all</button>
+      <button id="deselect-all" type="button">Deselect all</button>
+    </div>
   </div>
 
   <div class="sect">
-    <h2>Map</h2>
-    <label class="toggle"><input type="radio" name="base" value="dark" checked> Dark</label>
-    <label class="toggle"><input type="radio" name="base" value="streets"> Streets</label>
-    <label class="toggle"><input type="radio" name="base" value="aerial"> Aerial photography</label>
+    <h2>Basemap</h2>
+    <div class="basemap-options" role="radiogroup" aria-label="Basemap">
+      <label class="basemap-choice">
+        <input type="radio" name="base" value="dark" checked>
+        <span class="basemap-preview dark" aria-hidden="true"></span>
+        <span class="basemap-name">Dark</span>
+      </label>
+      <label class="basemap-choice">
+        <input type="radio" name="base" value="osm">
+        <span class="basemap-preview osm" aria-hidden="true"></span>
+        <span class="basemap-name">OpenStreetMap</span>
+      </label>
+      <label class="basemap-choice">
+        <input type="radio" name="base" value="aerial">
+        <span class="basemap-preview aerial" aria-hidden="true"></span>
+        <span class="basemap-name">Aerial</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>Layers</h2>
     <span id="noise-wrap" class="on">
-      <label class="toggle"><input type="checkbox" id="noise-on" checked> Road noise</label>
+      <label class="toggle"><input type="checkbox" id="noise-on" checked> Noise overlay</label>
       <span id="opacity">
         <input type="range" id="noise-opacity" min="10" max="100" step="5" value="72"
-               aria-label="Road noise opacity">
+               aria-label="Noise overlay opacity">
         <output for="noise-opacity" id="noise-pct">72%</output>
       </span>
     </span>
@@ -619,7 +674,7 @@ function init(map, network, listings) {
        default for that reason. It earns its place on labels: it names the small
        streets the dark ground leaves anonymous, which is exactly what you want
        once you are deciding between two actual addresses. */
-    streets: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    osm: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">'
                  + 'OpenStreetMap</a> contributors'
@@ -638,14 +693,14 @@ function init(map, network, listings) {
     ground = name;
     GROUNDS[name].addTo(map);
     GROUNDS[name].bringToBack();
-    if (name === 'streets') { map.removeLayer(labelLayer); }
+    if (name === 'osm') { map.removeLayer(labelLayer); }
     else if (!map.hasLayer(labelLayer)) { labelLayer.addTo(map); }
     /* The amber-glow treatment is built for a dark ground: screen-blending it
        over a pale one would wash the whole map out. Over OSM Standard the
        raster is shown as published instead -- its own Lden palette, normally
        blended, which is how a noise map is usually read over a street map. */
     var np = map.getPane('noise');
-    np.classList.toggle('plain', name === 'streets');
+    np.classList.toggle('plain', name === 'osm');
   }
   setGround('dark');
 
@@ -654,7 +709,7 @@ function init(map, network, listings) {
     function (r) { r.onchange = function () { if (r.checked) { setGround(r.value); } }; }
   );
 
-  /* ---- noise: the ground, not an overlay -------------------------------- */
+  /* ---- noise overlay ---------------------------------------------------- */
   var noiseWrap = document.getElementById('noise-wrap');
   if (!NOISE) {
     noiseWrap.style.display = 'none';
@@ -795,12 +850,14 @@ function init(map, network, listings) {
     bulletBox.appendChild(b);
   });
 
-  var note = document.getElementById('line-note');
-  var resetBtn = document.createElement('button');
-  resetBtn.type = 'button';
-  resetBtn.textContent = 'Back to her lines';
-  resetBtn.onclick = function () {
-    selected = new Set(HOME_LINES.filter(function (l) { return known[l]; }));
+  var selectAllBtn = document.getElementById('select-all');
+  var deselectAllBtn = document.getElementById('deselect-all');
+  selectAllBtn.onclick = function () {
+    selected = new Set(LINES);
+    render(); frame();
+  };
+  deselectAllBtn.onclick = function () {
+    selected = new Set();
     render(); frame();
   };
 
@@ -830,17 +887,8 @@ function init(map, network, listings) {
       b.style.color = on ? ink(c) : '';
     });
 
-    /* Nothing is said while the default four lines are showing -- that is the
-       story, and it does not need narrating. The note appears only once you
-       have changed the selection, to offer the way back. */
-    var isHome = selected.size === HOME_LINES.length
-      && HOME_LINES.every(function (l) { return selected.has(l); });
-    note.textContent = '';
-    if (!isHome) {
-      note.appendChild(document.createTextNode(
-        selected.size === 0 ? 'No lines selected. ' : ''));
-      note.appendChild(resetBtn);
-    }
+    selectAllBtn.disabled = selected.size === LINES.length;
+    deselectAllBtn.disabled = selected.size === 0;
 
     if (open && !onLine(open.lines)) { closeApartment(); }
   }
