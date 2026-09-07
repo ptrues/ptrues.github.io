@@ -41,7 +41,7 @@
 .about-me h2 {
   font-family: "Source Code Pro", monospace;
   font-size: clamp(16px, 1.8vw, 20px);
-  color: #0a0a0a;
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -62,7 +62,7 @@
 .work-experience-heading {
   font-family: "Source Code Pro", monospace;
   font-size: clamp(16px, 1.8vw, 20px);
-  color: #0a0a0a;
+  color: var(--ink);
   text-decoration: none;
   text-align: left; /* Ensure left alignment */
   font-weight: 400; /* Not bolded */

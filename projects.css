@@ -106,7 +106,7 @@
 /* Specific link styling for code-like appearance */
 .code-link {
   font-family: "Source Code Pro", monospace;
-  color: #0a0a0a;
+  color: var(--ink);
   text-decoration: none;
 }
 .code-link:hover { text-decoration: underline; }
