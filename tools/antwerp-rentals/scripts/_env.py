@@ -51,7 +51,17 @@ def _fix_proj() -> None:
             os.environ["PROJ_LIB"] = str(proj_dir)
             break
     else:
-        print("! warning: no proj.db found under", prefix, file=sys.stderr)
+        # No proj.db under the interpreter means a pip environment, where
+        # pyproj carries its own copy inside the wheel and wants no help --
+        # which is the case in CI. Only worth saying something when PROJ has
+        # already been pointed somewhere by an outside party and we have found
+        # nothing to point it back at: the PostGIS case this module exists for.
+        if os.environ.get("PROJ_LIB") or os.environ.get("PROJ_DATA"):
+            print(
+                "! warning: PROJ_LIB/PROJ_DATA is set externally and there is "
+                "no proj.db under {} to override it with".format(prefix),
+                file=sys.stderr,
+            )
 
     for gdal_dir in (prefix / "Library" / "share" / "gdal", prefix / "share" / "gdal"):
         if gdal_dir.is_dir():

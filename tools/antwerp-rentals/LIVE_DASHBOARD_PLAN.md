@@ -277,7 +277,7 @@ unknown age, then plain staleness.
 
 ---
 
-## Phase 3 — Schedule it
+## Phase 3 — Schedule it *(done)*
 
 **Where it runs:** GitHub Actions on a daily cron in `ptrues/ptrues.github.io`,
 committing the refreshed JSON to `main`. No server, no hosting bill, and the
@@ -378,14 +378,81 @@ your machine and CI is a worse problem than 40 seconds of install time, and the
 `geospatial` env is how you debug locally.
 
 **On the shared history:** this repo is otherwise hand-edited, so a daily bot
-commit will dominate `git log`. `git log --author=listings-bot --invert-grep`
-keeps the human history readable.
+commit will dominate `git log`. To read the human history:
+
+```
+git log --perl-regexp --author='^(?!listings-bot)'
+```
+
+(`--invert-grep` inverts `--grep`, not `--author`, so the form first written
+here did nothing.)
 
 **Done when:** the workflow runs green on `workflow_dispatch`, commits a changed
 `listings.json`, **and the deployed page reflects it** — check the live URL, not
 the repo, since the whole point of this phase is that those two can diverge.
 
 *Effort: ~half a day, most of it pinning dependencies.*
+
+### What actually happened
+
+**The concurrency note was right about the danger and wrong about the fix.**
+Setting `cancel-in-progress: false` on the refresh protects nothing: GitHub
+reads that setting from the run that *arrives*, not from the one already in
+flight. `deploy.yml` at `true` would therefore have cancelled a refresh
+mid-run -- possibly in the window between its `git push` and its
+`deploy-pages`, which is precisely the commit-on-`main`-that-nothing-publishes
+this phase exists to prevent. Both workflows are now `false`, so a hand-edited
+push queues behind a refresh rather than killing it. The cost is a deploy
+waiting ~2 minutes; the alternative was the failure mode the phase is about.
+
+**A failed refresh has to deploy too.** As written, `03` exiting non-zero would
+stop the job -- and with it the commit and the deploy. But `03`'s failure path
+exists to *write* `status.json`, and that file is worth nothing sitting in a
+runner's filesystem: the banner is computed from the deployed copy. Phase 2's
+whole apparatus would have been silent in exactly the case it was built for.
+The pipeline step is now `continue-on-error: true` and the job is failed by a
+last step after the deploy, so the run still goes red in the Actions tab and
+still notifies -- but the page gets to say what went wrong first.
+
+**`_env.py`'s PROJ fix is a no-op off this machine, but it was not a silent
+one.** It warned `no proj.db found under <prefix>` whenever it could not find
+one, which on a pip environment -- CI -- is the normal, correct state: pyproj
+wheels carry their own PROJ data. That is a scary-looking warning on every step
+of every scheduled run, i.e. training to ignore warnings, in a job whose entire
+design is *make failure visible*. It now warns only when `PROJ_LIB` /
+`PROJ_DATA` is set by someone else and there is nothing to override it with --
+the PostGIS case it was written for.
+
+**`--data-only` earns its keep beyond speed.** A full `05` rewrites
+`index.html`, and folium stamps fresh random element ids into it on every
+render: a 9-line diff in the shell, every morning, for a file whose content did
+not change. Worse, it would put the page's markup at the mercy of whichever
+folium the CI resolver picked that day. `index.html` stays hand-reviewed; only
+`data/` moves on a schedule. Verified: `--data-only` leaves `index.html`
+byte-identical and writes `network.json` / `listings.json` byte-identical to a
+full run.
+
+**`requirements.txt` pins the direct dependencies exactly** -- the versions the
+`geospatial` conda env has, each checked to have a `manylinux` `cp312` wheel on
+PyPI, so the job needs no `apt-get` and no system GDAL. Only `folium` publishes
+as an sdist, and it is pure Python. Transitive dependencies are left to the
+resolver; a true lockfile would have to be generated on Linux, which is not
+where this is developed. `rasterio` and `pillow` are deliberately absent: `06`
+is not scheduled.
+
+**Not done, on purpose:** no card on `projects/index.html` -- the page stays
+unlisted, reachable at its URL but not advertised. And no
+`08_update_history.py` step in the workflow: that script is Phase 4's and does
+not exist yet. Adding it is one line, in the `Refresh the data` step, between
+`04` and `05`.
+
+**Still to verify on the real thing:** everything above is local. The workflow
+has never run. It cannot be trusted until `workflow_dispatch` goes green once
+and the *deployed* page -- not the repo -- shows the new data. Two things are
+most likely to bite first: Immoweb answering a GitHub-hosted runner's IP
+differently from a Belgian domestic one (which `03` would correctly refuse to
+publish, going red), and the first `pip install` resolving a transitive
+dependency the local conda env never had to.
 
 ---
 
@@ -472,7 +539,12 @@ static snapshot will keep degrading visibly.
 
 ## Refresh order, today
 
-Until Phase 3 lands, refreshing by hand means `03` → `04` → `05`. Note that
+Phase 3 landed, so the usual answer is: nothing. The refresh runs itself at
+04:00 UTC, and `workflow_dispatch` on **Refresh Antwerp rental listings** runs
+it on demand.
+
+By hand it is still `03` → `04` → `05`, with `--data-only` on `05` unless the
+shell itself changed. Note that
 `run_all.py --from N` counts positions in `STEPS`, not filename prefixes — the
 run order is `01, 07, 02, 03, 04, 06, 05`, so `03` is position **4**:
 

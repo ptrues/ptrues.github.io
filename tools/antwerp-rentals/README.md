@@ -18,6 +18,7 @@ tools/antwerp-rentals/
   data/processed/   derived: buffers, spatial join, reprojected raster
   data/history/     append-only snapshots (see LIVE_DASHBOARD_PLAN.md)
   scripts/          the pipeline, numbered in run order
+  requirements.txt  what the scheduled refresh installs (not this machine)
 
 antwerp-rentals/    <- the published page; `_env.WEB` points here
   index.html            the shell: chrome, CSS, JS, no data
@@ -29,7 +30,33 @@ antwerp-rentals/    <- the published page; `_env.WEB` points here
 
 `scripts/_env.py` is the only place that knows either path.
 
-## Running it
+## It refreshes itself
+
+`.github/workflows/refresh-listings.yml` re-runs `03` → `04` → `05 --data-only`
+every day at 04:00 UTC, commits whatever changed, and deploys Pages **in the
+same run**. That last part is not belt-and-braces: a push made with the default
+`GITHUB_TOKEN` does not trigger other workflows, so `deploy.yml` never sees the
+bot's commit. Relying on it would leave the data on `main` and yesterday's data
+on the site — the one form of staleness the banner cannot see, because the
+banner reads the *deployed* `status.json`.
+
+Both workflows sit in the `pages` concurrency group with `cancel-in-progress:
+false` on **both** sides. GitHub reads that flag from the arriving run, so
+leaving `deploy.yml` at `true` would let a hand-edited push cancel a refresh
+between its push and its deploy.
+
+The pipeline step runs `continue-on-error` and the job is failed by a last step
+*after* the deploy. A failed refresh still has to publish its `status.json`;
+going red before that would silence the report.
+
+Run it on demand from the Actions tab (**Refresh Antwerp rental listings** →
+Run workflow). Bot commits are `listings-bot`; to read the human history:
+
+```
+git log --perl-regexp --author='^(?!listings-bot)'
+```
+
+## Running it by hand
 
 Everything runs on the `geospatial` conda env:
 
@@ -40,6 +67,17 @@ C:/anaconda/envs/geospatial/python.exe tools/antwerp-rentals/scripts/run_all.py
 Or a single step, e.g. `scripts/02_buffer_stops.py`. `run_all.py --from 4`
 resumes partway. `03_fetch_immoweb.py --from-cache` rebuilds the listing
 GeoJSON from the saved API pages without re-querying Immoweb.
+
+`05_build_map.py --data-only` rewrites `data/network.json` and
+`data/listings.json` and leaves `index.html` alone — what the scheduled refresh
+runs. Re-rendering the shell would put a fresh set of folium's random element
+ids in every daily commit, for a file whose content had not changed; the shell
+is hand-reviewed and only the data moves on a schedule.
+
+`requirements.txt` is CI's, not this machine's: it pins what `03`, `04` and
+`05 --data-only` need, at the versions the conda env is verified against. `06`'s
+`rasterio` and `pillow` are not in it — the noise survey is republished every
+five years, and its PNG is committed.
 
 ### Refusing to publish
 
@@ -203,4 +241,6 @@ tag on each line's OSM route relation (used for 1, 11, A3, A9).
   (154 results → 148 unique).
 - The noise overlay is two datasets composited, not one survey. Coverage is
   blanket inside the City of Antwerp and corridor-only outside it; see above.
-- The listing snapshot is static. Re-run `03`–`05` to refresh.
+- Listings are a daily snapshot, not live: the refresh runs once at 04:00
+  UTC, so a flat let at noon stays on the map until the next morning. The
+  page says which morning it is from.

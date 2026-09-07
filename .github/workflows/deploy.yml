@@ -10,10 +10,16 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment, cancelling in-progress runs
+# One deployment at a time. NOT cancel-in-progress, even though a superseded
+# deploy is normally waste: refresh-listings.yml shares this group and pushes
+# commits, and cancel-in-progress is read from the run that *arrives*, not the
+# one already going. Left true, a hand-edited push here would cancel a refresh
+# mid-flight -- possibly after it had pushed its data commit and before it had
+# deployed it, which is a commit on main that nothing ever publishes. Queue
+# behind it instead; it takes about two minutes.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:

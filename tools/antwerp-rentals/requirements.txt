@@ -1,0 +1,37 @@
+# Dependencies of the scheduled refresh (.github/workflows/refresh-listings.yml):
+# steps 03, 04 and 05 --data-only, and nothing else.
+#
+# Versions are the ones the pipeline is developed and verified against in the
+# local `geospatial` conda env. Pinned exactly rather than floated, because this
+# job runs unattended at 06:00 and a resolver quietly picking a new pandas is a
+# breakage nobody is awake to see. Bump deliberately, and re-run 03-05 locally
+# first. Direct dependencies only; transitive ones (branca, jinja2, certifi,
+# packaging...) are left to the resolver, which is the usual trade -- a full
+# lockfile would need regenerating on Linux, which is not where this is written.
+#
+# Deliberately absent:
+#   rasterio, pillow  are 06's, for the noise raster. 06 is not scheduled: the
+#                     PNG it produces is committed, and Flanders publishes that
+#                     survey every five years.
+#   01 and 07 (De Lijn / Overpass) need only requests, listed below. Also not
+#                     scheduled -- the tram network changes a few times a
+#                     decade, and their output is committed as a constant.
+
+requests==2.34.2         # 03, and 01/07 when run by hand
+
+# 04's spatial join, and 05's read of it. geopandas itself is pure Python; the
+# compiled work lives in shapely, pyproj and pyogrio, each of which ships a
+# manylinux cp312 wheel with GDAL and PROJ bundled in. That is what keeps the
+# workflow free of apt-get and of a system GDAL whose version would then have to
+# be pinned too.
+geopandas==1.1.0
+pandas==3.0.5
+numpy==2.5.2
+shapely==2.1.2
+pyproj==3.7.2
+pyogrio==0.12.1
+
+# 05 imports folium at module scope even under --data-only, which renders no
+# map. Published as an sdist rather than a wheel; it is pure Python, so pip
+# builds it in about a second and no compiler is involved.
+folium==0.20.0

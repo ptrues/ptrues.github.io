@@ -1,0 +1,103 @@
+name: Refresh Antwerp rental listings
+
+on:
+  schedule:
+    - cron: "0 4 * * *"        # 06:00 Brussels in summer, 05:00 in winter
+  workflow_dispatch:
+
+# Same group as deploy.yml, so a refresh and a hand-edited push are serialised
+# rather than racing for the Pages deployment. Both sides set
+# cancel-in-progress: false; see the note in deploy.yml for why it has to be
+# both.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: write        # the refresh commits listings.json back to main
+  pages: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20    # a hung fetch must not sit on the pages group all day
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/antwerp-rentals/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r tools/antwerp-rentals/requirements.txt
+
+      # continue-on-error, and the job is failed at the very end instead. A
+      # failed refresh writes status.json saying so, and that file is worth
+      # nothing until it is deployed -- stopping here would leave the page
+      # unable to report the very failure it was built to report. So: run to an
+      # outcome, commit it, deploy it, and only then go red.
+      #
+      # If 03 fails, 04 and 05 do not run (the shell is -e), which is correct:
+      # listings.json keeps yesterday's data and status.json carries the error.
+      - name: Refresh the data
+        id: refresh
+        continue-on-error: true
+        run: |
+          python tools/antwerp-rentals/scripts/03_fetch_immoweb.py
+          python tools/antwerp-rentals/scripts/04_filter_listings.py
+          python tools/antwerp-rentals/scripts/05_build_map.py --data-only
+
+      - name: Commit the refreshed data
+        run: |
+          git config user.name  "listings-bot"
+          git config user.email "listings-bot@users.noreply.github.com"
+          git add antwerp-rentals/data tools/antwerp-rentals/data
+          if git diff --staged --quiet; then
+            echo "nothing changed"
+          else
+            git commit -m "listings $(date -u +%F)"
+            # Someone may have pushed while the fetch was running; rebase the
+            # one data commit onto whatever is there rather than failing.
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      # Deploy from this run. A push made with GITHUB_TOKEN does NOT trigger
+      # deploy.yml -- GitHub's loop protection, and it fails silently: the
+      # commit lands, no deployment runs, and the site keeps serving yesterday's
+      # listings.json. That is the one failure the staleness banner cannot see,
+      # because the banner is computed from the *deployed* status.json.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      # upload-pages-artifact has no exclude option and publishes `path` whole.
+      # Kept identical to deploy.yml on purpose; if the two ever drift, factor
+      # them into a workflow_call rather than patching one side.
+      - name: Prune build-time files from the artifact
+        run: rm -rf tools
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Last, so that everything above has already happened. The page is now
+      # honest about being stale; this is what makes the run red in the Actions
+      # tab and sends the notification.
+      - name: Report the refresh outcome
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo "::error::The refresh failed; status.json has been deployed with the reason."
+          exit 1

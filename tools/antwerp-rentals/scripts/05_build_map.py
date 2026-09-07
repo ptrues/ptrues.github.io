@@ -830,7 +830,26 @@ def write_json(path, payload, indent):
     )
 
 
-def main(inline=False):
+def write_data(network, listings):
+    """The two files under antwerp-rentals/data/ that a refresh rewrites."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    # network.json compact: it is machine-only, rarely rewritten, and mostly
+    # route coordinates that one-per-line indentation would inflate badly.
+    # listings.json indented: it is committed daily, so diffs are read.
+    write_json(NETWORK_JSON, network, indent=None)
+    write_json(LISTINGS_JSON, listings, indent=1)
+    print("-> {}".format(NETWORK_JSON))
+    print("-> {}".format(LISTINGS_JSON))
+
+
+def summarise(apt_records, stop_records, listed_lines, colours, fallbacks):
+    print("{} apartments, {} stops".format(len(apt_records), len(stop_records)))
+    print("lines: " + ", ".join("{} {}".format(l, colours[l]) for l in listed_lines))
+    if fallbacks:
+        print("OSM colour fallback used for: " + ", ".join(fallbacks))
+
+
+def main(inline=False, data_only=False):
     apartments = gpd.read_file(APARTMENTS).to_crs(4326)
     stops = gpd.read_file(STOPS).to_crs(4326)
     osm_lines = json.loads(LINES_META.read_text(encoding="utf-8"))
@@ -918,6 +937,24 @@ def main(inline=False):
         if (_env.WEB / meta["png"]).exists():
             noise = {"png": meta["png"], "bounds": meta["bounds"]}
 
+    network = {
+        "stops": stop_records,
+        "colours": colours,
+        "noise": noise,
+        "shapes": shapes,
+    }
+    listings = {"apts": apt_records}
+
+    if data_only:
+        # What the daily refresh runs. Re-rendering the shell would churn
+        # folium's random element ids into every bot commit, and would put the
+        # page's markup at the mercy of whichever folium CI resolved that
+        # morning -- for a file whose content had not changed. index.html is
+        # reviewed by hand; only the data moves on a schedule.
+        write_data(network, listings)
+        summarise(apt_records, stop_records, listed_lines, colours, fallbacks)
+        return 0
+
     m = folium.Map(
         location=[apartments.geometry.y.mean(), apartments.geometry.x.mean()],
         zoom_start=13,
@@ -927,14 +964,6 @@ def main(inline=False):
     )
     bounds = apartments.total_bounds  # minx, miny, maxx, maxy
     m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]], padding=(40, 40))
-
-    network = {
-        "stops": stop_records,
-        "colours": colours,
-        "noise": noise,
-        "shapes": shapes,
-    }
-    listings = {"apts": apt_records}
 
     root = m.get_root()
     # plain substitution, not %-formatting -- the CSS is full of literal '%'
@@ -959,33 +988,30 @@ def main(inline=False):
 
     out = OFFLINE_OUT if inline else OUT
     m.save(str(out))
-    if not inline:
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-        # network.json compact: it is machine-only, rarely rewritten, and mostly
-        # route coordinates that one-per-line indentation would inflate badly.
-        # listings.json indented: it is committed daily, so diffs are read.
-        write_json(NETWORK_JSON, network, indent=None)
-        write_json(LISTINGS_JSON, listings, indent=1)
-
-    print("{} apartments, {} stops".format(len(apt_records), len(stop_records)))
-    print("lines: " + ", ".join("{} {}".format(l, colours[l]) for l in listed_lines))
-    if fallbacks:
-        print("OSM colour fallback used for: " + ", ".join(fallbacks))
+    summarise(apt_records, stop_records, listed_lines, colours, fallbacks)
     print("-> {}".format(out))
     if not inline:
-        print("-> {}".format(NETWORK_JSON))
-        print("-> {}".format(LISTINGS_JSON))
+        write_data(network, listings)
     return 0
 
 
 def cli():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument(
+    # Mutually exclusive: --inline bakes the data in and writes no data/ files,
+    # --data-only writes nothing but them.
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument(
         "--inline",
         action="store_true",
         help="bake the data into a self-contained {} for file:// use".format(
             OFFLINE_OUT.name
         ),
+    )
+    mode.add_argument(
+        "--data-only",
+        action="store_true",
+        help="rewrite data/network.json and data/listings.json without "
+             "re-rendering {} -- what the scheduled refresh runs".format(OUT.name),
     )
     return main(**vars(ap.parse_args()))
 
