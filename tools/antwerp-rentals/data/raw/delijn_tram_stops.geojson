@@ -1,0 +1,5275 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3680815,
+     51.1769685
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119263427",
+    "name": "Aartselaarstraat",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3682159,
+     51.1772276
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119263431",
+    "name": "Aartselaarstraat",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3788442,
+     51.1906723
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1035870135",
+    "name": "Abdijstraat",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3781277,
+     51.1899204
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2109888547",
+    "name": "Abdijstraat",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4049725,
+     51.2312028
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5907365094",
+    "name": "Amsterdam",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4043106,
+     51.2312276
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5907365095",
+    "name": "Amsterdam",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3979444,
+     51.1910842
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202073275",
+    "name": "Antwerp Expo",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.399566,
+     51.1921237
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202073276",
+    "name": "Antwerp Expo",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4694695,
+     51.2283013
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216971990",
+    "name": "Antwerp stadion",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.46983,
+     51.2283996
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216972000",
+    "name": "Antwerp stadion",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4454486,
+     51.2444825
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349071",
+    "name": "Barnkracht",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4461851,
+     51.244775
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349074",
+    "name": "Barnkracht",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4185112,
+     51.2054887
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636529225",
+    "name": "Belgiëlei",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4173963,
+     51.2059644
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-592475442",
+    "name": "Belgiëlei",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4341533,
+     51.201569
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11301850755",
+    "name": "Berchem Station",
+    "lines": "4,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4345262,
+     51.201456
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11301904699",
+    "name": "Berchem Station",
+    "lines": "4,11,A9",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4342009,
+     51.2016034
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1475208807",
+    "name": "Berchem Station",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3962742,
+     51.2059895
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2213402203",
+    "name": "Bestorming",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3967712,
+     51.2064698
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3174604072",
+    "name": "Bestorming",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4933298,
+     51.1689595
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116075",
+    "name": "Boechout P+R Boechout",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4928277,
+     51.1686777
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3080935124",
+    "name": "Boechout P+R Boechout",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3908017,
+     51.2015482
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11186213352",
+    "name": "Bolivarplaats",
+    "lines": "1,4",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3882259,
+     51.2041649
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205542558",
+    "name": "Bolivarplaats",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3881553,
+     51.204141
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205542567",
+    "name": "Bolivarplaats",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3893582,
+     51.2033695
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844969",
+    "name": "Bolivarplaats",
+    "lines": "1,4",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4374797,
+     51.240108
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-652646286",
+    "name": "Bredabaan",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4368169,
+     51.2403943
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-652646510",
+    "name": "Bredabaan",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3965335,
+     51.2069628
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844970",
+    "name": "Bres",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3990649,
+     51.2077416
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844971",
+    "name": "Bres",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3929627,
+     51.2024846
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3174594355",
+    "name": "Broedermin",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3938456,
+     51.2033733
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3174604065",
+    "name": "Broedermin",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4009347,
+     51.2270749
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5032006353",
+    "name": "Brouwersvliet",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4011924,
+     51.2272757
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5032006354",
+    "name": "Brouwersvliet",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.440746,
+     51.2423506
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2619232075",
+    "name": "Burgemeester Nolf",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4414998,
+     51.2427169
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2619232076",
+    "name": "Burgemeester Nolf",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4209671,
+     51.2189811
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11792850732",
+    "name": "Centraal Station",
+    "lines": "11,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4215741,
+     51.2186226
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13144047344",
+    "name": "Centraal Station",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4214504,
+     51.2188812
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1889049539",
+    "name": "Centraal Station",
+    "lines": "11,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4207089,
+     51.2193023
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1889054883",
+    "name": "Centraal Station",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4644654,
+     51.2271233
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216958248",
+    "name": "Clara Snellings",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4649441,
+     51.2271605
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216958253",
+    "name": "Clara Snellings",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4552849,
+     51.2198744
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611695020",
+    "name": "Cogelsplein",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.454901,
+     51.2197761
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611695252",
+    "name": "Cogelsplein",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4574105,
+     51.227909
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216913418",
+    "name": "Confortalei",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4572712,
+     51.2282167
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2610760842",
+    "name": "Confortalei",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4583467,
+     51.2263721
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216945759",
+    "name": "Craeybeckx",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4603036,
+     51.2263822
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216945850",
+    "name": "Craeybeckx",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.427511,
+     51.2033865
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12618347191",
+    "name": "Cuperus",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4280045,
+     51.2037238
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13800810462",
+    "name": "Cuperus",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4281982,
+     51.2034665
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1645920732",
+    "name": "Cuperus",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4268962,
+     51.2035999
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1674841344",
+    "name": "Cuperus",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4291878,
+     51.2071007
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-598214987",
+    "name": "Dageraadplaats",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4296971,
+     51.2069416
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-598215238",
+    "name": "Dageraadplaats",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3882222,
+     51.1838466
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202351365",
+    "name": "De Bosschaert",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3888409,
+     51.1840195
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660778480",
+    "name": "De Bosschaert",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4209636,
+     51.221585
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604887091",
+    "name": "De Coninck",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4209478,
+     51.2215408
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604891236",
+    "name": "De Coninck",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4154557,
+     51.1988929
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582898526",
+    "name": "De Merode",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4162738,
+     51.1981095
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582898916",
+    "name": "De Merode",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4409009,
+     51.213873
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203725914",
+    "name": "De Roma",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4416835,
+     51.214049
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203725915",
+    "name": "De Roma",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4765255,
+     51.2050569
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1936668212",
+    "name": "Deurne Dassastraat",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4776038,
+     51.20477
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201385310",
+    "name": "Deurne Dassastraat",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4324422,
+     51.2058646
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-556600063",
+    "name": "Draakplaats",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4325965,
+     51.2056803
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-556600163",
+    "name": "Draakplaats",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4183352,
+     51.195969
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582899332",
+    "name": "Driekoningen",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4192628,
+     51.1950647
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582899439",
+    "name": "Driekoningen",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4341554,
+     51.2150179
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203715514",
+    "name": "Drink",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4351762,
+     51.2147352
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-259231624",
+    "name": "Drink",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203215,
+     51.2568531
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734431843",
+    "name": "Dublin",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203753,
+     51.257452
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734431846",
+    "name": "Dublin",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4944342,
+     51.2222278
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201572909",
+    "name": "Ertbrugge",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4935457,
+     51.2220861
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2611269215",
+    "name": "Ertbrugge",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4711851,
+     51.2059854
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12373427438",
+    "name": "Florent Pauwels",
+    "lines": "8",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4707404,
+     51.2058123
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201344814",
+    "name": "Florent Pauwels",
+    "lines": "8,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.471713,
+     51.2056782
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-600876587",
+    "name": "Florent Pauwels",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5109532,
+     51.2255873
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1958353043",
+    "name": "Fortveld",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5117696,
+     51.2252493
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201560070",
+    "name": "Fortveld",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5117229,
+     51.2252884
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201560076",
+    "name": "Fortveld",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4791101,
+     51.2235486
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1653013245",
+    "name": "Frans Van Dijck",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4791427,
+     51.2240869
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1653013246",
+    "name": "Frans Van Dijck",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4335587,
+     51.1794071
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2357195669",
+    "name": "Fruithoflaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4325903,
+     51.1804716
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2357195670",
+    "name": "Fruithoflaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4593122,
+     51.2203477
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217216503",
+    "name": "Gallifortlei",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4598338,
+     51.2203461
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217216520",
+    "name": "Gallifortlei",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4242231,
+     51.225945
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604899979",
+    "name": "Gasstraat",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4251375,
+     51.2260754
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604901327",
+    "name": "Gasstraat",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4405821,
+     51.238175
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2620304309",
+    "name": "Gasthuishoeve",
+    "lines": "2,6,A3",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4401312,
+     51.2386084
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2620304315",
+    "name": "Gasthuishoeve",
+    "lines": "2,6,A3",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4484457,
+     51.1711778
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217561803",
+    "name": "Gemeenteplein",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4489698,
+     51.1708632
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-259448101",
+    "name": "Gemeenteplein",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4411137,
+     51.1742732
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116264",
+    "name": "Gevaert",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.440341,
+     51.1745461
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116269",
+    "name": "Gevaert",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4100954,
+     51.2057202
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-600422499",
+    "name": "Gounod",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4101899,
+     51.205444
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-600422500",
+    "name": "Gounod",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3746775,
+     51.1858383
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1543582526",
+    "name": "Grens Kiel",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3756966,
+     51.187117
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2109888549",
+    "name": "Grens Kiel",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4204342,
+     51.2442511
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2223416991",
+    "name": "Groenendaallaan",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203797,
+     51.2439335
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2316121582",
+    "name": "Groenendaallaan",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4012974,
+     51.218643
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1635630580",
+    "name": "Groenplaats",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4017411,
+     51.2184898
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2610365437",
+    "name": "Groenplaats",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4131811,
+     51.2010654
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636570834",
+    "name": "Harmonie",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4130417,
+     51.2011137
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636570837",
+    "name": "Harmonie",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4127405,
+     51.2016182
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636570842",
+    "name": "Harmonie",
+    "lines": "2,6,7,A3",
+    "line_count": 4,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.489093,
+     51.2211575
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-10739166205",
+    "name": "Havik",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4882035,
+     51.2210147
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11038719645",
+    "name": "Havik",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3660207,
+     51.1738086
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119245305",
+    "name": "Heidestraat",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3660391,
+     51.173943
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119245309",
+    "name": "Heidestraat",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4104867,
+     51.2094175
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-592475855",
+    "name": "Hemel",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4119677,
+     51.2085678
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-600422503",
+    "name": "Hemel",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4738843,
+     51.2302852
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12395919696",
+    "name": "Hermans",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4749432,
+     51.230714
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1724434032",
+    "name": "Hermans",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4777919,
+     51.1679966
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116275",
+    "name": "Hof Savelkoul",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4780817,
+     51.1680052
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116282",
+    "name": "Hof Savelkoul",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4493601,
+     51.2181849
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5319008619",
+    "name": "Hof Ter Lo",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4501429,
+     51.2182681
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5319008620",
+    "name": "Hof Ter Lo",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4205304,
+     51.2354537
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670762000",
+    "name": "IJzerlaan",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4205674,
+     51.2359063
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670762001",
+    "name": "IJzerlaan",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4283208,
+     51.1870809
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900802",
+    "name": "Jan Moorkens",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4295981,
+     51.18582
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900810",
+    "name": "Jan Moorkens",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4486668,
+     51.2123462
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201399087",
+    "name": "Joe English",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4482886,
+     51.2125471
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201399090",
+    "name": "Joe English",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4740777,
+     51.1683534
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116502",
+    "name": "Kaphaan",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4719625,
+     51.1685927
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116513",
+    "name": "Kaphaan",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3641534,
+     51.1709262
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119227334",
+    "name": "Karel Meyvis",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3644347,
+     51.1712879
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2119227341",
+    "name": "Karel Meyvis",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4015911,
+     51.208602
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844982",
+    "name": "Kasteelplein",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4037057,
+     51.2092488
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844988",
+    "name": "Kasteelplein",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4386607,
+     51.2006422
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1474518080",
+    "name": "Keerlus Groenenhoek",
+    "lines": "4,11,A9",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4050411,
+     51.2215005
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2000786829",
+    "name": "Keizerstraat",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4050961,
+     51.2216934
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2000786857",
+    "name": "Keizerstraat",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4639855,
+     51.1693314
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12273288616",
+    "name": "Kerkstraat",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4290531,
+     51.2172284
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203691675",
+    "name": "Kerkstraat",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4266113,
+     51.2179183
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203691676",
+    "name": "Kerkstraat",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4619662,
+     51.1695668
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2617925030",
+    "name": "Kerkstraat",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3805945,
+     51.1924027
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1543583116",
+    "name": "Kielpark",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3810773,
+     51.1928495
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1543583156",
+    "name": "Kielpark",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203618,
+     51.2457003
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734431855",
+    "name": "Kinepolis",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203067,
+     51.2451627
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-653808484",
+    "name": "Kinepolis",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.403491,
+     51.2232832
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205553831",
+    "name": "Klapdorp",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4027232,
+     51.2240664
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205553832",
+    "name": "Klapdorp",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3880744,
+     51.1958025
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1543582694",
+    "name": "Kolonel Silvertop",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3880924,
+     51.1958502
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1543582734",
+    "name": "Kolonel Silvertop",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4259491,
+     51.1890697
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900656",
+    "name": "Koninklijkelaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4261165,
+     51.1889845
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900675",
+    "name": "Koninklijkelaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3915164,
+     51.1815972
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202016632",
+    "name": "Kruishof",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4365943,
+     51.1765265
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116546",
+    "name": "Kuijpers",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4360676,
+     51.1769189
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2371923251",
+    "name": "Kuijpers",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4535675,
+     51.2268678
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12389841474",
+    "name": "Lakborslei",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4538625,
+     51.2268339
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611679322",
+    "name": "Lakborslei",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.429979,
+     51.2433933
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-652646013",
+    "name": "Lambrechtshoeken",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4308518,
+     51.2430373
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-652646028",
+    "name": "Lambrechtshoeken",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4236324,
+     51.2040974
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12618378801",
+    "name": "Lamorinièrestraat",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4201324,
+     51.2047539
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582888357",
+    "name": "Lamorinièrestraat",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4180865,
+     51.2058287
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12296832510",
+    "name": "Lange Leemstraat",
+    "lines": "2,6,A3",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4188524,
+     51.2063265
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12296832512",
+    "name": "Lange Leemstraat",
+    "lines": "2,6,A3",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4260685,
+     51.212914
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604720908",
+    "name": "Lente",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4260151,
+     51.2130472
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604721788",
+    "name": "Lente",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4102455,
+     51.2309645
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670766917",
+    "name": "Londen",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.409781,
+     51.2309862
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670766918",
+    "name": "Londen",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203691,
+     51.2517414
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734431847",
+    "name": "Luchtbal Kerk",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4203145,
+     51.2511441
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734431859",
+    "name": "Luchtbal Kerk",
+    "lines": "1,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4633217,
+     51.2199688
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217216526",
+    "name": "Lunden",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4636167,
+     51.2200628
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217216531",
+    "name": "Lunden",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4038844,
+     51.2299287
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5027280218",
+    "name": "MAS",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4039629,
+     51.229931
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5723637293",
+    "name": "MAS",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4073969,
+     51.1974868
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206330109",
+    "name": "Markgravelei",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4069653,
+     51.1973516
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206330110",
+    "name": "Markgravelei",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4051058,
+     51.2136008
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2316138107",
+    "name": "Mechelseplein",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4050396,
+     51.2132734
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-577358842",
+    "name": "Mechelseplein",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4052116,
+     51.2192968
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11301934029",
+    "name": "Meirbrug",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4048501,
+     51.21845
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-577359027",
+    "name": "Meirbrug",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4051028,
+     51.2187442
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604935553",
+    "name": "Meirbrug",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4044641,
+     51.2202342
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2000789738",
+    "name": "Melkmarkt",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.392721,
+     51.2057272
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844992",
+    "name": "Montigny",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3934829,
+     51.2059329
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205844993",
+    "name": "Montigny",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4521231,
+     51.2107994
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201399093",
+    "name": "Morckhoven",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4518188,
+     51.2109754
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201399096",
+    "name": "Morckhoven",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4505509,
+     51.1704735
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-259448124",
+    "name": "Mortsel",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4556909,
+     51.2096598
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11288284677",
+    "name": "Muggenberg",
+    "lines": "8,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4564686,
+     51.2093659
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201379768",
+    "name": "Muggenberg",
+    "lines": "8,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3940448,
+     51.209459
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-655335635",
+    "name": "Museum",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3930129,
+     51.2086785
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-655336271",
+    "name": "Museum",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4081219,
+     51.211489
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1635561303",
+    "name": "Nationale Bank",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4082887,
+     51.2114202
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205925579",
+    "name": "Nationale Bank",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4088542,
+     51.2117824
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205925614",
+    "name": "Nationale Bank",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4086567,
+     51.2118305
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2205925617",
+    "name": "Nationale Bank",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4205061,
+     51.2391936
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734462775",
+    "name": "Noorderbrug",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4204481,
+     51.2387768
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734462777",
+    "name": "Noorderbrug",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4131062,
+     51.2304965
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670761997",
+    "name": "Noorderplaats",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4130293,
+     51.2304854
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670761998",
+    "name": "Noorderplaats",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.413183,
+     51.2299192
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670761999",
+    "name": "Noorderplaats",
+    "lines": "1,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3920222,
+     51.185566
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-772334663",
+    "name": "Olympiade",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3916432,
+     51.1850873
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-772334739",
+    "name": "Olympiade",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4242905,
+     51.2181703
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604732755",
+    "name": "Ommeganck",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4244125,
+     51.2179049
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604732872",
+    "name": "Ommeganck",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4153399,
+     51.2184147
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-6991049277",
+    "name": "Opera",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4157641,
+     51.2190409
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-6991049278",
+    "name": "Opera",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4049795,
+     51.2156793
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-577358983",
+    "name": "Oudaan",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4049019,
+     51.216023
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-577358991",
+    "name": "Oudaan",
+    "lines": "4,7",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4500074,
+     51.2465331
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-516374621",
+    "name": "Oudebareel",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4508187,
+     51.2468617
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-516374864",
+    "name": "Oudebareel",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4183334,
+     51.2629775
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-4909252527",
+    "name": "P+R Luchtbal",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4182549,
+     51.2629829
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-4909252528",
+    "name": "P+R Luchtbal",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4627113,
+     51.2585538
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2209157618",
+    "name": "P+R Merksem",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4627914,
+     51.2585448
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-617189867",
+    "name": "P+R Merksem",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4635504,
+     51.2590409
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-617198940",
+    "name": "P+R Merksem",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3922761,
+     51.1839245
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202016711",
+    "name": "P+R Olympiade",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3915627,
+     51.1841319
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202016721",
+    "name": "P+R Olympiade",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3627139,
+     51.1693177
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-252024920",
+    "name": "P+R Schoonselhof",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4915885,
+     51.2116641
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3470330327",
+    "name": "P+R Wommelgem",
+    "lines": "8",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4150325,
+     51.2253
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12361661877",
+    "name": "Paardenmarkt",
+    "lines": "1,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4155373,
+     51.2237906
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-7004037897",
+    "name": "Paardenmarkt",
+    "lines": "1,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3897118,
+     51.2059879
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-655336718",
+    "name": "Pacificatie",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3900935,
+     51.2062511
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-655336893",
+    "name": "Pacificatie",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.426071,
+     51.2108961
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13727756363",
+    "name": "Plantin & Moretus",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4261719,
+     51.2106355
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13727756364",
+    "name": "Plantin & Moretus",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4256912,
+     51.2154169
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604727568",
+    "name": "Ploeg",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4257563,
+     51.2154737
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604728401",
+    "name": "Ploeg",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4110768,
+     51.1985326
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206330125",
+    "name": "Provinciehuis",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4115047,
+     51.1990086
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206330126",
+    "name": "Provinciehuis",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4312737,
+     51.1825293
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2357174054",
+    "name": "Pulhof",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4308315,
+     51.1837803
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2357174056",
+    "name": "Pulhof",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4558367,
+     51.2508422
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349924",
+    "name": "Rerum Novarum",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4569493,
+     51.251961
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349933",
+    "name": "Rerum Novarum",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4196489,
+     51.2239034
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582892700",
+    "name": "Richard",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4581891,
+     51.2533896
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349950",
+    "name": "Ringlaan",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4596517,
+     51.2548939
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349961",
+    "name": "Ringlaan",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4182053,
+     51.2193704
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604968404",
+    "name": "Roosevelt",
+    "lines": "11,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4163143,
+     51.2204127
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-6466975538",
+    "name": "Roosevelt",
+    "lines": "1,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4166353,
+     51.2195923
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-7106153100",
+    "name": "Roosevelt",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4165708,
+     51.2210005
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-7106154302",
+    "name": "Roosevelt",
+    "lines": "1,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4821798,
+     51.219818
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1466191710",
+    "name": "Ruggeveld",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4821765,
+     51.2198533
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1466191712",
+    "name": "Ruggeveld",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4790428,
+     51.231353
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12396061883",
+    "name": "Ruggeveldlaan",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4790854,
+     51.2316687
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12396061884",
+    "name": "Ruggeveldlaan",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3843755,
+     51.183111
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660778300",
+    "name": "Schijfwerper",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.383533,
+     51.1831137
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660778313",
+    "name": "Schijfwerper",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5066312,
+     51.2247079
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1958438669",
+    "name": "Schijnbeemden",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5072187,
+     51.22479
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201560045",
+    "name": "Schijnbeemden",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4761829,
+     51.2188421
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1465274734",
+    "name": "Schotensesteenweg",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4755356,
+     51.2189509
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217159675",
+    "name": "Schotensesteenweg",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4826649,
+     51.2038703
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1890699098",
+    "name": "Silsburg",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3987581,
+     51.2153476
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206747108",
+    "name": "Sint-Andries",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3992424,
+     51.2162354
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206747112",
+    "name": "Sint-Andries",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4218779,
+     51.2249895
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582893107",
+    "name": "Sint-Gummarus",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.421839,
+     51.2245162
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604896078",
+    "name": "Sint-Gummarus",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4089239,
+     51.2197535
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13727831191",
+    "name": "Sint-Jacob",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4090942,
+     51.2207466
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2000795910",
+    "name": "Sint-Jacob",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4011794,
+     51.2255868
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11302008208",
+    "name": "Sint-Paulusplaats",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4018094,
+     51.2248907
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11302008209",
+    "name": "Sint-Paulusplaats",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.414236,
+     51.2072573
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-11273671033",
+    "name": "Sint-Vincentius",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4147202,
+     51.2069583
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636529418",
+    "name": "Sint-Vincentius",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4214384,
+     51.1931003
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900264",
+    "name": "Sint-Willibrordus",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4218148,
+     51.1927356
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-582900269",
+    "name": "Sint-Willibrordus",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3787971,
+     51.1829742
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660777912",
+    "name": "Sportstraat",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3781915,
+     51.1829889
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660778144",
+    "name": "Sportstraat",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4115149,
+     51.2139186
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-696787863",
+    "name": "Stadspark",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.412138,
+     51.2143286
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-696787893",
+    "name": "Stadspark",
+    "lines": "1,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4237916,
+     51.2447048
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2223417481",
+    "name": "Station Luchtbal",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4231857,
+     51.2447368
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2223417490",
+    "name": "Station Luchtbal",
+    "lines": "6",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4566566,
+     51.1700635
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12273237081",
+    "name": "Station Oude God",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4560998,
+     51.1701506
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2617982289",
+    "name": "Station Oude God",
+    "lines": "A3",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3899962,
+     51.1982622
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660775911",
+    "name": "Station Zuid",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3898272,
+     51.1980296
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-660776246",
+    "name": "Station Zuid",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4444789,
+     51.2142812
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2203727696",
+    "name": "Stenenbrug",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.444239,
+     51.2144361
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-28792983",
+    "name": "Stenenbrug",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4204512,
+     51.2411379
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734458871",
+    "name": "Straatsburgdok",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4205077,
+     51.2413154
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1734462778",
+    "name": "Straatsburgdok",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4286597,
+     51.2268742
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-605744025",
+    "name": "Stuivenbergplein",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4283204,
+     51.2267658
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-605744373",
+    "name": "Stuivenbergplein",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4496507,
+     51.22701
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-12389841391",
+    "name": "Ten Eekhove",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4508731,
+     51.2269414
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611676508",
+    "name": "Ten Eekhove",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3972387,
+     51.2122388
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206732205",
+    "name": "Tropisch Instituut",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3977535,
+     51.2131846
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2206732206",
+    "name": "Tropisch Instituut",
+    "lines": "4",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4083058,
+     51.2090572
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636577310",
+    "name": "Van Bree",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4080982,
+     51.2095011
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1636577331",
+    "name": "Van Bree",
+    "lines": "7",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4791016,
+     51.2298376
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611691518",
+    "name": "Van Overmeire",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4790576,
+     51.2292655
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-611691864",
+    "name": "Van Overmeire",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4750817,
+     51.2102045
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3392513429",
+    "name": "Van Riel",
+    "lines": "8",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4756899,
+     51.2102843
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-3392513430",
+    "name": "Van Riel",
+    "lines": "8",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4273095,
+     51.2078192
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604706801",
+    "name": "Van Ruusbroec",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4266371,
+     51.2081041
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-604708969",
+    "name": "Van Ruusbroec",
+    "lines": "11",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4703057,
+     51.2197304
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217159672",
+    "name": "Venneborg",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4696727,
+     51.2198787
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2217159673",
+    "name": "Venneborg",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4545186,
+     51.2493649
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349448",
+    "name": "Victor Roosens",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4540782,
+     51.2489466
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-616349560",
+    "name": "Victor Roosens",
+    "lines": "2,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4315397,
+     51.2278535
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-13793510392",
+    "name": "Viséstraat",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4311565,
+     51.2278652
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1890057685",
+    "name": "Viséstraat",
+    "lines": "12",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3934669,
+     51.1873357
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-772335023",
+    "name": "Volhardingstraat",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3925124,
+     51.1862896
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-772335055",
+    "name": "Volhardingstraat",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4453521,
+     51.1728781
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116586",
+    "name": "Vredebaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4448581,
+     51.173146
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2216116587",
+    "name": "Vredebaan",
+    "lines": "7,A3",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4638665,
+     51.208139
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201387204",
+    "name": "Waterbaan",
+    "lines": "8,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4646032,
+     51.2077748
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201387205",
+    "name": "Waterbaan",
+    "lines": "8,24",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5016287,
+     51.2237076
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2201565430",
+    "name": "Wijnegem Shopping Center",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.5028501,
+     51.2239151
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5320916054",
+    "name": "Wijnegem Shopping Center",
+    "lines": "10,A9",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4829075,
+     51.2035911
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2459888896",
+    "name": "Wommelgem Krijgsbaan",
+    "lines": "24",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4165763,
+     51.2316872
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670433307",
+    "name": "Ziekenhuis Cadix",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4155251,
+     51.2317193
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-5670433308",
+    "name": "Ziekenhuis Cadix",
+    "lines": "1",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3907379,
+     51.2000077
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1705821716",
+    "name": "Zuid",
+    "lines": "1,4,10",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.391188,
+     51.2004633
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2213404428",
+    "name": "Zuid",
+    "lines": "1,4,10",
+    "line_count": 3,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4257573,
+     51.2061811
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2610365278",
+    "name": "Zurenborg",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4253423,
+     51.2065615
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-540345311",
+    "name": "Zurenborg",
+    "lines": "A9",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3724751,
+     51.1829203
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1901175798",
+    "name": "Zwaantjes",
+    "lines": "4,10",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3728891,
+     51.1833905
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-1901175817",
+    "name": "Zwaantjes",
+    "lines": "10",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3746408,
+     51.1829045
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202378201",
+    "name": "Zwaantjes",
+    "lines": "2",
+    "line_count": 1,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.3732819,
+     51.1827648
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2610365358",
+    "name": "Zwaantjes",
+    "lines": "2,4",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.401557,
+     51.193672
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202086562",
+    "name": "deSingel",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4035315,
+     51.1950364
+    ]
+   },
+   "properties": {
+    "stop_id": "osm-2202086566",
+    "name": "deSingel",
+    "lines": "2,6",
+    "line_count": 2,
+    "source": "osm-overpass"
+   }
+  }
+ ]
+}

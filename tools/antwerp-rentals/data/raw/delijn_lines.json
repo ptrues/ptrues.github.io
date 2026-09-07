@@ -1,0 +1,62 @@
+{
+ "1": {
+  "ref": "1",
+  "colour": "#8C2B87",
+  "network": "VVR Antwerpen"
+ },
+ "2": {
+  "ref": "2",
+  "colour": "#15882E",
+  "network": "VVR Antwerpen"
+ },
+ "4": {
+  "ref": "4",
+  "colour": "#00A6E2",
+  "network": "VVR Antwerpen"
+ },
+ "6": {
+  "ref": "6",
+  "colour": "#E6007E",
+  "network": "VVR Antwerpen"
+ },
+ "7": {
+  "ref": "7",
+  "colour": "#0056A4",
+  "network": "VVR Antwerpen"
+ },
+ "8": {
+  "ref": "8",
+  "colour": "#FC95C5",
+  "network": "VVR Antwerpen"
+ },
+ "10": {
+  "ref": "10",
+  "colour": "#C8D300",
+  "network": "VVR Antwerpen"
+ },
+ "11": {
+  "ref": "11",
+  "colour": "#FFFFFF",
+  "network": "VVR Antwerpen"
+ },
+ "12": {
+  "ref": "12",
+  "colour": "#E40521",
+  "network": "VVR Antwerpen"
+ },
+ "24": {
+  "ref": "24",
+  "colour": "#69C0AC",
+  "network": "VVR Antwerpen"
+ },
+ "A3": {
+  "ref": "A3",
+  "colour": "#FFCC00",
+  "network": "VVR Antwerpen"
+ },
+ "A9": {
+  "ref": "A9",
+  "colour": "#A85E24",
+  "network": "VVR Antwerpen"
+ }
+}

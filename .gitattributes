@@ -1,0 +1,6 @@
+# The antwerp-rentals pipeline is edited on Windows but run by CI on Linux,
+# which commits its output daily. Pinning LF keeps those commits to real
+# content changes instead of whole-file line-ending churn.
+tools/antwerp-rentals/** text eol=lf
+antwerp-rentals/**.json  text eol=lf
+antwerp-rentals/**.html  text eol=lf

@@ -1,1 +1,14 @@
 node_modules/
+
+# --- antwerp-rentals pipeline (tools/antwerp-rentals) ---
+__pycache__/
+*.pyc
+
+# 4.8 MB of raw Immoweb API responses per run. Kept locally for auditing;
+# 03_fetch_immoweb.py --from-cache replays it offline.
+tools/antwerp-rentals/data/raw/immoweb_pages.json
+
+# Noise-raster intermediates (5.4 MB). Only 06_fetch_noise_map.py needs them,
+# and it is not part of the scheduled refresh; the served PNG it produces
+# (antwerp-rentals/noise_lden_2021.png) is committed instead.
+tools/antwerp-rentals/data/**/*.tif

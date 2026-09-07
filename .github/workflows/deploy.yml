@@ -28,6 +28,12 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      # upload-pages-artifact has no exclude option and publishes `path` whole,
+      # so build-time-only directories are dropped from the checkout first.
+      # Nothing served links into tools/.
+      - name: Prune build-time files from the artifact
+        run: rm -rf tools
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

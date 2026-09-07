@@ -1,0 +1,38 @@
+{
+ "layer": "hh:hh_agglo_weg_lden_2021_c",
+ "layers": [
+  {
+   "name": "hh:hh_weg_aan_lden_2021_c",
+   "coverage": 0.289,
+   "title": "Road traffic, Lden 2021, major and supplementary roads",
+   "role": "corridor",
+   "extent": "Corridors along roads carrying more than 3 million vehicle passages a year, plus supplementary links, across Flanders."
+  },
+  {
+   "name": "hh:hh_agglo_weg_lden_2021_c",
+   "coverage": 0.4105,
+   "title": "Road traffic, Lden 2021, inside the large agglomerations",
+   "role": "full-area",
+   "extent": "The agglomeration polygons only (Antwerpen, Brugge, Gent, Leuven). For Antwerp that is the city municipality."
+  }
+ ],
+ "composite": true,
+ "coverage": {
+  "total": 0.5203,
+  "full_area": 0.4105,
+  "corridor_only": 0.1097
+ },
+ "source": "https://www.mercator.vlaanderen.be/raadpleegdienstenmercatorpubliek/ows",
+ "crs_native": "EPSG:31370",
+ "bounds": [
+  [
+   51.14722055774581,
+   4.329735852791666
+  ],
+  [
+   51.28366639738896,
+   4.5449267969395235
+  ]
+ ],
+ "png": "noise_lden_2021.png"
+}
