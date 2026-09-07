@@ -33,8 +33,11 @@ OUT_DIR = os.path.join(ROOT, "assets", "thumbs")
 #
 # The two flat-colour maps carry fine hairlines and small type, which is where
 # WebP's chroma handling shows first, so they get a higher quality.
+#
+# The London entry is absent on purpose. Its thumbnail is not a downscale of an
+# article map any more -- it is annotated, and build-london-thumb.py renders it
+# straight to assets/thumbs/ at source width.
 SOURCES = [
-    ("london-2026/assets/maps/map04-walkshed-hotels.png",      [1200],       88),
     ("stippenkaart-1941/data/stippenkaart-1941-georef.jpg",    [1200],       82),
     ("assets/Housing_Affordability_in_the_USA_simplified.png", [1200, 2000], 88),
     ("assets/plan_de_paris.jpg",                               [1200, 2000], 82),
