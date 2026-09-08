@@ -61,6 +61,17 @@
   background: #f7f5f4;
 }
 
+/* Two stacked thumbnails in one media column. The inner figures need an
+   explicit `margin: 0`; `.proj-media` sets it on the wrapper only, so without
+   this they keep the UA default `1em 40px` and render 80px narrower than
+   every other project thumbnail. */
+.proj-media--pair {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.proj-media-item { margin: 0; }
+
 /* Crop the photographed border around the Stippenkaart. */
 .proj-media--stippenkaart a {
   display: block;
