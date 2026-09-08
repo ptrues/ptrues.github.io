@@ -175,6 +175,9 @@ strong { font-weight: 600; }
 .banner .fact .unit { font-size: .42em; font-weight: 500; color: var(--banner-mut); }
 /* colour used for hierarchy: only the budget &mdash; the constraint &mdash; is amber */
 .banner .fact.key b { color: var(--banner-accent); }
+/* `.banner` sets `display: grid`, and an author rule beats the UA sheet, so the
+   `hidden` attribute alone would not hide it. */
+.banner[hidden] { display: none; }
 
 /* ============================================================================
    FIGURE PLATES
@@ -436,7 +439,7 @@ table.data tbody tr:last-child td { border-bottom: 0; }
   </header>
 
   <!-- ===================== INTRO BANNER ===================== -->
-  <section class="wide banner" aria-label="Trip at a glance">
+  <section class="wide banner" aria-label="Trip at a glance" hidden>
     <svg class="rings" width="240" height="240" viewBox="0 0 240 240" aria-hidden="true">
       <circle cx="120" cy="120" r="112" fill="none" stroke="var(--banner-accent)" stroke-dasharray="4 6" opacity=".55"/>
       <circle cx="120" cy="120" r="78" fill="none" stroke="var(--banner-accent)" opacity=".45"/>
@@ -451,11 +454,6 @@ table.data tbody tr:last-child td { border-bottom: 0; }
   </section>
 
   <!-- ===================== BODY ===================== -->
-  <div class="prose">
-    <p>Both of us can get overwhelmed in big cities.</p>
-    <p>But I wanted my wife's first trip to London to make a good impression.</p>
-  </div>
-
   <figure class="plate wide">
     <div class="frame"><img class="shot" src="assets/images/St._Pancras_International_station.jpg" alt="St Pancras International station"></div>
     <p class="credit">Robert-brook, <a href="https://commons.wikimedia.org/wiki/File:St._Pancras_International_station.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></p>
