@@ -1,9 +1,9 @@
 {
- "fetched_at": "2026-09-30T10:18:18Z",
- "checked_at": "2026-09-30T10:18:18Z",
- "total_items": 174,
- "unique": 171,
+ "fetched_at": "2026-10-01T10:44:33Z",
+ "checked_at": "2026-10-01T10:44:33Z",
+ "total_items": 167,
+ "unique": 164,
  "complete": true,
  "error": null,
- "within_800m": 123
+ "within_800m": 119
 }
