@@ -186,9 +186,9 @@
       case 'optional': {
         if (!s.stops || !s.stops.length) return '';
         const when = x => x.opens_later ? `Opens ${x.opens}` : x.closes_early ? `Closes ${x.closes}` : `Open until ${x.closes}`;
-        return `<details class="optional"${printAll ? ' open' : ''}><summary>Optional bookshops nearby · ${esc(s.title.toLowerCase())} (${s.stops.length})</summary>
+        return `<details class="optional"${printAll ? ' open' : ''}><summary>Optional bookshops · ${esc(s.title.charAt(0).toLowerCase() + s.title.slice(1))} (${s.stops.length})</summary>
           <p class="sub">Only if there is time. Not part of the plan.</p><ul>${s.stops.map(x => `<li><div><strong>${esc(x.name)}</strong>
-          <span>${esc(x.description)}</span><span class="meta">${when(x)} · about ${x.walk_min} min walk</span></div>
+          <span>${esc(x.description)}</span><span class="meta">${when(x)} · ${x.approx ? `adds roughly ${x.detour_min} min to the walk` : `adds about ${x.detour_min} min to the walk`}</span></div>
           <a href="${navURL(x.coordinate)}" target="_blank" rel="noopener">Navigate</a></li>`).join('')}</ul></details>`;
       }
       case 'cruise':
