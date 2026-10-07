@@ -24,6 +24,9 @@
   };
   const navURL = (coord) => `https://www.google.com/maps/dir/?api=1&destination=${coord[1]},${coord[0]}&travelmode=walking`;
   const link = (query) => query ? `?${query}` : './';
+  // Home-list titles wrap only at their " · " separators: each short phrase
+  // stays on one line (long phrases still wrap normally).
+  const phrases = t => String(t).split(' · ').map(x => x.length <= 24 ? `<span class="phrase">${esc(x)}</span>` : esc(x)).join(' · ');
   const sortKey = t => { const m = /^(\d\d):(\d\d)/.exec(t || ''); return m ? +m[1] * 60 + +m[2] : (t === 'Evening' ? 19 * 60 : 24 * 60); };
 
   // Every data request carries the build version, so a new deployment never
@@ -55,6 +58,7 @@
 
   async function render(scrollTop) {
     cleanup.forEach(f => f()); cleanup = [];
+    document.body.classList.toggle('white-page', params().has('tickets'));
     const p = params();
     try {
       if (p.has('tickets')) await renderTickets();
@@ -128,11 +132,11 @@
       dayEntries(d).map(r => {
         if (r.journey) {
           const j = r.journey;
-          return `<li><a class="item journey" href="${link('j=' + j.id)}" data-nav><span class="t">${esc(r.time)}</span><span class="label">${esc(j.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
+          return `<li><a class="item journey" href="${link('j=' + j.id)}" data-nav><span class="t">${esc(r.time)}</span><span class="label">${phrases(j.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
         }
         if (r.booking) {
           const b = r.booking;
-          return `<li><a class="item" href="${link('j=' + (b.page || b.journey))}" data-nav><span class="t">${esc(b.start)}</span><span class="label">${esc(b.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
+          return `<li><a class="item" href="${link('j=' + (b.page || b.journey))}" data-nav><span class="t">${esc(b.start)}</span><span class="label">${phrases(b.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
         }
         return `<li><div class="item ${r.item.kind}"><span class="t">${esc(r.time)}</span><span class="label">${esc(r.item.title)}</span><span></span></div></li>`;
       }).join('')}</ul></section>`).join('');
@@ -542,7 +546,7 @@
     const show = items => {
       const qrs = items.filter(i => i.type.startsWith('image/'));
       const pdf = items.find(i => i.type === 'application/pdf');
-      app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"><img src="${q.url}" alt="${esc(q.label)} QR code"><figcaption>${esc(q.label)}</figcaption></figure>`).join('')}
+      app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"><figcaption>${esc(q.label)}</figcaption><img src="${q.url}" alt="${esc(q.label)} ticket QR code"></figure>`).join('')}
         ${pdf ? `<a class="button" href="${pdf.url}" download="${esc(pdf.download || 'tickets.pdf')}">Download ticket PDF</a>` : ''}
         <p class="sub">Turn the screen brightness up for scanning.</p>
         <button type="button" class="button secondary" data-forget>Forget the password on this phone</button></section>`;
