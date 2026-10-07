@@ -548,7 +548,7 @@
       const qrs = items.filter(i => i.type.startsWith('image/'));
       const pdf = items.find(i => i.type === 'application/pdf');
       app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"${q.anchor ? ` id="ticket-${esc(q.anchor)}"` : ''}><figcaption>${q.group ? `<small>${esc(q.group)}</small>` : ''}${esc(q.label)}</figcaption><img src="${q.url}" alt="${esc((q.group ? q.group + ', ' : '') + q.label)} ticket QR code"></figure>`).join('')}
-        ${pdf ? `<a class="button" href="${pdf.url}" download="${esc(pdf.download || 'tickets.pdf')}">Download ticket PDF</a>` : ''}
+        ${pdf ? `<a class="button" href="${pdf.url}" download="${esc(pdf.download || 'tickets.pdf')}">Download ${esc(pdf.label)}</a>` : ''}
         <p class="sub">Turn the screen brightness up for scanning.</p>
         <button type="button" class="button secondary" data-forget>Forget the password on this phone</button></section>`;
       const target = params().get('t') && document.getElementById('ticket-' + params().get('t'));
