@@ -275,7 +275,8 @@
     const overlay = svg.append('g');
     const points = [];
     (m.stations || []).forEach(st => points.push({xy: projection(st.coordinate), station: st}));
-    (m.pins || []).forEach(p => points.push({xy: projection(p.coordinate), pin: p}));
+    const pinOrder = p => p.shop ? 0 : p.minor ? 1 : 2;  // planned pins drawn last, on top
+    [...(m.pins || [])].sort((a, b) => pinOrder(a) - pinOrder(b)).forEach(p => points.push({xy: projection(p.coordinate), pin: p}));
     const nodes = points.map(pt => {
       const g = overlay.append('g');
       if (pt.station) {
@@ -283,10 +284,10 @@
         if (pt.station.major) g.append('text').attr('class', 'label').attr('x', 10).attr('y', 4).text(pt.station.name);
       } else {
         const p = pt.pin;
-        g.attr('class', 'pin' + (p.minor ? ' minor' : ''));
-        g.append('circle').attr('r', p.minor ? 7 : 12);
-        if (!p.minor) g.append('text').attr('class', 'n').attr('text-anchor', 'middle').attr('y', 4.5).text(p.n);
-        g.append('text').attr('class', 'label' + (p.minor ? ' small' : '')).attr('x', p.minor ? 10 : 16).attr('y', 4.5).text(p.label);
+        g.attr('class', 'pin' + (p.shop ? ' shop' : p.minor ? ' minor' : ''));
+        g.append('circle').attr('r', p.shop ? 4 : p.minor ? 7 : 12);
+        if (!p.minor && !p.shop) g.append('text').attr('class', 'n').attr('text-anchor', 'middle').attr('y', 4.5).text(p.n);
+        g.append('text').attr('class', 'label' + (p.shop ? ' shop' : p.minor ? ' small' : '')).attr('x', p.shop ? 7 : p.minor ? 10 : 16).attr('y', 4).text(p.label);
       }
       return {g, pt};
     });
@@ -295,15 +296,34 @@
     me.append('circle').attr('class', 'me').attr('r', 7);
     let fix = null;
     function place(t) {
-      nodes.forEach(({g, pt}) => {
+      // Planned pins and their labels claim space first; on-the-way shop labels
+      // then take the first free spot (right, left, below, above) or hide.
+      const boxes = [];
+      const overlaps = b => b.x < 2 || b.x + b.w > w - 2 || boxes.some(o => b.x < o.x + o.w && o.x < b.x + b.w && b.y < o.y + o.h && o.y < b.y + b.h);
+      const boxOf = (label, x, y) => { const b = label.node().getBBox(); return {x: b.x + x - 2, y: b.y + y - 1, w: b.width + 4, h: b.height + 2}; };
+      const shopFirst = nodes.filter(n => !(n.pt.pin && n.pt.pin.shop)).concat(nodes.filter(n => n.pt.pin && n.pt.pin.shop));
+      shopFirst.forEach(({g, pt}) => {
         const [x, y] = t.apply(pt.xy);
         g.attr('transform', `translate(${x},${y})`);
+        const r = pt.pin ? (pt.pin.shop ? 4 : pt.pin.minor ? 7 : 12) : 6;
         const label = g.select('text.label');
         if (!label.empty()) {
           const len = label.node().getComputedTextLength();
-          const right = x + 16 + len < w - 6;
-          label.attr('text-anchor', right ? 'start' : 'end').attr('x', right ? (pt.pin && pt.pin.minor ? 10 : 16) : -(pt.pin && !pt.pin.minor ? 16 : 10));
+          if (pt.pin && pt.pin.shop) {
+            const spots = [['start', 7, 4], ['end', -7, 4], ['start', -4, 16], ['start', -4, -8]];
+            const free = spots.find(([anchor, dx, dy]) => {
+              label.attr('display', null).attr('text-anchor', anchor).attr('x', dx).attr('y', dy);
+              return !overlaps(boxOf(label, x, y));
+            });
+            if (free) boxes.push(boxOf(label, x, y)); else label.attr('display', 'none');
+          } else {
+            const right = x + 16 + len < w - 6;
+            const gap = pt.pin && pt.pin.minor ? 10 : pt.pin ? 16 : 10;
+            label.attr('text-anchor', right ? 'start' : 'end').attr('x', right ? gap : -gap);
+            boxes.push(boxOf(label, x, y));
+          }
         }
+        boxes.push({x: x - r, y: y - r, w: 2 * r, h: 2 * r});
       });
       if (fix) {
         const [x, y] = t.apply(projection(fix.coord));

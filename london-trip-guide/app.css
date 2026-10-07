@@ -89,6 +89,8 @@ svg .rail.victoria { stroke: #0098d4; }
 svg path, svg ellipse { vector-effect: non-scaling-stroke; }
 svg .pin circle { fill: var(--route); stroke: #ffffff; stroke-width: 2.5; }
 svg .pin.minor circle { fill: #ffffff; stroke: var(--route); stroke-width: 2.5; }
+svg .pin.shop circle { fill: #ffffff; stroke: #7a857d; stroke-width: 1.8; }
+svg .label.shop { font-size: 11px; font-weight: 400; fill: #56625a; stroke-width: 3px; }
 svg .pin text.n { fill: #ffffff; font: 500 13px Roboto, "Segoe UI", Arial, sans-serif; }
 svg .label { fill: var(--ink); font: 500 13px Roboto, "Segoe UI", Arial, sans-serif; paint-order: stroke; stroke: #ffffffee; stroke-width: 4px; stroke-linejoin: round; }
 svg .label.small { font-size: 12px; font-weight: 400; }
