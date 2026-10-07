@@ -26,8 +26,12 @@
   const link = (query) => query ? `?${query}` : './';
   const sortKey = t => { const m = /^(\d\d):(\d\d)/.exec(t || ''); return m ? +m[1] * 60 + +m[2] : (t === 'Evening' ? 19 * 60 : 24 * 60); };
 
+  // Every data request carries the build version, so a new deployment never
+  // reuses a file the browser cached from an older one. The offline copy
+  // matches these requests ignoring the query string.
+  const VERSION = (document.querySelector('meta[name="guide-version"]') || {}).content || '';
   async function getJSON(url) {
-    const res = await fetch(url);
+    const res = await fetch(VERSION ? `${url}?v=${VERSION}` : url);
     if (!res.ok) throw new Error(`${url}: ${res.status}`);
     return res.json();
   }
