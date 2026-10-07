@@ -79,28 +79,55 @@
     trip.bookings.filter(b => b.day === day.id).forEach((b, k) => rows.push({i: 100 + k, time: b.start, key: sortKey(b.start) + 0.5, booking: b}));
     return rows.sort((a, b) => a.key - b.key || a.i - b.i);
   }
-  function nextJourney() {
-    const now = londonNow();
-    const list = trip.days.flatMap(d => d.items.filter(i => i.journey).map(i => trip.journeys[i.journey]))
-      .filter(j => j.start).map(j => ({j, at: `${dayOf(j.day).date}T${j.start}`, until: `${dayOf(j.day).date}T${j.end || j.start}`}));
-    return list.find(x => x.until >= now) || null;
+  // The home card: timed journeys show Next/Now; once a day's last timed item
+  // (journeys and bookings such as the museum or the cruise) has ended, the
+  // day's untimed evening pages (dinner, the Friday return) show together.
+  function cardEntries() {
+    const out = [];
+    trip.days.forEach(d => {
+      const js = d.items.filter(i => i.journey).map(i => trip.journeys[i.journey]);
+      const timed = js.filter(j => j.start);
+      timed.forEach(j => out.push({kind: 'timed', j, d, at: `${d.date}T${j.start}`, until: `${d.date}T${j.end || j.start}`}));
+      const evening = js.filter(j => !j.start);
+      if (evening.length) {
+        const ends = timed.map(j => j.end || j.start).concat(trip.bookings.filter(b => b.day === d.id).map(b => b.end || b.start));
+        const busy = ends.sort().pop() || '17:00';
+        out.push({kind: 'evening', js: evening, d, at: `${d.date}T${busy}`, until: `${d.date}T23:59`});
+      }
+    });
+    return out;
   }
+  function nextCardHTML() {
+    const now = londonNow();
+    const e = cardEntries().find(x => x.until >= now);
+    if (!e) return '';
+    if (e.kind === 'timed') {
+      return `<a class="next-card" href="${link('j=' + e.j.id)}" data-nav><span class="eyebrow">${e.at <= now ? 'Now' : 'Next'}</span>
+        <strong>${esc(e.j.title)}</strong><span class="when">${esc(e.d.label)} · ${esc(e.j.time_label)}</span></a>`;
+    }
+    const today = e.d.date === now.slice(0, 10);
+    return `<div class="next-card"><span class="eyebrow">${e.at <= now ? 'This evening' : today ? 'Later today' : 'Next'}</span>
+      ${e.js.map(j => `<a class="evening-link" href="${link('j=' + j.id)}" data-nav><strong>${esc(j.title)}</strong><span aria-hidden="true">›</span></a>`).join('')}
+      <span class="when">${esc(e.d.label)} · Evening</span></div>`;
+  }
+  function refreshCard() {
+    const slot = document.querySelector('.next-slot');
+    if (slot) slot.innerHTML = nextCardHTML();
+  }
+  // Keep the card current while the home page stays open or returns from the background.
+  setInterval(refreshCard, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshCard(); });
+  window.addEventListener('pageshow', refreshCard);
+  window.addEventListener('focus', refreshCard);
+
   function renderHome(focusDay) {
     document.title = 'London trip guide';
-    const next = nextJourney();
-    const now = londonNow();
-    let nextHTML = '';
-    if (next) {
-      const d = dayOf(next.j.day);
-      const live = next.at <= now;
-      nextHTML = `<a class="next-card" href="${link('j=' + next.j.id)}" data-nav><span class="eyebrow">${live ? 'Now' : 'Next'}</span>
-        <strong>${esc(next.j.title)}</strong><span class="when">${esc(d.label)} · ${esc(next.j.time_label)}</span></a>`;
-    }
+    const nextHTML = `<div class="next-slot">${nextCardHTML()}</div>`;
     const days = trip.days.map(d => `<section class="day" id="${d.id}"><h2>${esc(d.label)}</h2><p class="day-summary">${esc(d.summary)}</p><ul class="items">${
       dayEntries(d).map(r => {
         if (r.journey) {
           const j = r.journey;
-          return `<li><a class="item journey" href="${link('j=' + j.id)}" data-nav><span class="t">${esc(r.time)}</span><span class="label">${esc(j.title)}${j.status === 'open' ? ' <span class="chip open">Not chosen yet</span>' : ''}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
+          return `<li><a class="item journey" href="${link('j=' + j.id)}" data-nav><span class="t">${esc(r.time)}</span><span class="label">${esc(j.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
         }
         if (r.booking) {
           const b = r.booking;
@@ -124,15 +151,24 @@
     const maps = await mapsFor(id);
     const booked = trip.bookings.filter(b => b.journey === id);
     const facts = [`<span class="chip">${esc(j.time_label)}</span>`];
-    if (j.status === 'open') facts.push('<span class="chip open">Not chosen yet</span>');
     booked.forEach(b => facts.push(`<span class="chip booked">${esc(b.start)} ${esc(b.title.split(' · ')[0])}</span>`));
     const next = j.next && trip.journeys[j.next];
     app.innerHTML = `<nav class="crumbs"><a href="${link('d=' + day.id)}" data-nav>‹ ${esc(day.label)}</a></nav>
       <header class="journey-head"><div class="day-label">${esc(day.label)}</div><h1>${esc(j.title)}</h1><div class="facts">${facts.join('')}</div>
       ${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>
-      <div class="sections">${sectionsHTML(j.sections, option, 'j=' + id)}</div>
+      <div class="sections">${j.kind === 'dinner' ? dinnerHTML(j) : sectionsHTML(j.sections, option, 'j=' + id)}</div>
       ${next ? `<div class="next-link"><a class="button secondary" href="${link('j=' + next.id)}" data-nav>Next · ${esc(next.time_label)} ${esc(next.title)} ›</a></div>` : ''}`;
     mountAll(app, maps, false);
+  }
+
+  // Dinner pages: a curated list of places grouped by area (no maps or steps).
+  function dinnerHTML(j) {
+    const places = j.places || [];
+    if (!places.length) return '<section class="section dinner"><p class="sub">Nothing added yet.</p></section>';
+    const areas = [...new Set(places.map(p => p.area || 'Other'))];
+    return areas.map(area => `<section class="section dinner"><h2>${esc(area)}</h2><ul class="places">${
+      places.filter(p => (p.area || 'Other') === area).map(p => `<li><div><strong>${esc(p.name)}</strong>${p.description ? `<span>${esc(p.description)}</span>` : ''}${p.note ? `<span class="meta">${esc(p.note)}</span>` : ''}</div>
+        <div class="place-links">${p.coordinate ? `<a href="${navURL(p.coordinate)}" target="_blank" rel="noopener">Navigate</a>` : ''}${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">Website</a>` : ''}</div></li>`).join('')}</ul></section>`).join('');
   }
 
   function sectionsHTML(sections, option, base, printAll) {
@@ -415,7 +451,7 @@
     const all = await Promise.all(journeys.map(j => mapsFor(j.id)));
     const rows = dayEntries(day).map(r => `<li><div class="item"><span class="t">${esc(r.time)}</span><span class="label">${esc(r.journey ? r.journey.title : r.booking ? r.booking.title : r.item.title)}</span><span></span></div></li>`).join('');
     app.innerHTML = `<div class="print-day hero"><h1>${esc(day.label)}</h1><p>${esc(day.summary)} · London trip ${esc(trip.dates)}</p></div><ul class="items">${rows}</ul>` +
-      journeys.map((j, n) => `<div class="print-journey" data-pj="${n}"><header class="journey-head"><div class="day-label">${esc(day.label)} · ${esc(j.time_label)}</div><h1>${esc(j.title)}</h1>${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>${sectionsHTML(j.sections, 0, 'j=' + j.id, true)}</div>`).join('');
+      journeys.map((j, n) => `<div class="print-journey" data-pj="${n}"><header class="journey-head"><div class="day-label">${esc(day.label)} · ${esc(j.time_label)}</div><h1>${esc(j.title)}</h1>${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>${j.kind === 'dinner' ? dinnerHTML(j) : sectionsHTML(j.sections, 0, 'j=' + j.id, true)}</div>`).join('');
     app.querySelectorAll('[data-pj]').forEach(el => mountAll(el, all[+el.dataset.pj], true));
     document.body.dataset.ready = 'true';
   }
