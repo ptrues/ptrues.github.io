@@ -143,6 +143,13 @@ svg .plan-highlight { fill: #b7462122; stroke: var(--route); stroke-width: 2.5; 
 .dinner .place-links { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
 .dinner .place-links a { min-height: 32px; display: inline-flex; align-items: center; }
 
+.destination .address { font-weight: 500; margin: 0 0 8px; }
+.destination p { margin: 0 0 8px; }
+.dest-links { list-style: none; margin: 4px 0 0; padding: 0; }
+.dest-links li { border-top: 1px solid var(--line); }
+.dest-links a { display: flex; min-height: 44px; align-items: center; text-decoration: none; }
+a.chip.booked { text-decoration: none; }
+
 /* Optional extras: deliberately quieter than the planned sections. */
 .optional { margin: 14px 16px 0; font-size: 14px; color: var(--sub); }
 .optional summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; padding: 4px 0; }

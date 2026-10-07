@@ -131,7 +131,7 @@
         }
         if (r.booking) {
           const b = r.booking;
-          return `<li><a class="item" href="${link('j=' + b.journey)}" data-nav><span class="t">${esc(b.start)}</span><span class="label">${esc(b.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
+          return `<li><a class="item" href="${link('j=' + (b.page || b.journey))}" data-nav><span class="t">${esc(b.start)}</span><span class="label">${esc(b.title)}</span><span class="chev" aria-hidden="true">›</span></a></li>`;
         }
         return `<li><div class="item ${r.item.kind}"><span class="t">${esc(r.time)}</span><span class="label">${esc(r.item.title)}</span><span></span></div></li>`;
       }).join('')}</ul></section>`).join('');
@@ -151,14 +151,29 @@
     const maps = await mapsFor(id);
     const booked = trip.bookings.filter(b => b.journey === id);
     const facts = [`<span class="chip">${esc(j.time_label)}</span>`];
-    booked.forEach(b => facts.push(`<span class="chip booked">${esc(b.start)} ${esc(b.title.split(' · ')[0])}</span>`));
+    booked.forEach(b => facts.push(b.page
+      ? `<a class="chip booked" href="${link('j=' + b.page)}" data-nav>${esc(b.start)} ${esc(trip.journeys[b.page].title)} ›</a>`
+      : `<span class="chip booked">${esc(b.start)} ${esc(b.title.split(' · ')[0])}</span>`));
     const next = j.next && trip.journeys[j.next];
     app.innerHTML = `<nav class="crumbs"><a href="${link('d=' + day.id)}" data-nav>‹ ${esc(day.label)}</a></nav>
       <header class="journey-head"><div class="day-label">${esc(day.label)}</div><h1>${esc(j.title)}</h1><div class="facts">${facts.join('')}</div>
       ${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>
-      <div class="sections">${j.kind === 'dinner' ? dinnerHTML(j) : sectionsHTML(j.sections, option, 'j=' + id)}</div>
+      <div class="sections">${j.kind === 'dinner' ? dinnerHTML(j) : j.kind === 'destination' ? destinationHTML(j) : sectionsHTML(j.sections, option, 'j=' + id)}</div>
       ${next ? `<div class="next-link"><a class="button secondary" href="${link('j=' + next.id)}" data-nav>Next · ${esc(next.time_label)} ${esc(next.title)} ›</a></div>` : ''}`;
     mountAll(app, maps, false);
+  }
+
+  // Destination pages for bookings: what you need once you are there.
+  function destinationHTML(j, print) {
+    const p = trip.places[j.place];
+    const walk = j.walk && trip.journeys[j.walk];
+    return `<section class="section destination">
+      ${j.address ? `<p class="address">${esc(j.address)}</p>` : ''}
+      ${(j.notes || []).map(n => `<p>${esc(n)}</p>`).join('')}
+      ${(j.links || []).length ? `<ul class="dest-links">${j.links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join('')}</ul>` : ''}
+      ${j.navigate !== false && p ? `<a class="button" href="${navURL(p.coordinate)}" target="_blank" rel="noopener">Navigate to ${esc(j.title)}</a>` : ''}
+      ${walk && !print ? `<a class="button secondary" href="${link('j=' + walk.id)}" data-nav>How to get there · ${esc(walk.title)} ›</a>` : ''}
+    </section>`;
   }
 
   // Dinner pages: a curated list of places grouped by area (no maps or steps).
@@ -447,11 +462,12 @@
     const day = dayOf(dayId);
     if (!day) throw new Error('No such day');
     document.title = `${day.label} · London trip`;
-    const journeys = day.items.filter(i => i.journey).map(i => trip.journeys[i.journey]);
+    const journeys = day.items.filter(i => i.journey).map(i => trip.journeys[i.journey])
+      .concat(Object.values(trip.journeys).filter(j => j.kind === 'destination' && j.day === dayId));
     const all = await Promise.all(journeys.map(j => mapsFor(j.id)));
     const rows = dayEntries(day).map(r => `<li><div class="item"><span class="t">${esc(r.time)}</span><span class="label">${esc(r.journey ? r.journey.title : r.booking ? r.booking.title : r.item.title)}</span><span></span></div></li>`).join('');
     app.innerHTML = `<div class="print-day hero"><h1>${esc(day.label)}</h1><p>${esc(day.summary)} · London trip ${esc(trip.dates)}</p></div><ul class="items">${rows}</ul>` +
-      journeys.map((j, n) => `<div class="print-journey" data-pj="${n}"><header class="journey-head"><div class="day-label">${esc(day.label)} · ${esc(j.time_label)}</div><h1>${esc(j.title)}</h1>${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>${j.kind === 'dinner' ? dinnerHTML(j) : sectionsHTML(j.sections, 0, 'j=' + j.id, true)}</div>`).join('');
+      journeys.map((j, n) => `<div class="print-journey" data-pj="${n}"><header class="journey-head"><div class="day-label">${esc(day.label)} · ${esc(j.time_label)}</div><h1>${esc(j.title)}</h1>${j.lead ? `<p class="lead">${esc(j.lead)}</p>` : ''}</header>${j.kind === 'dinner' ? dinnerHTML(j) : j.kind === 'destination' ? destinationHTML(j, true) : sectionsHTML(j.sections, 0, 'j=' + j.id, true)}</div>`).join('');
     app.querySelectorAll('[data-pj]').forEach(el => mountAll(el, all[+el.dataset.pj], true));
     document.body.dataset.ready = 'true';
   }
