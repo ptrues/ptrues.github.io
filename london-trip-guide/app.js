@@ -57,7 +57,8 @@
     cleanup.forEach(f => f()); cleanup = [];
     const p = params();
     try {
-      if (p.get('print')) await renderPrint(p.get('print'));
+      if (p.has('tickets')) await renderTickets();
+      else if (p.get('print')) await renderPrint(p.get('print'));
       else if (p.get('j')) await renderJourney(p.get('j'), +(p.get('o') || 0));
       else renderHome(p.get('d'));
     } catch (err) {
@@ -137,6 +138,7 @@
       }).join('')}</ul></section>`).join('');
     const dl = trip.days.map(d => `<li><a class="button secondary" href="downloads/${d.id}.pdf" download>${esc(d.label.split(' ')[0])} PDF</a></li>`).join('');
     app.innerHTML = `<div class="hero"><h1>${esc(trip.title)}</h1><p>${esc(trip.dates)}</p></div>${nextHTML}${days}
+      <section class="downloads"><h2>Tickets</h2><a class="button secondary" href="?tickets" data-nav>British Museum tickets (locked) ›</a></section>
       <section class="downloads"><h2>Backups</h2><ul>${dl}</ul>
       <p>Each PDF holds that day’s maps, station plans and directions. Save them to the phone in case the guide cannot load.</p></section>`;
     if (focusDay && document.getElementById(focusDay)) document.getElementById(focusDay).scrollIntoView();
@@ -161,10 +163,12 @@
       <div class="sections">${j.kind === 'dinner' ? dinnerHTML(j) : j.kind === 'destination' ? destinationHTML(j) : sectionsHTML(j.sections, option, 'j=' + id)}</div>
       ${next ? `<div class="next-link"><a class="button secondary" href="${link('j=' + next.id)}" data-nav>Next · ${esc(next.time_label)} ${esc(next.title)} ›</a></div>` : ''}`;
     mountAll(app, maps, false);
+    if (j.museum) mountMuseum(j.museum);
   }
 
   // Destination pages for bookings: what you need once you are there.
   function destinationHTML(j, print) {
+    if (j.museum) return (print ? '' : `<section class="section ticket-link"><a class="button" href="${link('tickets')}" data-nav>Tickets (locked) ›</a></section>`) + museumHTML(j.museum, print);
     const p = trip.places[j.place];
     const walk = j.walk && trip.journeys[j.walk];
     return `<section class="section destination">
@@ -177,12 +181,63 @@
     </section>`;
   }
 
+  function museumHTML(m, print) {
+    return `<section class="section museum-maps">
+      ${!print ? `<div class="museum-floor-tabs" role="tablist" aria-label="Museum floor">${m.floors.map((f, i) => `<button type="button" role="tab" id="museum-tab-${f.id}" aria-controls="museum-floor-${f.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-museum-floor="${f.id}">${esc(f.label)}</button>`).join('')}</div>` : ''}
+      ${m.floors.map((f, i) => `<div class="museum-floor" id="museum-floor-${f.id}"${!print ? ` role="tabpanel" aria-labelledby="museum-tab-${f.id}"${i ? ' hidden' : ''}` : ''}>
+        ${print ? `<h3>${esc(f.label)}</h3>` : ''}<div class="map-box plan-box" data-plan="${f.plan}"><svg role="group" aria-label="${esc(f.label)} museum plan with numbered stops"></svg>
+        <div class="map-tools"><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="out" aria-label="Zoom out">−</button><button type="button" data-zoom="reset" aria-label="Reset plan">⟲</button><span class="sub">Drag · pinch or +/− to zoom</span></div>
+        <div class="map-credit"><span>© 2026 Trustees of the British Museum</span><a href="downloads/british-museum-map.pdf" target="_blank" rel="noopener">Full official map ↗</a></div></div>
+      </div>`).join('')}
+      ${!print ? '<div class="museum-selected" aria-live="polite"></div>' : ''}
+      <ol class="museum-map-key" aria-label="Stops in visit order">${m.stops.map(s => `<li><button type="button" data-museum-stop="${s.n}" aria-pressed="${s.n === 1}"${s.optional ? ' class="optional-pin"' : ''}><b>${s.n}</b><span><strong>${esc(s.title)}</strong><small>${esc(s.room)} · ${s.floor === 'ground' ? 'Ground' : 'Upper'}${s.optional ? ' · optional' : ''}</small></span></button></li>`).join('')}</ol>
+      <a class="button secondary" href="downloads/british-museum-map.pdf" download>Download the full official floor plans</a></section>`;
+  }
+
+  function mountMuseum(m) {
+    const root = app.querySelector('.museum-maps');
+    function showFloor(id) {
+      root.querySelectorAll('[data-museum-floor]').forEach(b => {
+        const active = b.dataset.museumFloor === id;
+        b.setAttribute('aria-selected', active); b.tabIndex = active ? 0 : -1;
+      });
+      root.querySelectorAll('.museum-floor').forEach(p => { p.hidden = p.id !== 'museum-floor-' + id; });
+      const box = root.querySelector(`#museum-floor-${id} [data-plan]`);
+      drawPlan(box, trip.plans[box.dataset.plan], false);
+    }
+    function select(n) {
+      const s = m.stops.find(s => s.n === n);
+      if (!s) return;
+      if (root.querySelector(`#museum-floor-${s.floor}`).hidden) showFloor(s.floor);
+      root.querySelectorAll('[data-museum-stop]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.museumStop === n));
+      root.querySelectorAll('[data-pin-stop]').forEach(p => p.classList.toggle('active', +p.dataset.pinStop === n));
+      root.querySelector('.museum-selected').innerHTML = `<strong>${s.n}. ${esc(s.title)}</strong><span>${esc(s.room)} · ${s.floor === 'ground' ? 'Level 0' : 'Level 3'}${s.optional ? ' · optional' : ''}</span>`;
+    }
+    root.addEventListener('click', e => {
+      const floor = e.target.closest('[data-museum-floor]');
+      if (floor) { showFloor(floor.dataset.museumFloor); select(m.floors.find(f => f.id === floor.dataset.museumFloor).stops[0]); }
+      const stop = e.target.closest('[data-museum-stop]');
+      if (stop) select(+stop.dataset.museumStop);
+
+    });
+    root.addEventListener('museum-select', e => select(e.detail));
+    root.querySelector('.museum-floor-tabs').addEventListener('keydown', e => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      e.preventDefault();
+      const buttons = [...root.querySelectorAll('[data-museum-floor]')];
+      const current = buttons.indexOf(document.activeElement);
+      const i = e.key === 'Home' ? 0 : e.key === 'End' ? buttons.length - 1 : (current + (e.key === 'ArrowLeft' ? -1 : 1) + buttons.length) % buttons.length;
+      buttons[i].click(); buttons[i].focus();
+    });
+    select(1);
+  }
+
   // Dinner pages: a curated list of places grouped by area (no maps or steps).
   function dinnerHTML(j) {
     const places = j.places || [];
     if (!places.length) return '<section class="section dinner"><p class="sub">Nothing added yet.</p></section>';
     const areas = [...new Set(places.map(p => p.area || 'Other'))];
-    return areas.map(area => `<section class="section dinner"><h2>${esc(area)}</h2><ul class="places">${
+    return (j.ranking_note ? `<p class="ranking-note">${esc(j.ranking_note)}</p>` : '') + areas.map(area => `<section class="section dinner"><h2>${esc(area)}</h2><ul class="places">${
       places.filter(p => (p.area || 'Other') === area).map(p => `<li><div><strong>${esc(p.name)}</strong>${p.description ? `<span>${esc(p.description)}</span>` : ''}${p.note ? `<span class="meta">${esc(p.note)}</span>` : ''}</div>
         <div class="place-links">${p.coordinate ? `<a href="${navURL(p.coordinate)}" target="_blank" rel="noopener">Navigate</a>` : ''}${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">Website</a>` : ''}</div></li>`).join('')}</ul></section>`).join('');
   }
@@ -443,9 +498,14 @@
     }
     const overlay = svg.append('g');
     const pins = p.pins.map((xy, i) => {
-      const g = overlay.append('g').attr('class', 'pin');
+      const g = overlay.append('g').attr('class', 'pin' + (p.optionalNumbers && p.optionalNumbers.includes(p.numbers[i]) ? ' optional-pin' : ''));
       g.append('circle').attr('r', 12);
-      g.append('text').attr('class', 'n').attr('text-anchor', 'middle').attr('y', 4.5).text(i + 1);
+      g.append('text').attr('class', 'n').attr('text-anchor', 'middle').attr('y', 4.5).text(p.numbers ? p.numbers[i] : i + 1);
+      if (p.stopIds && !still) {
+        g.attr('data-pin-stop', p.stopIds[i]).attr('role', 'button').attr('tabindex', 0).attr('aria-label', `${p.numbers[i]}. ${p.legend[i]}`);
+        const choose = () => box.dispatchEvent(new CustomEvent('museum-select', {bubbles: true, detail: p.stopIds[i]}));
+        g.on('click', choose).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+      }
       return {g, xy};
     });
     const fit = Math.min(w / p.width, h / p.height);
@@ -456,6 +516,66 @@
       const [x, y] = t.apply(xy); g.attr('transform', `translate(${x},${y})`);
     }), Math.min(fit, k), k * 6, initial, still, box,
       [[-p.width * 0.05, -p.height * 0.05], [p.width * 1.05, p.height * 1.05]], true);
+  }
+
+  // ------------------------------------------------------------ tickets (encrypted)
+  // The published files are AES-GCM ciphertext. The password is typed once; the
+  // derived key is then kept in this browser so the tickets open without typing.
+  const TICKET_KEY = 'london-trip-ticket-key';
+  const fromB64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const toB64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const normalisePassword = p => p.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[.!]+$/, '');
+  const storedKey = () => { try { return localStorage.getItem(TICKET_KEY); } catch (e) { return null; } };
+  async function decryptTickets(meta, key) {
+    return Promise.all(meta.items.map(async item => {
+      const res = await fetch(item.file);
+      if (!res.ok) throw new Error('missing ' + item.file);
+      const plain = await crypto.subtle.decrypt({name: 'AES-GCM', iv: fromB64(item.iv)}, key, await res.arrayBuffer());
+      return {...item, url: URL.createObjectURL(new Blob([plain], {type: item.type}))};
+    }));
+  }
+  async function renderTickets() {
+    document.title = 'Tickets · London trip';
+    const head = `<nav class="crumbs"><a href="./" data-nav>‹ All days</a></nav><header class="journey-head"><h1>Tickets</h1></header>`;
+    if (!window.isSecureContext || !crypto.subtle) { app.innerHTML = head + '<section class="section"><p>Tickets open only on the secure (https) guide address.</p></section>'; return; }
+    const meta = await getJSON('tickets/tickets.json');
+    const show = items => {
+      const qrs = items.filter(i => i.type.startsWith('image/'));
+      const pdf = items.find(i => i.type === 'application/pdf');
+      app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"><img src="${q.url}" alt="${esc(q.label)} QR code"><figcaption>${esc(q.label)}</figcaption></figure>`).join('')}
+        ${pdf ? `<a class="button" href="${pdf.url}" download="${esc(pdf.download || 'tickets.pdf')}">Download ticket PDF</a>` : ''}
+        <p class="sub">Turn the screen brightness up for scanning.</p>
+        <button type="button" class="button secondary" data-forget>Forget the password on this phone</button></section>`;
+      app.querySelector('[data-forget]').onclick = () => { try { localStorage.removeItem(TICKET_KEY); } catch (e) {} renderTickets(); };
+    };
+    const saved = storedKey();
+    if (saved) {
+      try {
+        const key = await crypto.subtle.importKey('raw', fromB64(saved), 'AES-GCM', false, ['decrypt']);
+        show(await decryptTickets(meta, key));
+        return;
+      } catch (e) { try { localStorage.removeItem(TICKET_KEY); } catch (x) {} }
+    }
+    app.innerHTML = head + `<section class="section tickets"><form class="unlock" autocomplete="on">
+      <label for="ticket-password">Password</label>
+      <input id="ticket-password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" required>
+      <button type="submit" class="button">Unlock tickets</button><p class="sub unlock-status" role="status">Type it once; this phone will remember it.</p></form></section>`;
+    const form = app.querySelector('.unlock');
+    form.onsubmit = async ev => {
+      ev.preventDefault();
+      const status = form.querySelector('.unlock-status');
+      status.textContent = 'Unlocking…';
+      try {
+        const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(normalisePassword(form.querySelector('input').value)), 'PBKDF2', false, ['deriveKey']);
+        const key = await crypto.subtle.deriveKey({name: 'PBKDF2', hash: meta.kdf.hash, salt: fromB64(meta.kdf.salt), iterations: meta.kdf.iterations},
+          base, {name: 'AES-GCM', length: 256}, true, ['decrypt']);
+        const items = await decryptTickets(meta, key);
+        try { localStorage.setItem(TICKET_KEY, toB64(await crypto.subtle.exportKey('raw', key))); } catch (e) {}
+        show(items);
+      } catch (e) {
+        status.textContent = 'That password didn’t work. Check the words and try again.';
+      }
+    };
   }
 
   // ------------------------------------------------------------ print (PDF backups)

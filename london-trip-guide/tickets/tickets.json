@@ -1,0 +1,33 @@
+{
+ "version": 1,
+ "kdf": {
+  "name": "PBKDF2",
+  "hash": "SHA-256",
+  "iterations": 600000,
+  "salt": "cOf8KTZ/0kbqjgki0AX7pg=="
+ },
+ "items": [
+  {
+   "id": "museum-qr-1",
+   "label": "British Museum · ticket 1",
+   "type": "image/png",
+   "file": "tickets/museum-qr-1.bin",
+   "iv": "silSk/yWimva9Aeb"
+  },
+  {
+   "id": "museum-qr-2",
+   "label": "British Museum · ticket 2",
+   "type": "image/png",
+   "file": "tickets/museum-qr-2.bin",
+   "iv": "0giiquZSpLZHuEvI"
+  },
+  {
+   "id": "museum-pdf",
+   "label": "British Museum tickets (PDF)",
+   "type": "application/pdf",
+   "file": "tickets/museum-pdf.bin",
+   "iv": "FmceSsJH4AudC2fK",
+   "download": "british-museum-tickets.pdf"
+  }
+ ]
+}
