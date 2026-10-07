@@ -130,6 +130,17 @@ svg .plan-highlight { fill: #b7462122; stroke: var(--route); stroke-width: 2.5; 
 .links li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
 .links a { min-height: 40px; display: inline-flex; align-items: center; }
 
+/* Optional extras: deliberately quieter than the planned sections. */
+.optional { margin: 14px 16px 0; font-size: 14px; color: var(--sub); }
+.optional summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; padding: 4px 0; }
+.optional .sub { margin: 0 0 4px; font-size: 13px; }
+.optional ul { list-style: none; margin: 0; padding: 0; }
+.optional li { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
+.optional strong { display: block; font-weight: 500; color: var(--ink); }
+.optional span { display: block; }
+.optional .meta { margin-top: 2px; font-size: 13px; }
+.optional a { flex-shrink: 0; min-height: 40px; display: inline-flex; align-items: center; }
+
 @media print {
   .topbar, .map-tools, .gps-status, .button, .tabs, .next-link, .crumbs { display: none !important; }
   body { background: #fff; }

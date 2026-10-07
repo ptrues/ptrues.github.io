@@ -183,6 +183,14 @@
         return `<section class="section"><h2>${esc(s.title)}</h2>${stepsHTML(s.steps)}</section>`;
       case 'links':
         return `<section class="section"><h2>${esc(s.title)}</h2><ul class="links">${s.places.map(k => `<li><span>${esc(place(k).name)}</span><a href="${navURL(place(k).coordinate)}" target="_blank" rel="noopener">Navigate ›</a></li>`).join('')}</ul></section>`;
+      case 'optional': {
+        if (!s.stops || !s.stops.length) return '';
+        const when = x => x.opens_later ? `Opens ${x.opens}` : x.closes_early ? `Closes ${x.closes}` : `Open until ${x.closes}`;
+        return `<details class="optional"${printAll ? ' open' : ''}><summary>Optional bookshops nearby · ${esc(s.title.toLowerCase())} (${s.stops.length})</summary>
+          <p class="sub">Only if there is time. Not part of the plan.</p><ul>${s.stops.map(x => `<li><div><strong>${esc(x.name)}</strong>
+          <span>${esc(x.description)}</span><span class="meta">${when(x)} · about ${x.walk_min} min walk</span></div>
+          <a href="${navURL(x.coordinate)}" target="_blank" rel="noopener">Navigate</a></li>`).join('')}</ul></details>`;
+      }
       case 'cruise':
         return `<section class="section"><h2>${esc(s.title)}</h2><p class="sub">${esc(s.text)}</p>${mapBox(s.map, 'River Thames')}</section>`;
       case 'options': {
