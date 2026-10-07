@@ -185,7 +185,7 @@
         return `<section class="section"><h2>${esc(s.title)}</h2><ul class="links">${s.places.map(k => `<li><span>${esc(place(k).name)}</span><a href="${navURL(place(k).coordinate)}" target="_blank" rel="noopener">Navigate ›</a></li>`).join('')}</ul></section>`;
       case 'optional': {
         if (!s.stops || !s.stops.length) return '';
-        const when = x => x.opens_later ? `Opens ${x.opens}` : x.closes_early ? `Closes ${x.closes}` : `Open until ${x.closes}`;
+        const when = x => x.closed ? 'Closed that day' : x.opens_later ? `Opens ${x.opens}` : `Open until ${x.closes}`;
         return `<details class="optional"${printAll ? ' open' : ''}><summary>Optional bookshops · ${esc(s.title.charAt(0).toLowerCase() + s.title.slice(1))} (${s.stops.length})</summary>
           <p class="sub">Only if there is time. Not part of the plan.</p><ul>${s.stops.map(x => `<li><div><strong>${esc(x.name)}</strong>
           <span>${esc(x.description)}</span><span class="meta">${when(x)} · ${x.approx ? `adds roughly ${x.detour_min} min to the walk` : `adds about ${x.detour_min} min to the walk`}</span></div>
