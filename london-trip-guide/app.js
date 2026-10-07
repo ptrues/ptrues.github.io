@@ -165,7 +165,7 @@
         const p = trip.plans[s.plan];
         return `<section class="section plan"><h2>${esc(p.title)}</h2><p class="sub">${esc(p.subtitle)}</p>
           <div class="map-box plan-box" data-plan="${s.plan}"><svg role="img" aria-label="${esc(p.title)} plan with the route highlighted"></svg>
-          <div class="map-tools"><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="out" aria-label="Zoom out">−</button><button type="button" data-zoom="reset" aria-label="Reset plan">⟲</button><span class="sub" style="margin:0;font-size:13px">Drag to move when zoomed</span></div>
+          <div class="map-tools"><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="out" aria-label="Zoom out">−</button><button type="button" data-zoom="reset" aria-label="Reset plan">⟲</button><span class="sub" style="margin:0;font-size:13px">Drag to move · pinch or +/− to zoom</span></div>
           <div class="map-credit"><span>${esc(p.subtitle.split(' · ').pop())}</span><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.credit)} ↗</a></div></div>
           <ul class="legend">${p.legend.map((l, i) => `<li><b>${i + 1}</b>${esc(l)}</li>`).join('')}</ul>
           <p class="plan-text">${p.text}</p></section>`;
@@ -207,22 +207,27 @@
     root.querySelectorAll('[data-plan]').forEach(box => drawPlan(box, trip.plans[box.dataset.plan], still));
   }
 
-  function zoomable(svg, w, h, content, overlay, minK, maxK, initial, still, box) {
-    const zoom = d3.zoom().scaleExtent([minK, maxK]).translateExtent([[-w * 0.1, -h * 0.1], [w * 1.1, h * 1.1]])
+  // extent: pannable area in the content's own units (screen units for outdoor
+  // maps, image pixels / PDF points for station plans).
+  // alwaysDrag: one finger always moves the content (station plans); otherwise
+  // one finger scrolls the page until the map is zoomed in (outdoor maps).
+  function zoomable(svg, w, h, content, overlay, minK, maxK, initial, still, box, extent, alwaysDrag) {
+    const zoomed = () => d3.zoomTransform(svg.node()).k > initial.k * 1.01;
+    const zoom = d3.zoom().scaleExtent([minK, maxK]).extent([[0, 0], [w, h]]).translateExtent(extent)
       .filter(ev => {
         if (ev.type === 'wheel') return ev.ctrlKey;
         if (ev.type === 'dblclick') return true;
-        if (ev.touches) return ev.touches.length > 1 || d3.zoomTransform(svg.node()).k > initial.k * 1.01;
+        if (ev.touches) return alwaysDrag || ev.touches.length > 1 || zoomed();
         return !ev.button;
       })
       .on('zoom', ev => {
         content.attr('transform', ev.transform);
         overlay(ev.transform);
-        svg.style('touch-action', ev.transform.k > initial.k * 1.01 ? 'none' : 'pan-y');
+        if (!alwaysDrag) svg.style('touch-action', ev.transform.k > initial.k * 1.01 ? 'none' : 'pan-y');
       });
     if (still) { content.attr('transform', initial); overlay(initial); return; }
     svg.call(zoom).call(zoom.transform, initial).on('dblclick.zoom', null);
-    svg.style('touch-action', 'pan-y');
+    svg.style('touch-action', alwaysDrag ? 'none' : 'pan-y');
     box.querySelectorAll('[data-zoom]').forEach(b => b.onclick = () => {
       const kind = b.dataset.zoom;
       if (kind === 'reset') svg.transition().duration(200).call(zoom.transform, initial);
@@ -301,7 +306,8 @@
     }
     svg.append('text').attr('class', 'north').attr('x', w - 12).attr('y', 22).attr('text-anchor', 'end').text('N ↑');
     let current = d3.zoomIdentity;
-    zoomable(svg, w, h, content, t => { current = t; place(t); }, 1, 8, d3.zoomIdentity, still, box);
+    zoomable(svg, w, h, content, t => { current = t; place(t); }, 1, 8, d3.zoomIdentity, still, box,
+      [[-w * 0.1, -h * 0.1], [w * 1.1, h * 1.1]], false);
     if (still) return;
     // Location: only after the traveller asks for it.
     const status = box.querySelector('.gps-status');
@@ -364,7 +370,8 @@
     const initial = d3.zoomIdentity.translate(w / 2 - k * (x0 + x1) / 2, h / 2 - k * (y0 + y1) / 2).scale(k);
     zoomable(svg, w, h, content, t => pins.forEach(({g, xy}) => {
       const [x, y] = t.apply(xy); g.attr('transform', `translate(${x},${y})`);
-    }), Math.min(fit, k), k * 6, initial, still, box);
+    }), Math.min(fit, k), k * 6, initial, still, box,
+      [[-p.width * 0.05, -p.height * 0.05], [p.width * 1.05, p.height * 1.05]], true);
   }
 
   // ------------------------------------------------------------ print (PDF backups)
