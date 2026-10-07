@@ -143,6 +143,8 @@ svg .plan-highlight { fill: #b7462122; stroke: var(--route); stroke-width: 2.5; 
 .dinner .place-links { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
 .dinner .place-links a { min-height: 32px; display: inline-flex; align-items: center; }
 
+.destination .reminder { margin: 0 0 12px; background: var(--open-bg); color: var(--ink); border-left: 4px solid var(--open); }
+.destination .reminder strong { color: var(--open); }
 .destination .address { font-weight: 500; margin: 0 0 8px; }
 .destination p { margin: 0 0 8px; }
 .dest-links { list-style: none; margin: 4px 0 0; padding: 0; }

@@ -168,6 +168,7 @@
     const p = trip.places[j.place];
     const walk = j.walk && trip.journeys[j.walk];
     return `<section class="section destination">
+      ${j.reminder ? `<p class="note reminder"><strong>Reminder:</strong> ${esc(j.reminder)}</p>` : ''}
       ${j.address ? `<p class="address">${esc(j.address)}</p>` : ''}
       ${(j.notes || []).map(n => `<p>${esc(n)}</p>`).join('')}
       ${(j.links || []).length ? `<ul class="dest-links">${j.links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join('')}</ul>` : ''}
