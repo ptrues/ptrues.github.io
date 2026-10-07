@@ -142,7 +142,7 @@
       }).join('')}</ul></section>`).join('');
     const dl = trip.days.map(d => `<li><a class="button secondary" href="downloads/${d.id}.pdf" download>${esc(d.label.split(' ')[0])} PDF</a></li>`).join('');
     app.innerHTML = `<div class="hero"><h1>${esc(trip.title)}</h1><p>${esc(trip.dates)}</p></div>${nextHTML}${days}
-      <section class="downloads"><h2>Tickets</h2><a class="button secondary" href="?tickets" data-nav>British Museum tickets (locked) ›</a></section>
+      <section class="downloads"><h2>Tickets</h2><a class="button secondary" href="?tickets" data-nav>View tickets (locked) ›</a></section>
       <section class="downloads"><h2>Backups</h2><ul>${dl}</ul>
       <p>Each PDF holds that day’s maps, station plans and directions. Save them to the phone in case the guide cannot load.</p></section>`;
     if (focusDay && document.getElementById(focusDay)) document.getElementById(focusDay).scrollIntoView();
