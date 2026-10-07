@@ -10,23 +10,36 @@
   {
    "id": "museum-qr-1",
    "label": "Patrick Truesdell",
+   "group": "British Museum",
+   "anchor": "museum",
    "type": "image/png",
    "file": "tickets/museum-qr-1.bin",
-   "iv": "1WNayu/3UYBH7Cyc"
+   "iv": "N8OVYBSuLi+vp06y"
   },
   {
    "id": "museum-qr-2",
    "label": "Sophie Nachman",
+   "group": "British Museum",
    "type": "image/png",
    "file": "tickets/museum-qr-2.bin",
-   "iv": "e8SSXQDEmgpDQtMx"
+   "iv": "W9JnELVeHsMpdss/"
+  },
+  {
+   "id": "cruise-qr",
+   "label": "2 × Return Adult",
+   "group": "Thames cruise",
+   "anchor": "cruise",
+   "type": "image/png",
+   "file": "tickets/cruise-qr.bin",
+   "iv": "Oi15sDf+Wm5Jr1cp"
   },
   {
    "id": "museum-pdf",
    "label": "British Museum tickets (PDF)",
+   "group": "British Museum",
    "type": "application/pdf",
    "file": "tickets/museum-pdf.bin",
-   "iv": "RMipK8BzWHvw94uw",
+   "iv": "dAGHynRO2iFQCCRP",
    "download": "british-museum-tickets.pdf"
   }
  ]

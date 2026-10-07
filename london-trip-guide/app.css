@@ -225,6 +225,8 @@ body.white-page .section { border-color: #ffffff; }
 .tickets .ticket-qr { margin: 0; min-height: calc(100vh - 60px); min-height: calc(100svh - 60px); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; text-align: center; }
 .tickets .ticket-qr img { width: min(86vw, 380px); height: auto; image-rendering: pixelated; background: #fff; display: block; }
 .tickets .ticket-qr figcaption { font-size: 22px; font-weight: 500; color: var(--ink); }
+.tickets .ticket-qr figcaption small { display: block; font-size: 15px; font-weight: 400; color: var(--sub); margin-bottom: 2px; }
+.destination .ticket-button { margin: 0 0 14px; }
 .unlock label { display: block; font-weight: 500; margin-bottom: 6px; }
 .unlock input { width: 100%; min-height: 48px; font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); }
 

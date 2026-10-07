@@ -69,7 +69,7 @@
       console.error(err);
       app.innerHTML = `<p class="error">This page could not be loaded. ${navigator.onLine ? '' : 'You appear to be offline. '}<a href="./" data-nav>Back to all days</a></p>`;
     }
-    if (scrollTop) window.scrollTo(0, 0);
+    if (scrollTop && !params().get('t')) window.scrollTo(0, 0);
   }
 
   // ------------------------------------------------------------ home
@@ -172,11 +172,12 @@
 
   // Destination pages for bookings: what you need once you are there.
   function destinationHTML(j, print) {
-    if (j.museum) return (print ? '' : `<section class="section ticket-link"><a class="button" href="${link('tickets')}" data-nav>Tickets (locked) ›</a></section>`) + museumHTML(j.museum, print);
+    if (j.museum) return (print ? '' : `<section class="section ticket-link"><a class="button" href="${link('tickets&t=museum')}" data-nav>Tickets (locked) ›</a></section>`) + museumHTML(j.museum, print);
     const p = trip.places[j.place];
     const walk = j.walk && trip.journeys[j.walk];
     return `<section class="section destination">
       ${j.reminder ? `<p class="note reminder"><strong>Reminder:</strong> ${esc(j.reminder)}</p>` : ''}
+      ${j.tickets && !print ? `<a class="button ticket-button" href="${link('tickets&t=' + j.tickets)}" data-nav>Tickets (locked) ›</a>` : ''}
       ${j.address ? `<p class="address">${esc(j.address)}</p>` : ''}
       ${(j.notes || []).map(n => `<p>${esc(n)}</p>`).join('')}
       ${(j.links || []).length ? `<ul class="dest-links">${j.links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join('')}</ul>` : ''}
@@ -546,10 +547,12 @@
     const show = items => {
       const qrs = items.filter(i => i.type.startsWith('image/'));
       const pdf = items.find(i => i.type === 'application/pdf');
-      app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"><figcaption>${esc(q.label)}</figcaption><img src="${q.url}" alt="${esc(q.label)} ticket QR code"></figure>`).join('')}
+      app.innerHTML = head + `<section class="section tickets">${qrs.map(q => `<figure class="ticket-qr"${q.anchor ? ` id="ticket-${esc(q.anchor)}"` : ''}><figcaption>${q.group ? `<small>${esc(q.group)}</small>` : ''}${esc(q.label)}</figcaption><img src="${q.url}" alt="${esc((q.group ? q.group + ', ' : '') + q.label)} ticket QR code"></figure>`).join('')}
         ${pdf ? `<a class="button" href="${pdf.url}" download="${esc(pdf.download || 'tickets.pdf')}">Download ticket PDF</a>` : ''}
         <p class="sub">Turn the screen brightness up for scanning.</p>
         <button type="button" class="button secondary" data-forget>Forget the password on this phone</button></section>`;
+      const target = params().get('t') && document.getElementById('ticket-' + params().get('t'));
+      if (target) requestAnimationFrame(() => target.scrollIntoView());
       app.querySelector('[data-forget]').onclick = () => { try { localStorage.removeItem(TICKET_KEY); } catch (e) {} renderTickets(); };
     };
     const saved = storedKey();
