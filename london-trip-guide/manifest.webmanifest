@@ -1,0 +1,10 @@
+{
+  "name": "London trip guide",
+  "short_name": "London trip",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf9f5",
+  "theme_color": "#255b3e",
+  "icons": [{"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}]
+}
