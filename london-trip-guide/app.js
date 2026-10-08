@@ -125,6 +125,24 @@
   window.addEventListener('pageshow', refreshCard);
   window.addEventListener('focus', refreshCard);
 
+  function trainDeparturesHTML() {
+    const stations = new Map();
+    function collect(sections) {
+      for (const s of sections || []) {
+        for (const service of s.services || []) {
+          if (!service.live_departures_url) continue;
+          if (!stations.has(service.from)) stations.set(service.from, new Map());
+          stations.get(service.from).set(service.to, service.live_departures_url);
+        }
+        for (const option of s.options || []) collect(option.sections);
+      }
+    }
+    Object.values(trip.journeys).forEach(j => collect(j.sections));
+    return `<section class="downloads train-departures"><h2>Train Departures</h2>${[...stations].sort(([a], [b]) => a.localeCompare(b)).map(([station, destinations]) =>
+      `<div class="departure-station"><h3>${esc(station)}</h3><ul>${[...destinations].sort(([a], [b]) => a.localeCompare(b)).map(([destination, url]) =>
+        `<li><a class="button secondary" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc('Live departures and platforms from ' + station + ' to ' + destination)}">To ${esc(destination)} ↗</a></li>`).join('')}</ul></div>`).join('')}</section>`;
+  }
+
   function renderHome(focusDay) {
     document.title = 'London trip guide';
     const nextHTML = `<div class="next-slot">${nextCardHTML()}</div>`;
@@ -143,6 +161,7 @@
     const dl = trip.days.map(d => `<li><a class="button secondary" href="downloads/${d.id}.pdf" download>${esc(d.label.split(' ')[0])} PDF</a></li>`).join('');
     app.innerHTML = `<div class="hero"><h1>${esc(trip.title)}</h1><p>${esc(trip.dates)}</p></div>${nextHTML}${days}
       <section class="downloads"><h2>Tickets</h2><a class="button secondary" href="?tickets" data-nav>View tickets (locked) ›</a></section>
+      ${trainDeparturesHTML()}
       <section class="downloads"><h2>Backups</h2><ul>${dl}</ul>
       <p>Each PDF holds that day’s maps, station plans and directions. Save them to the phone in case the guide cannot load.</p></section>`;
     if (focusDay && document.getElementById(focusDay)) document.getElementById(focusDay).scrollIntoView();
@@ -288,9 +307,12 @@
       }
       case 'rail': {
         const timed = s.services.some(x => x.dep);
-        const rows = s.services.map(x => timed
-          ? `<div class="tt">${esc(x.dep)}</div><div class="tp">${esc(x.from)}<span>${esc(x.line)} to ${esc(x.to)} · ${esc(x.detail)}</span></div><div class="tt">${esc(x.arr)}</div><div class="tp">${esc(x.to)}<span>Arrive</span></div>`
-          : `<div class="tp">${esc(x.from)} → ${esc(x.to)}<span>${esc(x.line)} · ${esc(x.detail)}</span></div>`).join('');
+        const rows = s.services.map(x => {
+          const live = x.live_departures_url ? `<a class="live-departures" href="${esc(x.live_departures_url)}" target="_blank" rel="noopener" aria-label="${esc('Live departures and platforms from ' + x.from + ' to ' + x.to)}">Live departures &amp; platforms ↗</a>` : '';
+          return timed
+            ? `<div class="tt">${esc(x.dep)}</div><div class="tp">${esc(x.from)}<span>${esc(x.line)} to ${esc(x.to)} · ${esc(x.detail)}</span>${live}</div><div class="tt">${esc(x.arr)}</div><div class="tp">${esc(x.to)}<span>Arrive</span></div>`
+            : `<div class="tp">${esc(x.from)} → ${esc(x.to)}<span>${esc(x.line)} · ${esc(x.detail)}</span>${live}</div>`;
+        }).join('');
         return `<section class="section rail"><h2>${esc(s.title)}</h2>${timed ? '<p class="sub">Planned timetable. Check the departure screens on the day.</p>' : '<p class="sub">Check the departure screens for times and platforms.</p>'}
           <div class="timeline${timed ? '' : ' untimed'}">${rows}</div>${s.fallback ? `<p class="note">${esc(s.fallback)}</p>` : ''}
           ${mapBox(s.map, 'Railway line (illustrative)')}</section>`;

@@ -51,6 +51,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .downloads h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--sub); font-weight: 500; margin: 0 0 8px; }
 .downloads ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .downloads p { font-size: 13px; color: var(--sub); }
+.train-departures .departure-station + .departure-station { margin-top: 16px; }
+.train-departures h3 { margin: 0 0 6px; font-size: 16px; font-weight: 500; }
+.train-departures ul { grid-template-columns: 1fr; }
 
 /* Journey */
 .crumbs { padding: 10px 16px 0; font-size: 14px; }
@@ -122,6 +125,7 @@ svg .plan-highlight { fill: #b7462122; stroke: var(--route); stroke-width: 2.5; 
 .timeline .tp { padding: 4px 0 12px 14px; border-left: 3px solid var(--track); position: relative; }
 .timeline .tp::before { content: ""; position: absolute; left: -7px; top: 9px; width: 11px; height: 11px; border-radius: 50%; background: var(--track); border: 2px solid #fff; }
 .timeline .tp span { display: block; font-size: 14px; color: var(--sub); }
+.timeline .live-departures { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
 .timeline.untimed { grid-template-columns: 1fr; }
 .note { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--soft); font-size: 14px; }
 .note.open { background: var(--open-bg); color: var(--open); }
