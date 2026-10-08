@@ -206,7 +206,7 @@
       ${j.reminder ? `<p class="note reminder"><strong>Reminder:</strong> ${esc(j.reminder)}</p>` : ''}
       ${j.tickets && !print ? `<a class="button ticket-button" href="${link('tickets&t=' + j.tickets)}" data-nav>Tickets (locked) ›</a>` : ''}
       ${j.address ? `<p class="address">${esc(j.address)}</p>` : ''}
-      ${(j.notes || []).map(n => `<p>${esc(n)}</p>`).join('')}
+      ${(j.notes || []).map(n => typeof n === 'string' ? `<p>${esc(n)}</p>` : `<ul>${n.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>`).join('')}
       ${(j.links || []).length ? `<ul class="dest-links">${j.links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join('')}</ul>` : ''}
       ${j.navigate !== false && p ? `<a class="button" href="${navURL(p.coordinate)}" target="_blank" rel="noopener">Navigate to ${esc(j.title)}</a>` : ''}
       ${walk && !print ? `<a class="button secondary" href="${link('j=' + walk.id)}" data-nav>How to get there · ${esc(walk.title)} ›</a>` : ''}
