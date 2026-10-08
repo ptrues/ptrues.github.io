@@ -138,9 +138,16 @@
       }
     }
     Object.values(trip.journeys).forEach(j => collect(j.sections));
-    return `<section class="downloads train-departures"><h2>Train Departures</h2>${[...stations].sort(([a], [b]) => a.localeCompare(b)).map(([station, destinations]) =>
-      `<div class="departure-station"><h3>${esc(station)}</h3><ul>${[...destinations].sort(([a], [b]) => a.localeCompare(b)).map(([destination, url]) =>
-        `<li><a class="button secondary" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc('Live departures and platforms from ' + station + ' to ' + destination)}">To ${esc(destination)} ↗</a></li>`).join('')}</ul></div>`).join('')}</section>`;
+    const updates = trip.train_departures || {};
+    const orderedStations = [...new Set([...(updates.station_order || []), ...stations.keys()])].filter(station => stations.has(station));
+    return `<section class="downloads train-departures"><h2>Train Departures</h2>${updates.checked_label ? `<p>${esc(updates.checked_label)}</p>` : ''}${orderedStations.map(station => {
+      const destinations = stations.get(station);
+      const info = (updates.stations || {})[station] || {};
+      const extra = (info.links || []).map(l => `<li><a class="button secondary" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join('');
+      const notices = (info.notices || []).map(n => `<div class="departure-notice"><strong>${esc(n.label)}</strong><p>${esc(n.text)} <a href="${esc(n.url)}" target="_blank" rel="noopener">Details ↗</a></p></div>`).join('');
+      return `<div class="departure-station"><h3>${esc(station)}</h3><ul>${[...destinations].sort(([a], [b]) => a.localeCompare(b)).map(([destination, url]) =>
+        `<li><a class="button secondary" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc('Live departures and platforms from ' + station + ' to ' + destination)}">To ${esc(destination)} ↗</a></li>`).join('')}${extra}</ul>${notices}</div>`;
+    }).join('')}</section>`;
   }
 
   function renderHome(focusDay) {
