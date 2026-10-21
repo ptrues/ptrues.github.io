@@ -235,15 +235,9 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <h1>Workflow</h1>
 </header>
 <div class="prose">
-  <h2 id="responsibility-lanes">Responsibility throughout the project</h2>
-  <p>I organized the research and directed work throughout the project. I set the questions, working rules and review requirements. I also evaluated assumptions and required supporting evidence.</p>
-  <p>AI coding agents performed literature searches, coded, ran analyses, and maintained records. They also drafted prose and figures, which I edited extensively before finalizing. I reviewed all outputs and decided which analytical choices to accept.</p>
-  <h2 id="vault">The Obsidian vault</h2>
-  <p>Obsidian is an application for linked notes. It calls a folder of notes a vault, and I organized the project as an Obsidian vault.</p>
-  <p>The notes used Markdown. Links connected questions, evidence, decisions and results, and they worked outside Obsidian too.</p>
-  <p>Git recorded the repository's revisions, so earlier notes and code remained recoverable.</p>
-  <h2 id="wiki">A wiki maintained between sessions</h2>
+  <h2 id="wiki">The Karpathy Method</h2>
   <p>I adapted <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Andrej Karpathy's LLM Wiki pattern</a>. In it, “the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files”.</p>
+  <p>The markdown files were organized in an application called Obsidian.</p>
   <p>When a new source is added, the LLM “reads it, extracts the key information, and integrates it into the existing wiki — updating entity pages, revising topic summaries, noting where new data contradicts old claims, strengthening or challenging the evolving synthesis. The knowledge is compiled once and then kept current, not re-derived on every query.”</p>
   <p>The pattern also calls for a schema that tells the model how to maintain the wiki; in this project, that document was a system of governance that divided authority between me and the agents, set a procedure for each kind of work, and required every result to be traced to recorded inputs and code.</p>
   <p>Sources remained unchanged, while agents updated the wiki as evidence or decisions changed. The governance specified which page owned each finding.</p>
@@ -394,6 +388,9 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 <div class="prose">
   <p>Create the <code>cycling-catchment</code> environment from <code>environment.yml</code>. Run the legal-access analysis with <code>python -m breda_pilot.adopted</code> and that configuration; it reads only the two raw downloads its configuration names. Its <code>metrics.csv</code> supplies the result.</p>
   <p>The <a href="reproduce.html">reproduction instructions</a> preserve exact commands and output locations.</p>
+  <h2 id="responsibility-lanes">Responsibility throughout the project</h2>
+  <p>I organized the research and directed work throughout the project. I set the questions, working rules and review requirements. I also evaluated assumptions and required supporting evidence.</p>
+  <p>AI coding agents performed literature searches, coded, ran analyses, and maintained records. They also drafted prose and figures, which I edited extensively before finalizing. I reviewed all outputs and decided which analytical choices to accept.</p>
 </div>
 <footer class="foot">
   <p><em><a href="index.html">Story</a></em></p>
