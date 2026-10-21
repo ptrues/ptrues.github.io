@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon-tight.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-tight-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-tight-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-tight-180x180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflow</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root {
+  color-scheme: light;
+  --page: #FAF9F7; --plate: #F2EAD8; --ink: #181818; --muted: #5A4C35;
+  --rule: #584433; --link: #8E4410; --focus: #8E4410;
+  --sans: "Noto Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Source Code Pro", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --measure: 40rem; --plate-w: 60rem; --gutter: clamp(12px, 3.5vw, 28px);
+  --para: 1.15rem; --section: 3.25rem;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--sans);
+  font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.canvas { display: grid; row-gap: var(--section); padding-block: var(--section) 0;
+  grid-template-columns: 1fr min(var(--measure), calc(100% - 2 * var(--gutter))) 1fr; }
+.canvas > * { grid-column: 2; min-width: 0; }
+.canvas > .wide { grid-column: 1 / -1; width: min(var(--plate-w), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
+
+h1, h2, h3 { margin: 0; line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0; }
+.hero { display: grid; gap: 1rem; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4.4rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+.hero .subtitle { font-size: clamp(1.4rem, 2.6cqi, 1.85rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; text-wrap: balance; }
+.prose > * + * { margin-top: var(--para); }
+.prose h2 { font-size: clamp(1.4rem, 2.6cqi, 1.85rem); font-weight: 600; }
+.prose h3 { font-size: inherit; font-weight: 600; letter-spacing: 0; }
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+a:hover { color: var(--muted); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+figure.plate { margin: 0; }
+.plate .frame { border: 3px double var(--rule); background: var(--plate); padding: 6px; }
+/* A hand-off page's basic figure: the image as drawn, at most a reading width */
+.plate img.basic { display: block; width: 100%; max-width: 640px; height: auto; margin-inline: auto; }
+.placeholder { display: grid; place-content: center; justify-items: center; gap: .7rem;
+  padding: clamp(1rem, 4vw, 2.5rem); text-align: center; color: var(--muted);
+  border: 1px dashed color-mix(in srgb, var(--rule) 45%, transparent);
+  background: repeating-linear-gradient(135deg, transparent 0 9px, color-mix(in srgb, var(--rule) 7%, transparent) 9px 10px); }
+.placeholder[data-kind="GRAPHIC"] { aspect-ratio: 16 / 9; }
+.placeholder[data-kind="MAP"] { aspect-ratio: 4 / 3; }
+.placeholder[data-kind="PHOTO"] { aspect-ratio: 3 / 2; }
+.placeholder[data-kind="PLOT"] { aspect-ratio: 16 / 10; }
+.placeholder[data-kind="DIAGRAM"] { aspect-ratio: 16 / 10; }
+.placeholder[data-kind="MOCKUP"] { aspect-ratio: 4 / 3; }
+.placeholder[data-kind="IMAGE"] { aspect-ratio: 3 / 2; }
+.placeholder[data-kind="FIGURE"] { aspect-ratio: 1 / 1; }
+.placeholder .kind { font-family: var(--mono); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--rule); }
+.placeholder .brief { max-width: 34rem; font-size: .92rem; line-height: 1.45; }
+.plate .credit { margin-top: .35rem; text-align: right; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .04em; color: var(--muted); }
+.plate .credit a { color: var(--muted); }
+.plate figcaption { margin-top: .7rem; display: flex; gap: .8rem; align-items: baseline;
+  font-size: .92rem; color: var(--muted); }
+.plate .credit + figcaption { margin-top: .45rem; }
+.aligned-right { text-align: right; color: var(--muted); font-size: .72rem; margin-top: -.4rem; }
+.plate .aligned-right { margin-top: .35rem; }
+.plate .credit + .aligned-right { margin-top: 0; }
+.plate figcaption .fig { font-family: var(--mono); font-size: .8rem; font-weight: 600;
+  font-variant-caps: small-caps; letter-spacing: .06em; color: var(--ink); white-space: nowrap; }
+.plate figcaption .takeaway { font-style: italic; }
+
+.shared { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+figure.pullquote { margin: 0; }
+.pullquote blockquote { margin: 0; font-weight: 600; letter-spacing: -0.02em;
+  font-size: clamp(1.45rem, 4.2vw, 2.15rem); line-height: 1.18; color: var(--ink); text-wrap: balance; }
+.pullquote blockquote::before { content: "\201C"; color: var(--link); }
+.pullquote blockquote::after { content: "\201D"; color: var(--link); }
+.pullquote strong { font-weight: inherit; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--link) 24%, transparent) 58% 92%, transparent 92%); }
+.pullquote figcaption { margin-top: .8rem; text-align: right; font-size: .92rem; color: var(--muted); }
+.prose h2[id], .prose h3[id] { scroll-margin-top: 1rem; }
+.prose ul { margin-block: 0; padding-left: 1.2rem; }
+.prose li + li { margin-top: .35rem; }
+code { font-family: var(--mono); font-size: .88em; }
+figure.code { margin: 0; }
+figure.code pre { margin: 0; padding: 1rem 1.15rem; overflow-x: auto; background: #F7F5F4;
+  border: 1px solid #E8E8E8; border-radius: .4rem; font-size: .875rem; line-height: 1.6;
+  tab-size: 4; }
+figure.code pre code { font-size: inherit; }
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+figure.code .syntax .hll { background-color: #ffffcc }
+figure.code .syntax .c { color: #3D7B7B; font-style: italic } /* Comment */
+figure.code .syntax .err { border: 1px solid #F00 } /* Error */
+figure.code .syntax .k { color: #008000; font-weight: bold } /* Keyword */
+figure.code .syntax .o { color: #666 } /* Operator */
+figure.code .syntax .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+figure.code .syntax .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+figure.code .syntax .cp { color: #9C6500 } /* Comment.Preproc */
+figure.code .syntax .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+figure.code .syntax .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+figure.code .syntax .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+figure.code .syntax .gd { color: #A00000 } /* Generic.Deleted */
+figure.code .syntax .ge { font-style: italic } /* Generic.Emph */
+figure.code .syntax .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+figure.code .syntax .gr { color: #E40000 } /* Generic.Error */
+figure.code .syntax .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+figure.code .syntax .gi { color: #008400 } /* Generic.Inserted */
+figure.code .syntax .go { color: #717171 } /* Generic.Output */
+figure.code .syntax .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+figure.code .syntax .gs { font-weight: bold } /* Generic.Strong */
+figure.code .syntax .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+figure.code .syntax .gt { color: #04D } /* Generic.Traceback */
+figure.code .syntax .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+figure.code .syntax .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+figure.code .syntax .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+figure.code .syntax .kp { color: #008000 } /* Keyword.Pseudo */
+figure.code .syntax .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+figure.code .syntax .kt { color: #B00040 } /* Keyword.Type */
+figure.code .syntax .m { color: #666 } /* Literal.Number */
+figure.code .syntax .s { color: #BA2121 } /* Literal.String */
+figure.code .syntax .na { color: #687822 } /* Name.Attribute */
+figure.code .syntax .nb { color: #008000 } /* Name.Builtin */
+figure.code .syntax .nc { color: #00F; font-weight: bold } /* Name.Class */
+figure.code .syntax .no { color: #800 } /* Name.Constant */
+figure.code .syntax .nd { color: #A2F } /* Name.Decorator */
+figure.code .syntax .ni { color: #717171; font-weight: bold } /* Name.Entity */
+figure.code .syntax .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+figure.code .syntax .nf { color: #00F } /* Name.Function */
+figure.code .syntax .nl { color: #767600 } /* Name.Label */
+figure.code .syntax .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+figure.code .syntax .nt { color: #008000; font-weight: bold } /* Name.Tag */
+figure.code .syntax .nv { color: #19177C } /* Name.Variable */
+figure.code .syntax .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+figure.code .syntax .w { color: #BBB } /* Text.Whitespace */
+figure.code .syntax .mb { color: #666 } /* Literal.Number.Bin */
+figure.code .syntax .mf { color: #666 } /* Literal.Number.Float */
+figure.code .syntax .mh { color: #666 } /* Literal.Number.Hex */
+figure.code .syntax .mi { color: #666 } /* Literal.Number.Integer */
+figure.code .syntax .mo { color: #666 } /* Literal.Number.Oct */
+figure.code .syntax .sa { color: #BA2121 } /* Literal.String.Affix */
+figure.code .syntax .sb { color: #BA2121 } /* Literal.String.Backtick */
+figure.code .syntax .sc { color: #BA2121 } /* Literal.String.Char */
+figure.code .syntax .dl { color: #BA2121 } /* Literal.String.Delimiter */
+figure.code .syntax .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+figure.code .syntax .s2 { color: #BA2121 } /* Literal.String.Double */
+figure.code .syntax .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+figure.code .syntax .sh { color: #BA2121 } /* Literal.String.Heredoc */
+figure.code .syntax .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+figure.code .syntax .sx { color: #008000 } /* Literal.String.Other */
+figure.code .syntax .sr { color: #A45A77 } /* Literal.String.Regex */
+figure.code .syntax .s1 { color: #BA2121 } /* Literal.String.Single */
+figure.code .syntax .ss { color: #19177C } /* Literal.String.Symbol */
+figure.code .syntax .bp { color: #008000 } /* Name.Builtin.Pseudo */
+figure.code .syntax .fm { color: #00F } /* Name.Function.Magic */
+figure.code .syntax .vc { color: #19177C } /* Name.Variable.Class */
+figure.code .syntax .vg { color: #19177C } /* Name.Variable.Global */
+figure.code .syntax .vi { color: #19177C } /* Name.Variable.Instance */
+figure.code .syntax .vm { color: #19177C } /* Name.Variable.Magic */
+figure.code .syntax .il { color: #666 } /* Literal.Number.Integer.Long */
+figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .04em; color: var(--muted); }
+.refs { list-style: none; padding: 0; margin: 0; font-size: .92rem; }
+.refs li { padding-left: 1.5rem; text-indent: -1.5rem; }
+.refs li + li { margin-top: .6rem; }
+.refs a { overflow-wrap: anywhere; }
+
+/* The plate of Figs 22 and 26 (owner, 2026-10-06: "Don't ignore background colors"): parchment inside the
+   double rule, every other row in Fig 26's band; no grain */
+.table { box-sizing: border-box; margin: 0; padding: .9rem 1rem; border: 3px double var(--rule); border-radius: 2px;
+  background: #EAE4D3; box-shadow: inset 0 0 2.4em #7e684638, 0 2px 12px #0000004d; }
+/* Keep table text and rules free of the figures' SVG filters. */
+.table, .table * { filter: none; }
+.table tbody tr:nth-child(odd) { background: #E4D6B8; }
+/* Fig 22's typeface for the column headings only (owner, 2026-10-20): tracked monospace capitals; every
+   other cell in the page's sans, which the owner found easier to read; the first column in bold */
+.table table { width: 100%; border-collapse: collapse; font-size: .92rem; line-height: 1.45; }
+.table thead th { font-family: var(--mono); }
+.table th, .table td { padding: .6rem .7rem; text-align: left; vertical-align: top; }
+.table thead th { border-bottom: 3px double var(--rule); font-weight: 600; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; }
+.table tbody td:first-child { font-weight: 600; }
+/* The other explainer pages (owner, 2026-10-06: "a plainer black and white appearance for the other
+   explainers"): the table sits in the text column, black hairlines, no paper, band or tracked capitals */
+.plain .canvas > .table.wide { grid-column: 2; width: auto; margin-inline: 0; }
+.plain .table { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.plain .table table { border-top: 1px solid #000; border-bottom: 1px solid #000; }
+.plain .table tbody tr:nth-child(odd) { background: none; }
+.plain .table thead th, .plain .table tbody td:first-child { font-family: inherit; font-size: inherit; letter-spacing: 0; text-transform: none; }
+.plain .table thead th { border-bottom: 1px solid #000; }
+.plain .table tbody tr + tr td { border-top: 1px solid #000; }
+.plain .table th, .plain .table td { padding-inline: 0 .9rem; color: #000; }
+/* A table's caption sits above it, by convention (owner, 2026-10-06): plain, descriptive */
+.table figcaption { margin-bottom: .6rem; font-size: .92rem; }
+.table figcaption .number { display: block; font-weight: 700; }
+.table figcaption .title { display: block; margin-top: .2rem; font-style: italic; }
+.plain .table figcaption { color: #000; }
+
+.foot { border-top: 3px double var(--rule); padding-block: 1.25rem 3.5rem; font-size: .92rem; color: var(--muted); }
+.foot > * + * { margin-top: .5rem; }
+
+@media (max-width: 40rem) {
+  .canvas > .wide { width: 100%; }
+  .plate .frame { border-inline: 0; }
+  .plate .credit, .plate figcaption { padding-inline: 1rem; }
+  .plate figcaption { display: grid; gap: .2rem; }
+  .placeholder .kind { font-size: 12px; }
+  .table { border-inline: 0; border-radius: 0; padding-inline: 0; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .table table, .table tbody, .table tr, .table td { display: block; }
+  .table tbody tr { padding-block: .9rem; }
+  .table tbody tr + tr { border-top: 3px double var(--rule); }
+  .table tbody tr + tr td { border-top: 0; }
+  .table td { padding: .2rem 1rem; }
+  .table td::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .table tbody td:first-child::before { content: none; }
+  .plain .table tbody tr + tr { border-top: 1px solid #000; }
+  .plain .table tbody tr + tr td { border-top: 0; }
+  .plain .table td { padding-inline: 0; }
+  .plain .table td::before { font-family: inherit; letter-spacing: 0; text-transform: none; color: #000; }
+}
+</style>
+</head>
+<body class="plain">
+<main class="canvas">
+<header class="hero">
+  <h1>Workflow</h1>
+</header>
+<div class="prose">
+  <h2 id="responsibility-lanes">Responsibility throughout the project</h2>
+  <p>I organized the research and directed work throughout the project. I set the questions, working rules and review requirements. I also evaluated assumptions and required supporting evidence.</p>
+  <p>AI coding agents performed literature searches, coded, ran analyses, and maintained records. They also drafted prose and figures, which I edited extensively before finalizing. I reviewed all outputs and decided which analytical choices to accept.</p>
+  <h2 id="vault">The Obsidian vault</h2>
+  <p>Obsidian is an application for linked notes. It calls a folder of notes a vault, and I organized the project as an Obsidian vault.</p>
+  <p>The notes used Markdown. Links connected questions, evidence, decisions and results, and they worked outside Obsidian too.</p>
+  <p>Git recorded the repository's revisions, so earlier notes and code remained recoverable.</p>
+  <h2 id="wiki">A wiki maintained between sessions</h2>
+  <p>I adapted <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Andrej Karpathy's LLM Wiki pattern</a>. In it, “the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files”.</p>
+  <p>When a new source is added, the LLM “reads it, extracts the key information, and integrates it into the existing wiki — updating entity pages, revising topic summaries, noting where new data contradicts old claims, strengthening or challenging the evolving synthesis. The knowledge is compiled once and then kept current, not re-derived on every query.”</p>
+  <p>The pattern also calls for a schema that tells the model how to maintain the wiki; in this project, that document was a system of governance that divided authority between me and the agents, set a procedure for each kind of work, and required every result to be traced to recorded inputs and code.</p>
+  <p>Sources remained unchanged, while agents updated the wiki as evidence or decisions changed. The governance specified which page owned each finding.</p>
+  <p>The wiki held the current understanding, and a separate log kept the history. Recorded findings remained usable without chat history.</p>
+  <h2 id="repository">How the repository was organized</h2>
+  <p>The repository separated evidence, maintained knowledge and the machinery that produces results.</p>
+</div>
+<figure class="table wide" id="table-1">
+  <figcaption><span class="number">Table 1</span><span class="title">Repository Structure</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Part</th><th scope="col">Location</th><th scope="col">Role</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Part">Evidence</td><td data-label="Location">data/raw/ and references/</td><td data-label="Role">Original datasets, documents, metadata and saved search results</td></tr>
+    <tr><td data-label="Part">Knowledge</td><td data-label="Location">wiki/</td><td data-label="Role">Source descriptions, questions, findings, decisions and analysis records</td></tr>
+    <tr><td data-label="Part">Analysis machinery</td><td data-label="Location">src/, scripts/, config/ and tests/</td><td data-label="Role">Reusable code, executable steps, settings and checks</td></tr>
+    <tr><td data-label="Part">Generated work</td><td data-label="Location">outputs/</td><td data-label="Role">Analysis results, review forms, figures and webpages</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <p>The wiki index linked to the maintained pages. The status page identified current results and open questions, and the handoff page stated where work stopped. The log recorded consequential changes.</p>
+  <h2 id="rules">Working rules and recorded choices</h2>
+  <p>I established rules for evidence, reproducibility and authority. They distinguished agent implementation choices from choices requiring my judgment, and agents read them before work.</p>
+  <p>A configuration recorded inputs and settings. Each analysis retained its configuration, code revision and software versions. Changed analyses preserved earlier results.</p>
+  <p>A decision record held the choice, alternatives, evidence and consequences. I accepted choices that settled a result's meaning, and agents recorded and implemented them.</p>
+</div>
+<figure class="table wide" id="table-2">
+  <figcaption><span class="number">Table 2</span><span class="title">Examples of Recorded Answers</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Decision</th><th scope="col">Question</th><th scope="col">Recorded answer</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Decision">Cycling speed</td><td data-label="Question">Should the pilot assume people cycle at 15 km/h?</td><td data-label="Recorded answer">"15 km/h is well-justified by the literature."</td></tr>
+    <tr><td data-label="Decision">Walking at each end of the ride</td><td data-label="Question">How long a walk should the trip allow at each end?</td><td data-label="Recorded answer">"I do want to adopt a 2 min rule at either end"</td></tr>
+    <tr><td data-label="Decision">Bike access on OpenStreetMap</td><td data-label="Question">Should OpenStreetMap be trusted where it says bikes are allowed?</td><td data-label="Recorded answer">"Adopt the prefer-OSM rule"</td></tr>
+    <tr><td data-label="Decision">One-way streets</td><td data-label="Question">Should bikes ride both ways on one-way streets?</td><td data-label="Recorded answer">"Okay, since 92% treat public streets as open to bicycles, we will adopt an assumption that all of them do."</td></tr>
+    <tr><td data-label="Decision">The adopted method</td><td data-label="Question">Which analysis should be adopted?</td><td data-label="Recorded answer">"I want the adopted method to be entirely OSM-native."</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <h2 id="sources">How evidence was acquired</h2>
+  <p>I required literature searches before justifying research-based choices. A search agent developed and executed each search strategy.</p>
+  <p>OpenAlex is a searchable catalog of scholarly works.</p>
+  <p>The search agent queried OpenAlex and Crossref and saved queries, filters and responses.</p>
+</div>
+<figure class="table wide" id="table-3">
+  <figcaption><span class="number">Table 3</span><span class="title">An Example of a Search Strategy</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Database</th><th scope="col">Search terms</th><th scope="col">Hits</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Database">OpenAlex</td><td data-label="Search terms">"cycling speed" Netherlands GPS intersection stops</td><td data-label="Hits">68</td></tr>
+    <tr><td data-label="Database">OpenAlex</td><td data-label="Search terms">"bicycle travel speed" Dutch urban commuting</td><td data-label="Hits">15</td></tr>
+    <tr><td data-label="Database">Crossref</td><td data-label="Search terms">"cycling speed" Netherlands GPS intersection stops</td><td data-label="Hits">124,937</td></tr>
+    <tr><td data-label="Database">Crossref</td><td data-label="Search terms">"bicycle travel speed" Dutch urban commuting</td><td data-label="Hits">1,076,710</td></tr>
+    <tr><td data-label="Database">OpenAlex</td><td data-label="Search terms">Fietstelweek cycling speed Netherlands</td><td data-label="Hits">20</td></tr>
+    <tr><td data-label="Database">OpenAlex</td><td data-label="Search terms">Dutch cyclists GPS speed travel time stops</td><td data-label="Hits">482</td></tr>
+    <tr><td data-label="Database">Crossref</td><td data-label="Search terms">Fietstelweek cycling speed Netherlands</td><td data-label="Hits">352,181</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <p>The search log recorded screening criteria and reasons for retaining or rejecting sources.</p>
+</div>
+<figure class="table wide" id="table-4">
+  <figcaption><span class="number">Table 4</span><span class="title">Screening of the Example Search</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Paper</th><th scope="col">Decision</th><th scope="col">Reason</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Paper">Cycling speed variation: a multilevel model of characteristics of cyclists, trips and route tracking points (<a href="sources.html#ref-yan2024">Yan et al. 2024</a>)</td><td data-label="Decision">Kept</td><td data-label="Reason">Dutch GPS measurement that keeps stopped points and reports mean speeds</td></tr>
+    <tr><td data-label="Paper">How do people cycle in Amsterdam, Netherlands?</td><td data-label="Decision">Not kept</td><td data-label="Reason">Reports no cycling speed</td></tr>
+    <tr><td data-label="Paper">Understanding the relation between travel duration and station choice behavior of cyclists in the metropolitan region of Amsterdam</td><td data-label="Decision">Not kept</td><td data-label="Reason">Reports trip durations to stations, but no cycling speed</td></tr>
+    <tr><td data-label="Paper">Bicycle data-driven application framework</td><td data-label="Decision">Not kept</td><td data-label="Reason">Measures delay against an assumed 18 km/h, not a measured speed</td></tr>
+    <tr><td data-label="Paper">Measuring delays for bicycles at signalized intersections using smartphone GPS tracking data</td><td data-label="Decision">Not kept</td><td data-label="Reason">Studies Belgium, outside the criteria</td></tr>
+    <tr><td data-label="Paper">Active transport between home and school assessed with GPS</td><td data-label="Decision">Not kept</td><td data-label="Reason">Uses speed to classify the travel mode, not as a result</td></tr>
+    <tr><td data-label="Paper">Modelling the impact of road infrastructure on cycling moving speed</td><td data-label="Decision">Not kept</td><td data-label="Reason">Measures speed while moving, leaving out stops</td></tr>
+    <tr><td data-label="Paper">The Dutch road to a high level of cycling safety</td><td data-label="Decision">Comparison only</td><td data-label="Reason">Gives 16 to 18 km/h, excluding stops</td></tr>
+    <tr><td data-label="Paper">Characterisation of and reflections on the synergy of bicycles and public transport</td><td data-label="Decision">Comparison only</td><td data-label="Reason">Gives 19 km/h riding freely, with crossing delay added separately</td></tr>
+    <tr><td data-label="Paper">The bicycle-train travellers in the Netherlands</td><td data-label="Decision">Not kept</td><td data-label="Reason">Assumes 15 km/h rather than measuring it</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <p>Crossref supplied the publication metadata. It was queried using each publication's digital object identifier (DOI), and its responses were saved unchanged.</p>
+  <p>Papers went into the project's catalog and bibliography. Documents without DOIs used the publisher's record.</p>
+  <p>The full text of every cited paper was kept in the project, along with a plain-text copy so the LLM could parse it quickly. Each claim was checked against the text before the paper was cited.</p>
+  <p>The findings from each search went into a persistent wiki page.</p>
+  <p>Datasets were downloaded with scripts wherever possible. A wiki page recorded its provider, version, download date and license.</p>
+  <h2 id="citations">How citations reached the page</h2>
+  <p>The page builder looked up each citation's saved bibliography entry. Its links showed authors and year, and bibliography entries used the metadata.</p>
+  <p>Crossref was queried with the paper's DOI, and its response was saved in the project:</p>
+<figure class="code">
+<pre><code class="syntax language-sh">curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://api.crossref.org/works/10.3389/ffutr.2023.1127742"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&gt;<span class="w"> </span>references/literature/metadata/weikl2023.crossref.json</code></pre>
+</figure>
+  <p>A bibliography entry was built from that response and stored under a citation key, such as <code>weikl2023</code>.</p>
+  <p>The page's text cited the key at the end of a sentence: "I set the route criteria … as operationalized by Weikl and Mayer <code>[@weikl2023]</code>."</p>
+  <p>The code replaced each key with the authors and year from its entry, and linked it to the entry. A citation without a bibliography entry returned an error.</p>
+<figure class="code">
+<pre><code class="syntax language-python"><span class="k">def</span><span class="w"> </span><span class="nf">_citation</span><span class="p">(</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"@"</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">cite_label</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_cited</span><span class="p">:</span>
+            <span class="n">_cited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&lt;a href="sources.html#ref-</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">"&gt;</span><span class="si">{</span><span class="n">html</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/a&gt;'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">"("</span> <span class="o">+</span> <span class="s2">"; "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">+</span> <span class="s2">")"</span></code></pre>
+</figure>
+  <p>The bibliography listed every cited entry, formatted from the saved metadata:</p>
+<figure class="code">
+<pre><code class="syntax language-json"><span class="p">{</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weikl2023"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"article-journal"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"family"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weikl"</span><span class="p">,</span><span class="w"> </span><span class="nt">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Simone"</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"family"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mayer"</span><span class="p">,</span><span class="w"> </span><span class="nt">"given"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Patricia"</span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"issued"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"date-parts"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mi">2023</span><span class="p">]]},</span>
+<span class="w">  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data-driven quality assessment of cycling networks"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"container-title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frontiers in Future Transportation"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"DOI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.3389/ffutr.2023.1127742"</span>
+<span class="p">}</span></code></pre>
+</figure>
+  <p>For instance, the above metadata record became "Weikl, S. and Mayer, P. (2023). Data-driven quality assessment of cycling networks. <em>Frontiers in Future Transportation</em>, 4. https://doi.org/10.3389/ffutr.2023.1127742".</p>
+  <h2 id="decisions">Method development and manual review</h2>
+  <p>I set the route criteria from the Level of Traffic Stress framework (<a href="sources.html#ref-mekuria2012">Mekuria et al. 2012</a>; <a href="sources.html#ref-furth2016">Furth et al. 2016</a>) and the Dutch design manual for bicycle traffic (<a href="sources.html#ref-crowFietsberaad2016">CROW-Fietsberaad 2016</a>), as operationalized by Weikl and Mayer (<a href="sources.html#ref-weikl2023">Weikl and Mayer 2023</a>). The agent translated these criteria into proposed rules. I evaluated their consequences before adopting them.</p>
+  <p>I required justification for choices about sources and street attributes. For these, the agent prepared literature findings and data comparisons. I then judged whether the evidence supported adoption.</p>
+  <p>To catch errors in the spatial data, I reviewed selected cases manually. I designed a form that allowed me to review each case against aerial and street-level imagery. My responses were saved as a durable record in the project files.</p>
+  <p><a href="review-form-example.html">An example of a manual review form</a></p>
+  <h2 id="checks">Generated code and its checks</h2>
+  <p>Agents wrote the analysis code. Each analysis kept its settings in a file separate from the code.</p>
+  <p>Agents also wrote tests. Each test ran the code on a small example with a known answer and checked that the code returned that answer.</p>
+  <p>Before using an input file, the analysis calculated its checksum and compared it with the recorded value. A checksum is a value calculated from a file's contents. A mismatch meant the file had changed, and the analysis returned an error.</p>
+  <p>When the code changed, earlier analyses were rerun to confirm that they still gave the same results.</p>
+  <h2 id="rebuild">Reproducing the analysis</h2>
+  <p>The repository retains original inputs and documentation. It also holds cited works' full texts, and academic entries include publisher metadata.</p>
+  <p>A "current-results pointer" identifies the adopted analysis, and its record states the outputs, checks and limits.</p>
+</div>
+<figure class="table wide" id="table-5">
+  <figcaption><span class="number">Table 5</span><span class="title">Analysis Record</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Analysis</th><th scope="col">Configuration used</th><th scope="col">Code revision</th><th scope="col">Software record</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Analysis">Legal-access result</td><td data-label="Configuration used"><a href="run-055-configuration.html">Inputs and settings</a></td><td data-label="Code revision">5a6cab0</td><td data-label="Software record">environment.lock.yml at c16ec65</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <p>Create the <code>cycling-catchment</code> environment from <code>environment.yml</code>. Run the legal-access analysis with <code>python -m breda_pilot.adopted</code> and that configuration; it reads only the two raw downloads its configuration names. Its <code>metrics.csv</code> supplies the result.</p>
+  <p>The <a href="reproduce.html">reproduction instructions</a> preserve exact commands and output locations.</p>
+</div>
+<footer class="foot">
+  <p><em><a href="index.html">Story</a></em></p>
+  <p><em><a href="method.html" target="_blank" rel="noopener">Method</a></em></p>
+  <p><em><a href="sources.html" target="_blank" rel="noopener">Sources</a></em></p>
+</footer>
+</main>
+</body>
+</html>

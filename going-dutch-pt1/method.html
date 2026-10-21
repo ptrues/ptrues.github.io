@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon-tight.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-tight-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-tight-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-tight-180x180.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root {
+  color-scheme: light;
+  --page: #FAF9F7; --plate: #F2EAD8; --ink: #181818; --muted: #5A4C35;
+  --rule: #584433; --link: #8E4410; --focus: #8E4410;
+  --sans: "Noto Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Source Code Pro", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --measure: 40rem; --plate-w: 60rem; --gutter: clamp(12px, 3.5vw, 28px);
+  --para: 1.15rem; --section: 3.25rem;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--sans);
+  font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.canvas { display: grid; row-gap: var(--section); padding-block: var(--section) 0;
+  grid-template-columns: 1fr min(var(--measure), calc(100% - 2 * var(--gutter))) 1fr; }
+.canvas > * { grid-column: 2; min-width: 0; }
+.canvas > .wide { grid-column: 1 / -1; width: min(var(--plate-w), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
+
+h1, h2, h3 { margin: 0; line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0; }
+.hero { display: grid; gap: 1rem; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4.4rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+.hero .subtitle { font-size: clamp(1.4rem, 2.6cqi, 1.85rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; text-wrap: balance; }
+.prose > * + * { margin-top: var(--para); }
+.prose h2 { font-size: clamp(1.4rem, 2.6cqi, 1.85rem); font-weight: 600; }
+.prose h3 { font-size: inherit; font-weight: 600; letter-spacing: 0; }
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+a:hover { color: var(--muted); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+figure.plate { margin: 0; }
+.plate .frame { border: 3px double var(--rule); background: var(--plate); padding: 6px; }
+/* A hand-off page's basic figure: the image as drawn, at most a reading width */
+.plate img.basic { display: block; width: 100%; max-width: 640px; height: auto; margin-inline: auto; }
+.placeholder { display: grid; place-content: center; justify-items: center; gap: .7rem;
+  padding: clamp(1rem, 4vw, 2.5rem); text-align: center; color: var(--muted);
+  border: 1px dashed color-mix(in srgb, var(--rule) 45%, transparent);
+  background: repeating-linear-gradient(135deg, transparent 0 9px, color-mix(in srgb, var(--rule) 7%, transparent) 9px 10px); }
+.placeholder[data-kind="GRAPHIC"] { aspect-ratio: 16 / 9; }
+.placeholder[data-kind="MAP"] { aspect-ratio: 4 / 3; }
+.placeholder[data-kind="PHOTO"] { aspect-ratio: 3 / 2; }
+.placeholder[data-kind="PLOT"] { aspect-ratio: 16 / 10; }
+.placeholder[data-kind="DIAGRAM"] { aspect-ratio: 16 / 10; }
+.placeholder[data-kind="MOCKUP"] { aspect-ratio: 4 / 3; }
+.placeholder[data-kind="IMAGE"] { aspect-ratio: 3 / 2; }
+.placeholder[data-kind="FIGURE"] { aspect-ratio: 1 / 1; }
+.placeholder .kind { font-family: var(--mono); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--rule); }
+.placeholder .brief { max-width: 34rem; font-size: .92rem; line-height: 1.45; }
+.plate .credit { margin-top: .35rem; text-align: right; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .04em; color: var(--muted); }
+.plate .credit a { color: var(--muted); }
+.plate figcaption { margin-top: .7rem; display: flex; gap: .8rem; align-items: baseline;
+  font-size: .92rem; color: var(--muted); }
+.plate .credit + figcaption { margin-top: .45rem; }
+.aligned-right { text-align: right; color: var(--muted); font-size: .72rem; margin-top: -.4rem; }
+.plate .aligned-right { margin-top: .35rem; }
+.plate .credit + .aligned-right { margin-top: 0; }
+.plate figcaption .fig { font-family: var(--mono); font-size: .8rem; font-weight: 600;
+  font-variant-caps: small-caps; letter-spacing: .06em; color: var(--ink); white-space: nowrap; }
+.plate figcaption .takeaway { font-style: italic; }
+
+.shared { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+figure.pullquote { margin: 0; }
+.pullquote blockquote { margin: 0; font-weight: 600; letter-spacing: -0.02em;
+  font-size: clamp(1.45rem, 4.2vw, 2.15rem); line-height: 1.18; color: var(--ink); text-wrap: balance; }
+.pullquote blockquote::before { content: "\201C"; color: var(--link); }
+.pullquote blockquote::after { content: "\201D"; color: var(--link); }
+.pullquote strong { font-weight: inherit; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--link) 24%, transparent) 58% 92%, transparent 92%); }
+.pullquote figcaption { margin-top: .8rem; text-align: right; font-size: .92rem; color: var(--muted); }
+.prose h2[id], .prose h3[id] { scroll-margin-top: 1rem; }
+.prose ul { margin-block: 0; padding-left: 1.2rem; }
+.prose li + li { margin-top: .35rem; }
+code { font-family: var(--mono); font-size: .88em; }
+figure.code { margin: 0; }
+figure.code pre { margin: 0; padding: 1rem 1.15rem; overflow-x: auto; background: #F7F5F4;
+  border: 1px solid #E8E8E8; border-radius: .4rem; font-size: .875rem; line-height: 1.6;
+  tab-size: 4; }
+figure.code pre code { font-size: inherit; }
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+figure.code .syntax .hll { background-color: #ffffcc }
+figure.code .syntax .c { color: #3D7B7B; font-style: italic } /* Comment */
+figure.code .syntax .err { border: 1px solid #F00 } /* Error */
+figure.code .syntax .k { color: #008000; font-weight: bold } /* Keyword */
+figure.code .syntax .o { color: #666 } /* Operator */
+figure.code .syntax .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+figure.code .syntax .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+figure.code .syntax .cp { color: #9C6500 } /* Comment.Preproc */
+figure.code .syntax .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+figure.code .syntax .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+figure.code .syntax .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+figure.code .syntax .gd { color: #A00000 } /* Generic.Deleted */
+figure.code .syntax .ge { font-style: italic } /* Generic.Emph */
+figure.code .syntax .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+figure.code .syntax .gr { color: #E40000 } /* Generic.Error */
+figure.code .syntax .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+figure.code .syntax .gi { color: #008400 } /* Generic.Inserted */
+figure.code .syntax .go { color: #717171 } /* Generic.Output */
+figure.code .syntax .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+figure.code .syntax .gs { font-weight: bold } /* Generic.Strong */
+figure.code .syntax .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+figure.code .syntax .gt { color: #04D } /* Generic.Traceback */
+figure.code .syntax .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+figure.code .syntax .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+figure.code .syntax .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+figure.code .syntax .kp { color: #008000 } /* Keyword.Pseudo */
+figure.code .syntax .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+figure.code .syntax .kt { color: #B00040 } /* Keyword.Type */
+figure.code .syntax .m { color: #666 } /* Literal.Number */
+figure.code .syntax .s { color: #BA2121 } /* Literal.String */
+figure.code .syntax .na { color: #687822 } /* Name.Attribute */
+figure.code .syntax .nb { color: #008000 } /* Name.Builtin */
+figure.code .syntax .nc { color: #00F; font-weight: bold } /* Name.Class */
+figure.code .syntax .no { color: #800 } /* Name.Constant */
+figure.code .syntax .nd { color: #A2F } /* Name.Decorator */
+figure.code .syntax .ni { color: #717171; font-weight: bold } /* Name.Entity */
+figure.code .syntax .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+figure.code .syntax .nf { color: #00F } /* Name.Function */
+figure.code .syntax .nl { color: #767600 } /* Name.Label */
+figure.code .syntax .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+figure.code .syntax .nt { color: #008000; font-weight: bold } /* Name.Tag */
+figure.code .syntax .nv { color: #19177C } /* Name.Variable */
+figure.code .syntax .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+figure.code .syntax .w { color: #BBB } /* Text.Whitespace */
+figure.code .syntax .mb { color: #666 } /* Literal.Number.Bin */
+figure.code .syntax .mf { color: #666 } /* Literal.Number.Float */
+figure.code .syntax .mh { color: #666 } /* Literal.Number.Hex */
+figure.code .syntax .mi { color: #666 } /* Literal.Number.Integer */
+figure.code .syntax .mo { color: #666 } /* Literal.Number.Oct */
+figure.code .syntax .sa { color: #BA2121 } /* Literal.String.Affix */
+figure.code .syntax .sb { color: #BA2121 } /* Literal.String.Backtick */
+figure.code .syntax .sc { color: #BA2121 } /* Literal.String.Char */
+figure.code .syntax .dl { color: #BA2121 } /* Literal.String.Delimiter */
+figure.code .syntax .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+figure.code .syntax .s2 { color: #BA2121 } /* Literal.String.Double */
+figure.code .syntax .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+figure.code .syntax .sh { color: #BA2121 } /* Literal.String.Heredoc */
+figure.code .syntax .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+figure.code .syntax .sx { color: #008000 } /* Literal.String.Other */
+figure.code .syntax .sr { color: #A45A77 } /* Literal.String.Regex */
+figure.code .syntax .s1 { color: #BA2121 } /* Literal.String.Single */
+figure.code .syntax .ss { color: #19177C } /* Literal.String.Symbol */
+figure.code .syntax .bp { color: #008000 } /* Name.Builtin.Pseudo */
+figure.code .syntax .fm { color: #00F } /* Name.Function.Magic */
+figure.code .syntax .vc { color: #19177C } /* Name.Variable.Class */
+figure.code .syntax .vg { color: #19177C } /* Name.Variable.Global */
+figure.code .syntax .vi { color: #19177C } /* Name.Variable.Instance */
+figure.code .syntax .vm { color: #19177C } /* Name.Variable.Magic */
+figure.code .syntax .il { color: #666 } /* Literal.Number.Integer.Long */
+figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .04em; color: var(--muted); }
+.refs { list-style: none; padding: 0; margin: 0; font-size: .92rem; }
+.refs li { padding-left: 1.5rem; text-indent: -1.5rem; }
+.refs li + li { margin-top: .6rem; }
+.refs a { overflow-wrap: anywhere; }
+
+/* The plate of Figs 22 and 26 (owner, 2026-10-06: "Don't ignore background colors"): parchment inside the
+   double rule, every other row in Fig 26's band; no grain */
+.table { box-sizing: border-box; margin: 0; padding: .9rem 1rem; border: 3px double var(--rule); border-radius: 2px;
+  background: #EAE4D3; box-shadow: inset 0 0 2.4em #7e684638, 0 2px 12px #0000004d; }
+/* Keep table text and rules free of the figures' SVG filters. */
+.table, .table * { filter: none; }
+.table tbody tr:nth-child(odd) { background: #E4D6B8; }
+/* Fig 22's typeface for the column headings only (owner, 2026-10-20): tracked monospace capitals; every
+   other cell in the page's sans, which the owner found easier to read; the first column in bold */
+.table table { width: 100%; border-collapse: collapse; font-size: .92rem; line-height: 1.45; }
+.table thead th { font-family: var(--mono); }
+.table th, .table td { padding: .6rem .7rem; text-align: left; vertical-align: top; }
+.table thead th { border-bottom: 3px double var(--rule); font-weight: 600; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; }
+.table tbody td:first-child { font-weight: 600; }
+/* The other explainer pages (owner, 2026-10-06: "a plainer black and white appearance for the other
+   explainers"): the table sits in the text column, black hairlines, no paper, band or tracked capitals */
+.plain .canvas > .table.wide { grid-column: 2; width: auto; margin-inline: 0; }
+.plain .table { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.plain .table table { border-top: 1px solid #000; border-bottom: 1px solid #000; }
+.plain .table tbody tr:nth-child(odd) { background: none; }
+.plain .table thead th, .plain .table tbody td:first-child { font-family: inherit; font-size: inherit; letter-spacing: 0; text-transform: none; }
+.plain .table thead th { border-bottom: 1px solid #000; }
+.plain .table tbody tr + tr td { border-top: 1px solid #000; }
+.plain .table th, .plain .table td { padding-inline: 0 .9rem; color: #000; }
+/* A table's caption sits above it, by convention (owner, 2026-10-06): plain, descriptive */
+.table figcaption { margin-bottom: .6rem; font-size: .92rem; }
+.table figcaption .number { display: block; font-weight: 700; }
+.table figcaption .title { display: block; margin-top: .2rem; font-style: italic; }
+.plain .table figcaption { color: #000; }
+
+.foot { border-top: 3px double var(--rule); padding-block: 1.25rem 3.5rem; font-size: .92rem; color: var(--muted); }
+.foot > * + * { margin-top: .5rem; }
+
+@media (max-width: 40rem) {
+  .canvas > .wide { width: 100%; }
+  .plate .frame { border-inline: 0; }
+  .plate .credit, .plate figcaption { padding-inline: 1rem; }
+  .plate figcaption { display: grid; gap: .2rem; }
+  .placeholder .kind { font-size: 12px; }
+  .table { border-inline: 0; border-radius: 0; padding-inline: 0; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .table table, .table tbody, .table tr, .table td { display: block; }
+  .table tbody tr { padding-block: .9rem; }
+  .table tbody tr + tr { border-top: 3px double var(--rule); }
+  .table tbody tr + tr td { border-top: 0; }
+  .table td { padding: .2rem 1rem; }
+  .table td::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .table tbody td:first-child::before { content: none; }
+  .plain .table tbody tr + tr { border-top: 1px solid #000; }
+  .plain .table tbody tr + tr td { border-top: 0; }
+  .plain .table td { padding-inline: 0; }
+  .plain .table td::before { font-family: inherit; letter-spacing: 0; text-transform: none; color: #000; }
+}
+</style>
+</head>
+<body class="plain">
+<main class="canvas">
+<header class="hero">
+  <h1>Method</h1>
+</header>
+<div class="prose">
+  <p>This page describes how Breda station's cycling catchment was estimated.</p>
+  <p>The <a href="workflow.html" target="_blank" rel="noopener">Workflow</a> page describes the role of AI and how to reproduce the analysis.</p>
+  <h3 id="terms">Terms</h3>
+  <ul>
+    <li><strong>Catchment:</strong> the set of residential addresses that can reach Breda station's bicycle-parking entrances under the trip rules.</li>
+    <li><strong>Legal-access method:</strong> the adopted method, which uses OpenStreetMap's mapped bicycle access and the direction rule.</li>
+    <li><strong>Low-stress method:</strong> the comparison method, which adds distance limits based on street characteristics.</li>
+  </ul>
+  <p>The adopted method (legal-access method) routes trips on OpenStreetMap's mapped bicycle access, with cycling allowed in both directions on one-way streets except in five cases. Another method (low-stress method) is described for comparison.</p>
+  <p>An <a href="system/code-legal.html">interactive system diagram</a> shows the parts of the legal-access method.</p>
+  <h2 id="population">Study population</h2>
+  <p>The study area covered points within 5 km of the selected station and bicycle-parking entrances. Within this area, the population comprised 85,144 residential addresses in use, taken from the national register of addresses and buildings (BAG).</p>
+</div>
+<figure class="plate wide" id="fig-01">
+<img class="basic" src="assets/method/p_attach.png" alt="A map of the circle around Breda station with every home as a purple dot, the bike network in grey, and the bike-parking and station entrances marked at the centre.">
+  <figcaption><span class="fig">Fig 01 · Map</span><span class="takeaway">The 85,144 homes in the study area, the bike network and the entrances.</span></figcaption>
+</figure>
+<div class="prose">
+  <h2 id="trip">Trip definition</h2>
+  <p>Each trip comprised an access walk, a bicycle ride and a walk to a bicycle-parking entrance. The access walk ended at the nearest network point from which a route could reach the station under the relevant method's rules, because a point without such a route could not provide a usable start. Cycling time was limited to 600 seconds, and an address was excluded if the ride from its nearest usable point exceeded this budget. The walk could not continue to a farther point with a quicker ride, which prevented walking from substituting for part of the ride toward the station.</p>
+  <p>Walking speed was fixed at 1.34 m/s, a measured speed for adults walking normally (<a href="sources.html#ref-bosina2017">Bosina and Weidmann 2017</a>; <a href="sources.html#ref-montufar2007">Montufar et al. 2007</a>). Each walk was limited to 2 minutes, which corresponds to approximately 161 m. Walking time fell outside the cycling budget. The final walk began where the cyclist dismounted and ended at the parking entrance. Access to the underground parking includes a staircase down which cyclists walk their bicycles.</p>
+</div>
+<figure class="plate wide" id="fig-02">
+<img class="basic" src="assets/method/p_walknet.png" alt="A map in green of the paths around Breda station along which a bicycle can be pushed, with black dots where a barrier blocks a pushed bicycle.">
+  <figcaption><span class="fig">Fig 02 · Map</span><span class="takeaway">The paths along which a bicycle can be pushed, and the barriers it cannot pass.</span></figcaption>
+</figure>
+<div class="prose">
+  <p>Cycling speed was fixed at 15 km/h. Fiets Telweek was a national week of recorded cycling trips, and the chosen speed approximated its median of 15.083 km/h on 81 logged routes ending near the station. Measured Dutch riding speeds are higher, at 16 to 19 km/h, but they exclude some of the delays of a trip (<a href="sources.html#ref-kager2016">Kager et al. 2016</a>; <a href="sources.html#ref-schepers2017">Schepers et al. 2017</a>; <a href="sources.html#ref-yan2024">Yan et al. 2024</a>). The pilot omitted waiting at junctions, so a lower speed was used.</p>
+</div>
+<figure class="plate wide" id="fig-03">
+<img class="basic" src="assets/method/p_route.png" alt="A map of the bike network coloured from yellow near the station to dark purple at 10 minutes of riding; streets beyond 10 minutes are grey.">
+  <figcaption><span class="fig">Fig 03 · Map</span><span class="takeaway">Minutes of riding to the bike-parking entrances at 15 km/h, up to the 10-minute limit.</span></figcaption>
+</figure>
+<div class="prose">
+  <h2 id="network">Network data</h2>
+  <p>The legal-access method used OpenStreetMap's map of Noord-Brabant as of 8 September 2026. The Netherlands' national road network also supplies road lines, but OpenStreetMap was selected for its more complete street and path coverage in this pilot.</p>
+  <h2 id="legal">Legal-access method</h2>
+  <p>Cycleways and public roads were included unless the map marked them closed to bicycles. Paths, footways and pedestrian streets were included only where the map explicitly allowed cycling.</p>
+  <p>The added direction rule retained one-way travel for five categories: halves of divided roads, one-way cycleways and paths, roads with a painted lane or dedicated cycle path, roundabouts, and roads tagged one-way for bicycles. The rule identified painted lanes from OpenStreetMap tags.</p>
+  <p>Breda's traffic orders are the municipality's published decisions on street signs. They supported the direction rule. These orders permit cycling in both directions on 33 of the 36 one-way public streets checked.</p>
+</div>
+<figure class="plate wide" id="fig-04">
+<img class="basic" src="assets/method/p_bike.png" alt="A map of the bike network around Breda station in blue, with the one-way streets opened to bicycles in both directions in orange.">
+  <figcaption><span class="fig">Fig 04 · Map</span><span class="takeaway">The streets and paths open to bicycles, and the one-way streets opened both ways.</span></figcaption>
+</figure>
+<div class="prose">
+  <p>The resulting network reached 31,479 addresses within a 10-minute ride of the bicycle-parking entrances.</p>
+</div>
+<figure class="plate wide" id="fig-05">
+<img class="basic" src="assets/method/out_legal.png" alt="A map of the homes within a 10-minute ride of the bike-parking entrances as green dots, clustered around the station inside the study circle.">
+  <figcaption><span class="fig">Fig 05 · Map</span><span class="takeaway">The 31,479 homes within a 10-minute ride of the bike-parking entrances.</span></figcaption>
+</figure>
+<div class="prose">
+  <h2 id="route">Low-stress method</h2>
+  <p>The low-stress method used the same OpenStreetMap network and trip budget as the legal-access method, but it evaluated whole routes. It matched each street to the national road network to read speed limits and road categories. One street score assessed separation from motor traffic, and another assessed the speed difference between traffic and cyclists. Both followed Weikl and Mayer's scales (<a href="sources.html#ref-weikl2023">Weikl and Mayer 2023</a>). The minimum accepted score was medium, and streets meeting this minimum on every scored feature were classified as low-stress. Scores used OpenStreetMap tags. A painted lane passed the separation test, but its speed score could still exclude it. Missing speed or traffic-volume data did not by themselves cause exclusion. Assuming low traffic volume on streets with no traffic-volume estimate follows the published convention (<a href="sources.html#ref-furth2016">Furth et al. 2016</a>; <a href="sources.html#ref-furth2018">Furth et al. 2018</a>).</p>
+  <p>Other streets were assigned to the classes in Table 1. Classes with distance limits were treated as uncomfortable. Excluding every uncomfortable street would also have excluded addresses behind short sections that a rider could tolerate.</p>
+  <p>The street classes followed the Dutch design manual published by CROW (<a href="sources.html#ref-crowFietsberaad2016">CROW-Fietsberaad 2016</a>). Its tables set the 30 km/h speed limit and the traffic-volume thresholds for shared streets, and they treat streets inside and outside the built-up area differently. The low-stress method read built-up status from the national road categories. Streets with no national counterpart counted as inside the built-up area. The 60 km/h limit for painted lanes drew on Level of Traffic Stress, an American street classification (<a href="sources.html#ref-furth2018">Furth et al. 2018</a>), and on video-rated comfort research (<a href="sources.html#ref-fitch2022">Fitch et al. 2022</a>).</p>
+  <p>Traffic-volume estimates came from Noord-Brabant's traffic model and Breda's map of roads carrying over 10,000 vehicles a day. Both directions counted on shared streets, because oncoming traffic forces a driver behind a cyclist to wait or pass closely. On painted lanes, only traffic in the lane's direction counted (<a href="sources.html#ref-furth2018">Furth et al. 2018</a>; <a href="sources.html#ref-crowFietsberaad2016">CROW-Fietsberaad 2016</a>; <a href="sources.html#ref-mekuria2012">Mekuria et al. 2012</a>).</p>
+  <p>In this project, a <strong>stretch</strong> was defined as the uncomfortable distance accumulated before a route returns to a low-stress street. The stretch limit was 200 m, and the route limit capped total uncomfortable distance at 400 m. Within the uncomfortable classes, painted lanes carrying over 5,000 vehicles a day in their direction had a further limit of 100 m consecutively. For shared streets in these classes, the same limit applied inside the built-up area. This allowance on shared streets was for data errors. It was not an estimate of tolerable exposure. The distance limits express my judgment, since no measured limit on tolerable distance along uncomfortable streets was identified in the literature. The ride's first street did not need to be low-stress, but it counted toward every distance limit.</p>
+  <p>In this project, a <strong>crossing</strong> was defined as a chain of sections, each at most 25 m long, that crosses a more important road at an angle of at least 60°. A crossing contributed no uncomfortable distance. Nor did it reset the accumulated uncomfortable distance.</p>
+</div>
+<figure class="table wide" id="table-1">
+  <figcaption><span class="number">Table 1</span><span class="title">Street Classes and Permitted Distances</span></figcaption>
+  <table>
+    <thead><tr><th scope="col">Street class</th><th scope="col">Permitted distance</th></tr></thead>
+    <tbody>
+    <tr><td data-label="Street class">Shared with traffic, up to 30 km/h and 5,000 vehicles a day</td><td data-label="Permitted distance">Unlimited; low-stress</td></tr>
+    <tr><td data-label="Street class">Painted lane, up to 60 km/h, up to 5,000 vehicles a day in its direction</td><td data-label="Permitted distance">Within the stretch and route limits</td></tr>
+    <tr><td data-label="Street class">Painted lane, up to 60 km/h, over 5,000 vehicles a day in its direction</td><td data-label="Permitted distance">100 m consecutively, within the other limits</td></tr>
+    <tr><td data-label="Street class">Shared, over 30 and up to 60 km/h, under 2,500 vehicles a day, outside the built-up area</td><td data-label="Permitted distance">Within the stretch and route limits</td></tr>
+    <tr><td data-label="Street class">The same, inside the built-up area</td><td data-label="Permitted distance">100 m consecutively, within the other limits</td></tr>
+    <tr><td data-label="Street class">Anything else</td><td data-label="Permitted distance">Crossing only</td></tr>
+    </tbody>
+  </table>
+</figure>
+<div class="prose">
+  <h2 id="reviews">Data review</h2>
+  <p>The low-stress method used the lower of conflicting OpenStreetMap and national speed limits. Traffic orders resolved 38 of the 399 disputed sections checked, and on 31 of those 38 the order states the lower limit. Where OpenStreetMap lacked a limit, the national value was not substituted. Among 15 reviewed sections, that value was wrong on 7 and right on 3. Service roads, including parking aisles and driveways, did not receive the 50 km/h default for the built-up area. All six identified errors from this default concerned service roads with limits of 30 km/h or less.</p>
+  <p>I reviewed street classifications for the low-stress method using aerial and street-level imagery. The review covered 82 admitted streets whose exclusion would remove addresses, 43 excluded streets that blocked addresses, the 20 longest avoided streets, and 18 blocking streets with painted lanes. My answers determined the classes of 1,364 street segments. Sections affected by the crossing rule were reviewed without showing which rule version admitted them. I carried out the classification reviews alone, and no second reviewer has checked them.</p>
+  <h2 id="sensitivity">Sensitivity checks</h2>
+  <p>In the sensitivity checks, the low-stress method's route limit was reduced from 400 m to 200 m or removed. The allowance for data errors on shared streets was also removed. Separate checks varied travel direction and the use of parking or station entrances.</p>
+  <h2 id="limitations">Limitations</h2>
+  <p>The low-stress method has not been validated against observed routes or reported comfort. It rests on design guidance, my judgment and my reviews. Modeled traffic volumes have not been checked against counts on municipal streets either.</p>
+  <p>The pilot fixed walking and cycling speeds and omitted waiting at junctions. It modeled one station with data from one date.</p>
+</div>
+<footer class="foot">
+  <p><em><a href="index.html">Story</a></em></p>
+  <p><em><a href="workflow.html" target="_blank" rel="noopener">Workflow</a></em></p>
+  <p><em><a href="sources.html" target="_blank" rel="noopener">Sources</a></em></p>
+</footer>
+</main>
+</body>
+</html>
