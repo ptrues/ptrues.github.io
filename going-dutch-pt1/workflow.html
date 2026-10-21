@@ -319,7 +319,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 <div class="prose">
   <p>Crossref supplied the publication metadata. It was queried using each publication's digital object identifier (DOI), and its responses were saved unchanged.</p>
   <p>Papers went into the project's catalog and bibliography. Documents without DOIs used the publisher's record.</p>
-  <p>The full text of every cited paper was kept in the project, along with a plain-text copy so the LLM could parse it quickly. Each claim was checked against the text before the paper was cited.</p>
+  <p>The full text of every cited paper was kept in the project, along with a plain-text copy so the LLM could parse it quickly. Agents checked each claim against the stored text before the paper was cited. I reviewed the evidence behind the findings I accepted, and checked some papers against their text myself.</p>
   <p>The findings from each search went into a persistent wiki page.</p>
   <p>Datasets were downloaded with scripts wherever possible. A wiki page recorded its provider, version, download date and license.</p>
   <h2 id="citations">How citations reached the page</h2>
@@ -364,6 +364,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <h2 id="checks">Generated code and its checks</h2>
   <p>Agents wrote the analysis code. Each analysis kept its settings in a file separate from the code.</p>
   <p>Agents also wrote tests. Each test ran the code on a small example with a known answer and checked that the code returned that answer.</p>
+  <p>These tests checked whether the software behaved as specified, not whether its assumptions represented real-world conditions. Street attributes and classifications were examined separately, through manual reviews of imagery and municipal traffic orders, as described in the <a href="./method.html#reviews">Method page's data review</a>.</p>
   <p>Before using an input file, the analysis calculated its checksum and compared it with the recorded value. A checksum is a value calculated from a file's contents. A mismatch meant the file had changed, and the analysis returned an error.</p>
   <p>When the code changed, earlier analyses were rerun to confirm that they still gave the same results.</p>
   <h2 id="rebuild">Reproducing the analysis</h2>
