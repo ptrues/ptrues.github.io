@@ -236,8 +236,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </header>
 <div class="prose">
   <h2 id="wiki">The Karpathy Method</h2>
-  <p>I adapted <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Andrej Karpathy's LLM Wiki pattern</a>. In it, “the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files”.</p>
-  <p>The markdown files were organized in an application called Obsidian.</p>
+  <p>I adapted <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Andrej Karpathy's LLM Wiki pattern</a>. In it, “the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files”. The markdown files were organized in an application called Obsidian.</p>
   <p>When a new source is added, the LLM “reads it, extracts the key information, and integrates it into the existing wiki — updating entity pages, revising topic summaries, noting where new data contradicts old claims, strengthening or challenging the evolving synthesis. The knowledge is compiled once and then kept current, not re-derived on every query.”</p>
   <p>The pattern also calls for a schema that tells the model how to maintain the wiki; in this project, that document was a system of governance that divided authority between me and the agents, set a procedure for each kind of work, and required every result to be traced to recorded inputs and code.</p>
   <p>Agents updated the wiki as evidence or decisions changed. A log kept track of project history.</p>
