@@ -258,7 +258,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </header>
 <div class="prose">
   <p>I'm thinking about working in Rotterdam, but my wife works here in Antwerp.</p>
-  <p>So there's a bit of a problem... Where could we live?</p>
+  <p>This means there's a bit of a problem... Where could we live?</p>
   <p>It turns out there's one good answer: <strong>Breda</strong>. The only place with a reasonable commute to both cities by train.</p>
 </div>
 <figure class="plate wide" id="fig-01">
@@ -272,8 +272,8 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 <div class="prose">
   <p>If we did move, I'd want to know which parts of the city are within a comfortable ten-minute bicycle ride of the train station.</p>
   <p>And conveniently, figuring that out was the perfect way to pilot part of my thesis method, and to test whether an <a href="workflow.html" target="_blank" rel="noopener">AI-assisted workflow</a> could hold up to academic standards.</p>
-  <p>The first problem was to define what ten minutes means.</p>
-  <p>The simplest way is to draw a circle around the station and count everything within a fixed straight-line distance as reachable.</p>
+  <p>The first problem was defining what a ten-minute ride actually is.</p>
+  <p>The simplest way to define it would be to draw a circle around the station and count everything within a fixed straight-line distance as reachable.</p>
 </div>
 <figure class="plate wide" id="fig-02">
 <style>.mapfig .art{position:relative;padding:6px;border:3px double #584433;background-color:#EAE4D3;background-image:none;box-shadow:inset 0 0 2.4em #7e684638,0 2px 12px #0000004d;transform:rotate(-0.4deg);border-radius:2px;transform:none}.mapfig .map-wrap svg{display:block;width:100%;height:auto;mix-blend-mode:multiply}.mapfig .map-wrap svg.m-items{position:absolute;left:0;top:0;width:100%;height:100%}.mapfig .map-wrap .ground{fill:transparent}.mapfig .map-wrap .rail-tie,.mapfig .map-wrap .road-through,.mapfig .map-wrap .road-distributor{stroke:#FFFFFF}.mapfig .m-place{position:absolute;transform:translate(-50%,-50%);font-family:'Source Code Pro',monospace;font-weight:600;font-size:var(--fs);line-height:1;text-transform:uppercase;letter-spacing:0.45em;padding-left:0.45em;color:#5A4C35;opacity:0.8;white-space:nowrap;pointer-events:none}.mapfig .m-star{fill:#B0622F}.mapfig .m-star-points{fill:#2F5F66}.mapfig .legend{position:absolute;right:12px;bottom:12px;margin:0;padding:.55rem .8rem;list-style:none;display:flex;flex-direction:column;gap:.3rem;background:#EAE4D3;border:3px double #584433;color:#181818;font:500 .92rem 'Source Code Pro',monospace;letter-spacing:.16em;text-transform:uppercase}.mapfig .legend li{display:flex;align-items:center;gap:.5rem}.mapfig .legend svg{width:28px;height:14px}.mapfig .map-wrap{position:relative;container-type:inline-size}.mapfig .m-callout{position:absolute;width:0;height:0}.mapfig .m-callout .m-box{position:absolute;left:22px;bottom:14px;white-space:nowrap}.mapfig .m-callout.flip .m-box{left:auto;right:22px}.mapfig .m-callout .m-leader{position:absolute;left:0;top:0;width:26px;height:1.2px;background:#181818;transform-origin:0 50%;transform:rotate(-32.5deg)}.mapfig .m-callout.flip .m-leader{transform:rotate(-147.5deg)}.mapfig .m-box,.mapfig .m-scale-box,.mapfig .m-north{font-family:'Source Code Pro',monospace;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:#181818;font-size:var(--fs);line-height:1}.mapfig .m-box{display:block;padding:.45em .5em .45em .66em;background:#EAE4D3;border:1px solid #584433}.mapfig .m-scale-box{position:absolute;left:12px;bottom:12px;min-width:calc(var(--bar) + 20px);width:max-content;padding:.5em 10px .55em;background:#EAE4D3;border:1px solid #584433;text-align:center}.mapfig .m-scale-text{display:block;margin-bottom:.45em;padding-left:.16em;white-space:nowrap}.mapfig .m-scale-bar{display:block;width:var(--bar);margin:0 auto;height:.45em;border:2px solid #181818;border-top:0}.mapfig .m-north{position:absolute;transform:translate(-50%,-100%);padding:0 0 3px .16em}.mapfig .m-rail{fill:none;stroke:#181818}.mapfig .m-rail-tie{fill:none;stroke:#EAE4D3}.mapfig .m-station-fp{fill:#584433;fill-opacity:.6;stroke:#584433}.mapfig .m-ltext{font-family:'Source Code Pro',monospace;fill:#181818;font-weight:500}</style>
@@ -284,8 +284,8 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </figure>
 <div class="prose">
   <p>But circles overestimate what's in reach.</p>
-  <p>It takes longer to travel along crooked streets, and circles ignore barriers like water and infrastructure.</p>
-  <p>A better way is to measure it by routed distance along the cycle network.</p>
+  <p>They ignore barriers like water and infrastructure, and it takes longer to travel along crooked streets than it does to travel in a straight line.</p>
+  <p>Therefore, a better way is to measure it by routed distance along the cycle network.</p>
 </div>
 <figure class="plate wide" id="fig-03">
 <style>.mapfig .art{position:relative;padding:6px;border:3px double #584433;background-color:#EAE4D3;background-image:none;box-shadow:inset 0 0 2.4em #7e684638,0 2px 12px #0000004d;transform:rotate(-0.4deg);border-radius:2px;transform:none}.mapfig .map-wrap svg{display:block;width:100%;height:auto;mix-blend-mode:multiply}.mapfig .map-wrap svg.m-items{position:absolute;left:0;top:0;width:100%;height:100%}.mapfig .map-wrap .ground{fill:transparent}.mapfig .map-wrap .rail-tie,.mapfig .map-wrap .road-through,.mapfig .map-wrap .road-distributor{stroke:#FFFFFF}.mapfig .m-place{position:absolute;transform:translate(-50%,-50%);font-family:'Source Code Pro',monospace;font-weight:600;font-size:var(--fs);line-height:1;text-transform:uppercase;letter-spacing:0.45em;padding-left:0.45em;color:#5A4C35;opacity:0.8;white-space:nowrap;pointer-events:none}.mapfig .m-star{fill:#B0622F}.mapfig .m-star-points{fill:#2F5F66}.mapfig .legend{position:absolute;right:12px;bottom:12px;margin:0;padding:.55rem .8rem;list-style:none;display:flex;flex-direction:column;gap:.3rem;background:#EAE4D3;border:3px double #584433;color:#181818;font:500 .92rem 'Source Code Pro',monospace;letter-spacing:.16em;text-transform:uppercase}.mapfig .legend li{display:flex;align-items:center;gap:.5rem}.mapfig .legend svg{width:28px;height:14px}.mapfig .map-wrap{position:relative;container-type:inline-size}.mapfig .m-callout{position:absolute;width:0;height:0}.mapfig .m-callout .m-box{position:absolute;left:22px;bottom:14px;white-space:nowrap}.mapfig .m-callout.flip .m-box{left:auto;right:22px}.mapfig .m-callout .m-leader{position:absolute;left:0;top:0;width:26px;height:1.2px;background:#181818;transform-origin:0 50%;transform:rotate(-32.5deg)}.mapfig .m-callout.flip .m-leader{transform:rotate(-147.5deg)}.mapfig .m-box,.mapfig .m-scale-box,.mapfig .m-north{font-family:'Source Code Pro',monospace;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:#181818;font-size:var(--fs);line-height:1}.mapfig .m-box{display:block;padding:.45em .5em .45em .66em;background:#EAE4D3;border:1px solid #584433}.mapfig .m-scale-box{position:absolute;left:12px;bottom:12px;min-width:calc(var(--bar) + 20px);width:max-content;padding:.5em 10px .55em;background:#EAE4D3;border:1px solid #584433;text-align:center}.mapfig .m-scale-text{display:block;margin-bottom:.45em;padding-left:.16em;white-space:nowrap}.mapfig .m-scale-bar{display:block;width:var(--bar);margin:0 auto;height:.45em;border:2px solid #181818;border-top:0}.mapfig .m-north{position:absolute;transform:translate(-50%,-100%);padding:0 0 3px .16em}.mapfig .m-rail{fill:none;stroke:#181818}.mapfig .m-rail-tie{fill:none;stroke:#EAE4D3}.mapfig .m-station-fp{fill:#584433;fill-opacity:.6;stroke:#584433}.mapfig .m-ltext{font-family:'Source Code Pro',monospace;fill:#181818;font-weight:500}</style>
@@ -312,7 +312,8 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </figure>
 <div class="prose">
   <p>In Breda, I wanted to count only the streets I would be comfortable riding.</p>
-  <p>So I checked trips along the entire network.</p>
+  <p>So I wanted to see if I could come up with a method that specifically measures low-stress trips from every address in the cycling network to the station.</p>
+  <p>The first step was defining a trip.</p>
   <p>Each trip started at a residential address.</p>
 </div>
 <figure class="plate wide" id="fig-05">
@@ -323,7 +324,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <figcaption><span class="fig">Fig 05 · Map</span><span class="takeaway">A residential address in Breda.</span></figcaption>
 </figure>
 <div class="prose">
-  <p>A trip began with a short walk from the address to a street or path on the network.</p>
+  <p>From the address, there was a short walk to a street or path on the network.</p>
 </div>
 <figure class="plate wide" id="fig-06">
 <style>.mapfig .art{position:relative;padding:6px;border:3px double #584433;background-color:#EAE4D3;background-image:none;box-shadow:inset 0 0 2.4em #7e684638,0 2px 12px #0000004d;transform:rotate(-0.4deg);border-radius:2px;transform:none}.mapfig .map-wrap svg{display:block;width:100%;height:auto;mix-blend-mode:multiply}.mapfig .map-wrap svg.m-items{position:absolute;left:0;top:0;width:100%;height:100%}.mapfig .map-wrap .ground{fill:transparent}.mapfig .map-wrap .rail-tie,.mapfig .map-wrap .road-through,.mapfig .map-wrap .road-distributor{stroke:#FFFFFF}.mapfig .m-place{position:absolute;transform:translate(-50%,-50%);font-family:'Source Code Pro',monospace;font-weight:600;font-size:var(--fs);line-height:1;text-transform:uppercase;letter-spacing:0.45em;padding-left:0.45em;color:#5A4C35;opacity:0.8;white-space:nowrap;pointer-events:none}.mapfig .m-star{fill:#B0622F}.mapfig .m-star-points{fill:#2F5F66}.mapfig .legend{position:absolute;right:12px;bottom:12px;margin:0;padding:.55rem .8rem;list-style:none;display:flex;flex-direction:column;gap:.3rem;background:#EAE4D3;border:3px double #584433;color:#181818;font:500 .92rem 'Source Code Pro',monospace;letter-spacing:.16em;text-transform:uppercase}.mapfig .legend li{display:flex;align-items:center;gap:.5rem}.mapfig .legend svg{width:28px;height:14px}.mapfig .map-wrap{position:relative;container-type:inline-size}.mapfig .m-callout{position:absolute;width:0;height:0}.mapfig .m-callout .m-box{position:absolute;left:22px;bottom:14px;white-space:nowrap}.mapfig .m-callout.flip .m-box{left:auto;right:22px}.mapfig .m-callout .m-leader{position:absolute;left:0;top:0;width:26px;height:1.2px;background:#181818;transform-origin:0 50%;transform:rotate(-32.5deg)}.mapfig .m-callout.flip .m-leader{transform:rotate(-147.5deg)}.mapfig .m-box,.mapfig .m-scale-box,.mapfig .m-north{font-family:'Source Code Pro',monospace;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:#181818;font-size:var(--fs);line-height:1}.mapfig .m-box{display:block;padding:.45em .5em .45em .66em;background:#EAE4D3;border:1px solid #584433}.mapfig .m-scale-box{position:absolute;left:12px;bottom:12px;min-width:calc(var(--bar) + 20px);width:max-content;padding:.5em 10px .55em;background:#EAE4D3;border:1px solid #584433;text-align:center}.mapfig .m-scale-text{display:block;margin-bottom:.45em;padding-left:.16em;white-space:nowrap}.mapfig .m-scale-bar{display:block;width:var(--bar);margin:0 auto;height:.45em;border:2px solid #181818;border-top:0}.mapfig .m-north{position:absolute;transform:translate(-50%,-100%);padding:0 0 3px .16em}.mapfig .m-rail{fill:none;stroke:#181818}.mapfig .m-rail-tie{fill:none;stroke:#EAE4D3}.mapfig .m-station-fp{fill:#584433;fill-opacity:.6;stroke:#584433}.mapfig .m-ltext{font-family:'Source Code Pro',monospace;fill:#181818;font-weight:500}.mapfig .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mapfig .m-panel{position:absolute;left:12px;top:12px}.mapfig .map-wrap svg.m-items{mix-blend-mode:normal}.mapfig .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}@media (max-width:40rem){.mapfig .grid{grid-template-columns:1fr}}.mapfig .m-panel{position:absolute;left:12px;top:12px}.mapfig .m-count{position:absolute;right:12px;bottom:12px}.mapfig .m-count.left{right:auto;left:12px}.mapfig .m-count.up{bottom:auto;top:12px}.mapfig .m-count.up.left{top:calc(12px + 2.6em)}.mapfig .m-callout.m-area{z-index:1}.mapfig .m-callout.m-area .m-box{background:transparent;border:0;padding:0;font-weight:600}.mapfig .m-callout.m-area .m-leader{display:none}.mapfig .m-callout.m-area .m-box{position:static;transform:translate(-50%,-50%);display:inline-block}.mapfig .m-on-station{opacity:1;color:#EAE4D3;font-weight:600;letter-spacing:.16em;padding-left:.16em;text-align:center;line-height:1.2}</style>
@@ -355,7 +356,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <figcaption><span class="fig">Fig 08 · Plot</span><span class="takeaway">Average bicycle speeds near Station Breda.</span></figcaption>
 </figure>
 <div class="prose">
-  <p>To do this for the whole network, I needed more data about the cycling infrastructure in the city.</p>
+  <p>To measure trips along the whole network, I needed more data about the cycling infrastructure in the city.</p>
   <p>OpenStreetMap was the obvious place to start. It's global, completely free and open, and generally high-quality.</p>
 </div>
 <figure class="plate wide" id="fig-09">
@@ -366,7 +367,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <figcaption><span class="fig">Fig 09 · Map</span><span class="takeaway">OpenStreetMap supplies a global bicycle network.</span></figcaption>
 </figure>
 <div class="prose">
-  <p>But OpenStreetMap depends on what its contributors have mapped. Some details can be missing or out of date.</p>
+  <p>But OpenStreetMap depends on what its contributors have mapped. Some details can be missing or out of date, including certain details that tell me whether a street is comfortable or not.</p>
   <p>The Netherlands also publishes a national road network with separate records for bicycle access, travel direction, road type, speed limits, and bike lanes.</p>
 </div>
 <figure class="plate wide" id="fig-10">
@@ -378,7 +379,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </figure>
 <div class="prose">
   <p>In theory, I could use those records to distinguish a comfortable street from an uncomfortable one.</p>
-  <p>Before defaulting to OpenStreetMap, I wanted to give the national dataset a try. But it needed repairs.</p>
+  <p>Since it had these records, I wanted to give the national dataset a try. But it needed repairs.</p>
   <p>When it was created, the authors only recorded attributes for each whole-meter segment.</p>
   <p>That meant there were thousands of gaps a fraction of a meter short that fractured the network.</p>
 </div>
@@ -413,7 +414,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </figure>
 <div class="prose">
   <p>So I kept OpenStreetMap’s geometry and joined it with the national network’s attributes. But the join was not clean, and the resulting network still excluded some valid streets and bike paths.</p>
-  <p>I reconciled the two networks with a set of rules for when they disagreed. I then manually validated those rules and checked them against Breda's published traffic orders, the city's legal decisions to put up a street sign.</p>
+  <p>I reconciled the two networks with a set of rules for when they disagreed. I then manually validated those rules and checked them against Breda's traffic orders, the city's published legal decisions to put up a street sign.</p>
 </div>
 <figure class="table wide" id="table-1">
   <figcaption><span class="number">Table 1</span><span class="title">Rules for Reconciling the Two Networks</span></figcaption>
@@ -450,7 +451,7 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
 </figure>
 <div class="prose">
   <p>A street counted as comfortable only if it scored medium or better on every measure.</p>
-  <p>I expected that most of Breda's bike network would pass, because Weikl and Mayer's method was explicitly based on Dutch design guidance.</p>
+  <p>Under this scheme, I expected that most of Breda's bike network would pass, because Weikl and Mayer's method was explicitly based on Dutch design guidance.</p>
 </div>
 <figure class="pullquote wide">
   <blockquote>Aside from the requirements in terms of <strong>cohesion, directness and safety</strong>, a network must also satisfy the requirements of <strong>comfort and attractiveness</strong>.</blockquote>
@@ -467,7 +468,8 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <figcaption><span class="fig">Fig 16 · Map</span><span class="takeaway">Nearly half of residential addresses were cut off using low-stress filters, relative to the full OSM network.</span></figcaption>
 </figure>
 <div class="prose">
-  <p>So I looked at the streets that cut off the most homes using aerial and street-level imagery. Sure enough, most of them were actually comfortable enough to use for at least a short distance.</p>
+  <p>When I looked at the streets that cut off the most homes, I found something.</p>
+  <p>Judging by aerial and street-level imagery, most of the streets that dropped from the network were actually comfortable enough to use for at least a short distance.</p>
   <p>And this led to a small revelation. A trip's comfort should not only be judged on the quality of the individual network segments it uses, but on the amount of exposure a cyclist has to uncomfortable conditions.</p>
   <p>In Chapel Hill, I wasn't necessarily satisfied with the overall quality of the network, but I tolerated some short, mildly uncomfortable parts to get to my destination.</p>
 </div>
@@ -529,8 +531,8 @@ figure.code figcaption { margin-top: .45rem; text-align: right; font-family: var
   <figcaption><span class="fig">Fig 21 · Diagram</span><span class="takeaway">One method was relatively simple and reproducible, while the other was complex and error-prone.</span></figcaption>
 </figure>
 <div class="prose">
-  <p>That makes the first method easily transferrable to another study area, while the second is not. It also makes the second method more prone to errors and wrong assumptions.</p>
-  <p>So there it is. With a few minor tweaks, the legal OpenStreetMap network is suitable for determining which streets I'm comfortable cycling on in Dutch cities, and if we move to Breda, we will pick one of the addresses in this catchment.</p>
+  <p>That makes the first method easily transferrable to another Dutch study area, while the second is not. It also makes the second method more prone to errors and wrong assumptions.</p>
+  <p>So, there it is. With a few minor tweaks, the legal OpenStreetMap network is suitable for determining which streets I'm comfortable cycling on in Dutch cities, and if we move to Breda, we will pick one of the addresses in this catchment.</p>
 </div>
 <figure class="plate wide" id="fig-22">
 <style>.mapfig .art{position:relative;padding:6px;border:3px double #584433;background-color:#EAE4D3;background-image:none;box-shadow:inset 0 0 2.4em #7e684638,0 2px 12px #0000004d;transform:rotate(-0.4deg);border-radius:2px;transform:none}.mapfig .map-wrap svg{display:block;width:100%;height:auto;mix-blend-mode:multiply}.mapfig .map-wrap svg.m-items{position:absolute;left:0;top:0;width:100%;height:100%}.mapfig .map-wrap .ground{fill:transparent}.mapfig .map-wrap .rail-tie,.mapfig .map-wrap .road-through,.mapfig .map-wrap .road-distributor{stroke:#FFFFFF}.mapfig .m-place{position:absolute;transform:translate(-50%,-50%);font-family:'Source Code Pro',monospace;font-weight:600;font-size:var(--fs);line-height:1;text-transform:uppercase;letter-spacing:0.45em;padding-left:0.45em;color:#5A4C35;opacity:0.8;white-space:nowrap;pointer-events:none}.mapfig .m-star{fill:#B0622F}.mapfig .m-star-points{fill:#2F5F66}.mapfig .legend{position:absolute;right:12px;bottom:12px;margin:0;padding:.55rem .8rem;list-style:none;display:flex;flex-direction:column;gap:.3rem;background:#EAE4D3;border:3px double #584433;color:#181818;font:500 .92rem 'Source Code Pro',monospace;letter-spacing:.16em;text-transform:uppercase}.mapfig .legend li{display:flex;align-items:center;gap:.5rem}.mapfig .legend svg{width:28px;height:14px}.mapfig .map-wrap{position:relative;container-type:inline-size}.mapfig .m-callout{position:absolute;width:0;height:0}.mapfig .m-callout .m-box{position:absolute;left:22px;bottom:14px;white-space:nowrap}.mapfig .m-callout.flip .m-box{left:auto;right:22px}.mapfig .m-callout .m-leader{position:absolute;left:0;top:0;width:26px;height:1.2px;background:#181818;transform-origin:0 50%;transform:rotate(-32.5deg)}.mapfig .m-callout.flip .m-leader{transform:rotate(-147.5deg)}.mapfig .m-box,.mapfig .m-scale-box,.mapfig .m-north{font-family:'Source Code Pro',monospace;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:#181818;font-size:var(--fs);line-height:1}.mapfig .m-box{display:block;padding:.45em .5em .45em .66em;background:#EAE4D3;border:1px solid #584433}.mapfig .m-scale-box{position:absolute;left:12px;bottom:12px;min-width:calc(var(--bar) + 20px);width:max-content;padding:.5em 10px .55em;background:#EAE4D3;border:1px solid #584433;text-align:center}.mapfig .m-scale-text{display:block;margin-bottom:.45em;padding-left:.16em;white-space:nowrap}.mapfig .m-scale-bar{display:block;width:var(--bar);margin:0 auto;height:.45em;border:2px solid #181818;border-top:0}.mapfig .m-north{position:absolute;transform:translate(-50%,-100%);padding:0 0 3px .16em}.mapfig .m-rail{fill:none;stroke:#181818}.mapfig .m-rail-tie{fill:none;stroke:#EAE4D3}.mapfig .m-station-fp{fill:#584433;fill-opacity:.6;stroke:#584433}.mapfig .m-ltext{font-family:'Source Code Pro',monospace;fill:#181818;font-weight:500}.mapfig .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mapfig .m-panel{position:absolute;left:12px;top:12px}.mapfig .map-wrap svg.m-items{mix-blend-mode:normal}.mapfig .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}@media (max-width:40rem){.mapfig .grid{grid-template-columns:1fr}}.mapfig .m-panel{position:absolute;left:12px;top:12px}.mapfig .m-count{position:absolute;right:12px;bottom:12px}.mapfig .m-count.left{right:auto;left:12px}.mapfig .m-count.up{bottom:auto;top:12px}.mapfig .m-count.up.left{top:calc(12px + 2.6em)}.mapfig .m-callout.m-area{z-index:1}.mapfig .m-callout.m-area .m-box{background:transparent;border:0;padding:0;font-weight:600}.mapfig .m-callout.m-area .m-leader{display:none}.mapfig .m-callout.m-area .m-box{position:static;transform:translate(-50%,-50%);display:inline-block}.mapfig .m-on-station{opacity:1;color:#EAE4D3;font-weight:600;letter-spacing:.16em;padding-left:.16em;text-align:center;line-height:1.2}</style>
