@@ -171,39 +171,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.4167194,
-     51.2284231
-    ]
-   },
-   "properties": {
-    "id": 21922181,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "De Waghemakerestraat 35 box 1",
-    "postal_code": "2060",
-    "locality": "Antwerpen",
-    "place": null,
-    "floor": 0,
-    "bedrooms": 2,
-    "surface_m2": 75,
-    "rent_eur": 790,
-    "costs_eur": 0,
-    "total_eur": 790,
-    "eur_per_m2": 10.5,
-    "agency": "PRIVATE",
-    "flag": "new",
-    "updated": "2026-10-17T08:48:56.490Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/100x100/e96cbf4b74737e5ba27f355619837b26.heic",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/736x736/e96cbf4b74737e5ba27f355619837b26.heic",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/736x736/e96cbf4b74737e5ba27f355619837b26.heic|https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/736x736/2fe426e9471b67cc9339d03073c6bd8f.jpg|https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/736x736/2be46d200b4b5b365857daa86245d130.heic|https://media-resize.immowebstatic.be/classifieds/83e3087d-3296-43c4-a867-90b58ae13535/736x736/0f2fd183b45f51bd85f0041af61aca6c.heic",
-    "url": "https://www.immoweb.be/en/classified/21922181"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.3811148,
      51.181644
     ]
@@ -224,8 +191,8 @@
     "total_eur": 950,
     "eur_per_m2": 10.4,
     "agency": "Ifac",
-    "flag": null,
-    "updated": "2026-10-18T17:51:58.143Z",
+    "flag": "under_option",
+    "updated": "2026-10-26T14:15:21.197Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/100x100/94d4e96634e7f7006e13129a05090025.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/736x736/94d4e96634e7f7006e13129a05090025.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/736x736/94d4e96634e7f7006e13129a05090025.jpg|https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/736x736/106dc622b6793001674e1f6b76390c61.jpg|https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/736x736/e11b66cacfb44ac0b080412f62d95733.jpg|https://media-resize.immowebstatic.be/classifieds/9200946f-df5c-4d32-8b00-398663a3e472/736x736/6c79389d3409e2c0b78cf49a3022de07.jpg",
@@ -324,7 +291,7 @@
     "eur_per_m2": 10.8,
     "agency": "Comfimmo nv",
     "flag": "new",
-    "updated": "2026-10-25T19:01:45.809Z",
+    "updated": "2026-10-26T19:02:35.531Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/100x100/bd237ab84773a2bf34d2798c1ab55af7.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/736x736/bd237ab84773a2bf34d2798c1ab55af7.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/736x736/bd237ab84773a2bf34d2798c1ab55af7.jpg|https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/736x736/4ea1df917f2078fd201b22b1bc9c3316.jpg|https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/736x736/99c95df71aedbb8995c6e7eeac5b7a5a.jpg|https://media-resize.immowebstatic.be/classifieds/9aa932fe-5df5-4f5c-85bf-fd777048f988/736x736/c5de35cfab1040e83b646922acfaedbb.jpg",
@@ -423,7 +390,7 @@
     "eur_per_m2": 9.4,
     "agency": "Habicom Antwerpen",
     "flag": null,
-    "updated": "2026-10-16T09:38:05.296Z",
+    "updated": "2026-10-26T11:04:50.418Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/100x100/54c8c8702a2e867c15fe5c583cb3893b.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/736x736/54c8c8702a2e867c15fe5c583cb3893b.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/736x736/54c8c8702a2e867c15fe5c583cb3893b.jpg|https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/736x736/64f82b628b966ae62e3eb349eea1e4bb.jpg|https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/736x736/c6dfd665f923e320ae20b2b19e6b06f3.jpg|https://media-resize.immowebstatic.be/classifieds/1f269be4-2478-4878-9984-af4dac2f76f7/736x736/a0b492d64cb875e1ac7a9b89d23ab877.jpg",
@@ -461,6 +428,39 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/eb17e762-f63a-40f5-a614-d8d89fca891e/736x736/21e7c89bf4f85963a2653727bf9643df.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/eb17e762-f63a-40f5-a614-d8d89fca891e/736x736/21e7c89bf4f85963a2653727bf9643df.jpg|https://media-resize.immowebstatic.be/classifieds/eb17e762-f63a-40f5-a614-d8d89fca891e/736x736/410364de9c89270a72b330cb8bf11302.jpg|https://media-resize.immowebstatic.be/classifieds/eb17e762-f63a-40f5-a614-d8d89fca891e/736x736/e512e25230ed5f9bac9c9f81e3e50fb2.jpg|https://media-resize.immowebstatic.be/classifieds/eb17e762-f63a-40f5-a614-d8d89fca891e/736x736/5e2ae08fc14e0d6d1bcd2b6b21157c65.jpg",
     "url": "https://www.immoweb.be/en/classified/21933516"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.471209,
+     51.2286463
+    ]
+   },
+   "properties": {
+    "id": 21944468,
+    "title": null,
+    "subtype": "APARTMENT",
+    "street": "Ter Heydelaan 290 box 301",
+    "postal_code": "2100",
+    "locality": "Deurne",
+    "place": null,
+    "floor": 3,
+    "bedrooms": 2,
+    "surface_m2": 83,
+    "rent_eur": 850,
+    "costs_eur": 60,
+    "total_eur": 910,
+    "eur_per_m2": 10.2,
+    "agency": "One Vastgoed",
+    "flag": "new",
+    "updated": "2026-10-26T17:12:25.607Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/100x100/23cd234361cf695d6bc329be4a9e7f73.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/736x736/23cd234361cf695d6bc329be4a9e7f73.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/736x736/23cd234361cf695d6bc329be4a9e7f73.jpg|https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/736x736/5cda9e09070e22770f485d2e39468429.jpg|https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/736x736/d567dca38dc5964ae318169aa5dbf81b.jpg|https://media-resize.immowebstatic.be/classifieds/80c56bd4-b688-42a0-bd2a-475e0e833d61/736x736/a13786274139f5538a677881c23982d2.jpg",
+    "url": "https://www.immoweb.be/en/classified/21944468"
    }
   },
   {
@@ -527,39 +527,6 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/e5a2d5e2-a11b-402f-a89a-b1ae21aed510/736x736/cf55bcfc5bb4984432d9b84737905c89.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/e5a2d5e2-a11b-402f-a89a-b1ae21aed510/736x736/cf55bcfc5bb4984432d9b84737905c89.jpg|https://media-resize.immowebstatic.be/classifieds/e5a2d5e2-a11b-402f-a89a-b1ae21aed510/736x736/eeccc381a58efc30131dc297c11a171d.jpg|https://media-resize.immowebstatic.be/classifieds/e5a2d5e2-a11b-402f-a89a-b1ae21aed510/736x736/3d0559fdbcc5848b0116a09801767515.jpg|https://media-resize.immowebstatic.be/classifieds/e5a2d5e2-a11b-402f-a89a-b1ae21aed510/736x736/377112babab6a5c3cfacedb810a68851.jpg",
     "url": "https://www.immoweb.be/en/classified/21799914"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     4.4798882,
-     51.2008878
-    ]
-   },
-   "properties": {
-    "id": 21876048,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "Karel Soetelaan 68 box 201",
-    "postal_code": "2150",
-    "locality": "Borsbeek",
-    "place": null,
-    "floor": 2,
-    "bedrooms": 2,
-    "surface_m2": 80,
-    "rent_eur": 850,
-    "costs_eur": 10,
-    "total_eur": 860,
-    "eur_per_m2": 10.6,
-    "agency": "Hans Vastgoed",
-    "flag": "under_option",
-    "updated": "2026-10-20T12:07:32.939Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/100x100/5d101e34c660d190e18a59902b0dff59.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/736x736/5d101e34c660d190e18a59902b0dff59.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/736x736/5d101e34c660d190e18a59902b0dff59.jpg|https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/736x736/081c22d8068fb3306c1964f284a7751e.jpg|https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/736x736/560bfa1e4acc3ba298ba3b2d901e5ba5.jpg|https://media-resize.immowebstatic.be/classifieds/8d8c5a39-2bae-471a-a683-b50a81518b73/736x736/8865c33933f01b97421bb7d20702066a.jpg",
-    "url": "https://www.immoweb.be/en/classified/21876048"
    }
   },
   {
@@ -753,7 +720,7 @@
     "eur_per_m2": null,
     "agency": "Walls Vastgoedmakelaars",
     "flag": null,
-    "updated": "2026-10-20T10:22:57.161Z",
+    "updated": "2026-10-26T11:26:29.443Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/100x100/9107ccca3325d68ee01ad3d140667a4e.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/736x736/9107ccca3325d68ee01ad3d140667a4e.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/736x736/9107ccca3325d68ee01ad3d140667a4e.jpg|https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/736x736/c4fa45db3808fab927d317cdbe6c0a53.jpg|https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/736x736/f43d6e8365a360f3a89d70f2b7da923d.jpg|https://media-resize.immowebstatic.be/classifieds/dc90d4fe-da2b-4b9d-81dc-1b17f7028615/736x736/9c101fd0315e1538e00c44373e606fe0.jpg",
@@ -786,7 +753,7 @@
     "eur_per_m2": 11.1,
     "agency": "One Vastgoed",
     "flag": "new",
-    "updated": "2026-10-23T18:04:28.344Z",
+    "updated": "2026-10-27T09:13:10.721Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/100x100/e8630faac44d353212a4e1b42e29868a.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/736x736/e8630faac44d353212a4e1b42e29868a.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/736x736/e8630faac44d353212a4e1b42e29868a.jpg|https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/736x736/83c4544fe331722752834107faf1da86.jpg|https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/736x736/b19a1cad34540fe5066347c66c82b199.jpg|https://media-resize.immowebstatic.be/classifieds/41e183bd-a576-4c10-9fdf-3887272f2202/736x736/ce069aa20da03e8123a4c5c68cb30470.jpg",
@@ -824,6 +791,39 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/54eb502a-1c2f-4b6a-af18-4748c5a27a4b/736x736/cc76d4765b9f4fd95af2267d19853312.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/54eb502a-1c2f-4b6a-af18-4748c5a27a4b/736x736/cc76d4765b9f4fd95af2267d19853312.jpg|https://media-resize.immowebstatic.be/classifieds/54eb502a-1c2f-4b6a-af18-4748c5a27a4b/736x736/b9ec6610404116fc63f13e08dc3bc731.jpg|https://media-resize.immowebstatic.be/classifieds/54eb502a-1c2f-4b6a-af18-4748c5a27a4b/736x736/a0ca9b006f185b423aad96757af09739.jpg|https://media-resize.immowebstatic.be/classifieds/54eb502a-1c2f-4b6a-af18-4748c5a27a4b/736x736/872907ffea56a1cf94a505fc93878d99.jpg",
     "url": "https://www.immoweb.be/en/classified/21704878"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4498076,
+     51.2042928
+    ]
+   },
+   "properties": {
+    "id": 21943459,
+    "title": null,
+    "subtype": "APARTMENT",
+    "street": "Karel De Preterlei 56 box 301",
+    "postal_code": "2140",
+    "locality": "Antwerpen",
+    "place": null,
+    "floor": 3,
+    "bedrooms": 2,
+    "surface_m2": 55,
+    "rent_eur": 875,
+    "costs_eur": 0,
+    "total_eur": 875,
+    "eur_per_m2": 15.9,
+    "agency": "Walls Vastgoedmakelaars",
+    "flag": "new",
+    "updated": "2026-10-26T13:19:35.641Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/100x100/afe62e54fa84cc59e1da159c65e52777.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/736x736/afe62e54fa84cc59e1da159c65e52777.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/736x736/afe62e54fa84cc59e1da159c65e52777.jpg|https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/736x736/5034527b9e6540c12b4f5aeef2cd9805.jpg|https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/736x736/6227f5cd3ada1d3005b90e77bdb50699.jpg|https://media-resize.immowebstatic.be/classifieds/7975ed36-058e-475a-998a-68af3fe43e72/736x736/097150283c9aed3b52c2a97168b620c3.jpg",
+    "url": "https://www.immoweb.be/en/classified/21943459"
    }
   },
   {
@@ -1083,7 +1083,7 @@
     "eur_per_m2": 11.0,
     "agency": "One Vastgoed",
     "flag": "new",
-    "updated": "2026-10-23T16:09:48.127Z",
+    "updated": "2026-10-26T11:17:08.653Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/100x100/a26a78a6bfb257f183eb511b68404228.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/736x736/a26a78a6bfb257f183eb511b68404228.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/736x736/a26a78a6bfb257f183eb511b68404228.jpg|https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/736x736/7616d96fb0b47a3f438a9e37f8f2e22c.jpg|https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/736x736/9b3ede94b5fcaa90728c2294f0011fb5.jpg|https://media-resize.immowebstatic.be/classifieds/f268a254-1a15-4302-b99f-7b03613f789b/736x736/36cae418b5fe7e27754042f27214dc5c.jpg",
@@ -1215,7 +1215,7 @@
     "eur_per_m2": 11.5,
     "agency": "PRIVATE",
     "flag": null,
-    "updated": "2026-10-19T06:36:20.802Z",
+    "updated": "2026-10-26T17:23:28.534Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/100x100/1c26bf05088000af2256bd9b66c31463.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/736x736/1c26bf05088000af2256bd9b66c31463.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/736x736/1c26bf05088000af2256bd9b66c31463.jpg|https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/736x736/2659dc0696fe14e8d83038e0b4c78071.jpg|https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/736x736/b533453b1c4f3a6ec399d7a616e7ad17.jpg|https://media-resize.immowebstatic.be/classifieds/15cafce5-58ce-4f25-9675-5c4a8b819795/736x736/4427c2e06707c577eff1e9be256a4131.jpg",
@@ -1248,7 +1248,7 @@
     "eur_per_m2": 11.2,
     "agency": "Immo Green Star",
     "flag": "new",
-    "updated": "2026-10-26T04:26:16.235Z",
+    "updated": "2026-10-26T20:24:07.870Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/100x100/e01257a0cf6869f8503da4ff2de5a7f6.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/736x736/e01257a0cf6869f8503da4ff2de5a7f6.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/736x736/e01257a0cf6869f8503da4ff2de5a7f6.jpg|https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/736x736/27b9c292c471ea4ca62dac5590130d98.jpg|https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/736x736/05a3295cf7848d62762ef8c3b4dbc262.jpg|https://media-resize.immowebstatic.be/classifieds/ec4f13de-82b6-4a08-982a-821e119d34f4/736x736/81a81d3a915b5bd62de4dcc9d0155887.jpg",
@@ -1380,7 +1380,7 @@
     "eur_per_m2": 10.3,
     "agency": "Immobib",
     "flag": "new",
-    "updated": "2026-10-19T12:05:52.994Z",
+    "updated": "2026-10-27T02:00:56.081Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/100x100/fcdba49ee17bf4bb986cd91f52a9011b.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/736x736/fcdba49ee17bf4bb986cd91f52a9011b.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/736x736/fcdba49ee17bf4bb986cd91f52a9011b.jpg|https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/736x736/a29f3fae98ee184d964b722f9d83fce9.jpg|https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/736x736/21bfcad0b8d71e3bfc64198efad841ab.jpg|https://media-resize.immowebstatic.be/classifieds/957fea50-fe9a-4506-915f-6e560658b70c/736x736/379ffc328c18a83795f31a9f55bd1783.jpg",
@@ -1446,7 +1446,7 @@
     "eur_per_m2": 10.1,
     "agency": "Walls Vastgoedmakelaars Linkeroever & Waasland",
     "flag": "new",
-    "updated": "2026-10-24T10:09:21.239Z",
+    "updated": "2026-10-26T11:26:47.337Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/100x100/ba68247cdcef3dd59df7874bba4b7750.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/736x736/ba68247cdcef3dd59df7874bba4b7750.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/736x736/ba68247cdcef3dd59df7874bba4b7750.jpg|https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/736x736/6bc4ec1ce00d794ac5dcc358b289f098.jpg|https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/736x736/e622b38b543591d332cdd4e80844b5dd.jpg|https://media-resize.immowebstatic.be/classifieds/0b1ea513-d3a4-4e2d-9b8b-784479a6d4bb/736x736/25df8f5fabe58238d0e8f332817ea35a.jpg",
@@ -1577,7 +1577,7 @@
     "total_eur": 900,
     "eur_per_m2": 10.0,
     "agency": "PRIVATE",
-    "flag": "new",
+    "flag": null,
     "updated": "2026-10-21T07:32:09.869Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/3bbba1d0-bc2d-4daf-b6c3-27d54e0955b4/100x100/9c6cadb86334515f78709123d882c745.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/3bbba1d0-bc2d-4daf-b6c3-27d54e0955b4/736x736/9c6cadb86334515f78709123d882c745.jpg",
@@ -1677,11 +1677,44 @@
     "eur_per_m2": 7.8,
     "agency": "PRIVATE",
     "flag": "new",
-    "updated": "2026-10-25T10:54:39.058Z",
+    "updated": "2026-10-25T10:59:12.511Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/100x100/007fa3a9ebaf9d7a35e6240bda251f6b.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/736x736/007fa3a9ebaf9d7a35e6240bda251f6b.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/736x736/007fa3a9ebaf9d7a35e6240bda251f6b.jpg|https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/736x736/1c14c093a624a5585c40ce7181187e14.jpg|https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/736x736/505f484b28c7edf647d531995fde433c.jpg|https://media-resize.immowebstatic.be/classifieds/37797f64-ee42-4572-9434-e1942937e8ff/736x736/c3b27e7fdd30968a0c97861744eea61b.jpg",
     "url": "https://www.immoweb.be/en/classified/21941778"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.425804299999999,
+     51.1877571
+    ]
+   },
+   "properties": {
+    "id": 21943361,
+    "title": null,
+    "subtype": "APARTMENT",
+    "street": "Marie-Josélaan 10 box 1",
+    "postal_code": "2600",
+    "locality": "Berchem",
+    "place": null,
+    "floor": 1,
+    "bedrooms": 2,
+    "surface_m2": 98,
+    "rent_eur": 910,
+    "costs_eur": 140,
+    "total_eur": 1050,
+    "eur_per_m2": 9.3,
+    "agency": "Reds Edegem",
+    "flag": "new",
+    "updated": "2026-10-26T11:08:34.138Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/100x100/5421a7b6de7b9ff32eaa00e11d7a8177.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/736x736/5421a7b6de7b9ff32eaa00e11d7a8177.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/736x736/5421a7b6de7b9ff32eaa00e11d7a8177.jpg|https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/736x736/d2647b789dcf886c753305688fbbe341.jpg|https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/736x736/bd80380f83bda20794570b96089f80da.jpg|https://media-resize.immowebstatic.be/classifieds/9dd07741-de56-4fe0-8d18-dc8c96eebbde/736x736/9f999f33fff0e586f5df28f49cb692ed.jpg",
+    "url": "https://www.immoweb.be/en/classified/21943361"
    }
   },
   {
@@ -1875,7 +1908,7 @@
     "eur_per_m2": 14.0,
     "agency": "Urbis Vastgoedgroep",
     "flag": "new",
-    "updated": "2026-10-25T19:42:35.193Z",
+    "updated": "2026-10-26T19:39:32.897Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/100x100/565b59cebe9893b584ec90f01b4ba1d0.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/736x736/565b59cebe9893b584ec90f01b4ba1d0.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/736x736/565b59cebe9893b584ec90f01b4ba1d0.jpg|https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/736x736/765cab44f6ca33039df8765ee05d653a.jpg|https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/736x736/4ab84df255ca75504015f3012cdd66ca.jpg|https://media-resize.immowebstatic.be/classifieds/94b2fc59-e9f5-4741-9322-439bff22d58d/736x736/2fed9fe659bcb09f47880e26ecf0753a.jpg",
@@ -2085,6 +2118,39 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
+     4.4663888,
+     51.197202
+    ]
+   },
+   "properties": {
+    "id": 21945041,
+    "title": "Apartment",
+    "subtype": "APARTMENT",
+    "street": "Floralaan 4",
+    "postal_code": "2100",
+    "locality": "Deurne",
+    "place": "",
+    "floor": 2,
+    "bedrooms": 2,
+    "surface_m2": 70,
+    "rent_eur": 940,
+    "costs_eur": 145,
+    "total_eur": 1085,
+    "eur_per_m2": 13.4,
+    "agency": "Area Deurne",
+    "flag": "new",
+    "updated": "2026-10-26T20:51:37.466Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/100x100/962713297a0385515bc2c8a3bd1b6e90.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/736x736/962713297a0385515bc2c8a3bd1b6e90.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/736x736/962713297a0385515bc2c8a3bd1b6e90.jpg|https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/736x736/61b8a6443b534e8263f225876244c525.jpg|https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/736x736/505d53f5b54408deca17e85d51af9502.jpg|https://media-resize.immowebstatic.be/classifieds/96729380-8016-4286-929f-3f7ca30b6a4f/736x736/af31cdc5a5c9aab9277463e90a356d74.jpg",
+    "url": "https://www.immoweb.be/en/classified/21945041"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
      4.4979667,
      51.1695175
     ]
@@ -2106,7 +2172,7 @@
     "eur_per_m2": 9.2,
     "agency": "Hans immo",
     "flag": "new",
-    "updated": "2026-10-19T01:09:30.252Z",
+    "updated": "2026-10-26T11:03:03.701Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/100x100/c59ca1d4d1669eb9f12aa2184b553cac.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/736x736/c59ca1d4d1669eb9f12aa2184b553cac.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/736x736/c59ca1d4d1669eb9f12aa2184b553cac.jpg|https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/736x736/6583fdedd1504be366b1711ccf6b70c7.jpg|https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/736x736/215b52400cf944cfbdeefe62e470f1ab.jpg|https://media-resize.immowebstatic.be/classifieds/f2d45926-0fe6-4c64-8cad-a95ae7b39f93/736x736/981d4b72f93ebfa09dcd0e025f232a84.jpg",
@@ -2139,7 +2205,7 @@
     "eur_per_m2": 11.9,
     "agency": "Chase",
     "flag": "new",
-    "updated": "2026-10-18T03:01:43.034Z",
+    "updated": "2026-10-26T11:04:19.156Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/100x100/3e4df3884f2e7902ae8358e969d556ac.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/736x736/3e4df3884f2e7902ae8358e969d556ac.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/736x736/3e4df3884f2e7902ae8358e969d556ac.jpg|https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/736x736/88eb79bb7bdc9d292dc376405b120b2e.jpg|https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/736x736/e948348f5ee2bc3b86934672bfe92b01.jpg|https://media-resize.immowebstatic.be/classifieds/6ab7c07e-40bf-460a-8a96-69026e45c7db/736x736/a0d398eec4a15b29833411f4edb31fec.jpg",
@@ -2205,7 +2271,7 @@
     "eur_per_m2": 9.6,
     "agency": "Rochtus Vastgoed",
     "flag": "new",
-    "updated": "2026-10-25T19:35:38.917Z",
+    "updated": "2026-10-26T19:32:28.995Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/100x100/6ae8ed67f13362e2c449a59d73ff2fe5.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/736x736/6ae8ed67f13362e2c449a59d73ff2fe5.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/736x736/6ae8ed67f13362e2c449a59d73ff2fe5.jpg|https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/736x736/c12d4f3fbe84500786392e0133bbec66.jpg|https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/736x736/3b4dc37906f6f8c79e67ce1fbc339e33.jpg|https://media-resize.immowebstatic.be/classifieds/85ea8c8b-8ec8-42a0-97b4-4a418168152b/736x736/b87987946ce54f63e0f0438d189dad85.jpg",
@@ -2237,8 +2303,8 @@
     "total_eur": 1025,
     "eur_per_m2": 13.0,
     "agency": "Heylen Vastgoed Deurne",
-    "flag": null,
-    "updated": "2026-10-09T05:10:16.609Z",
+    "flag": "under_option",
+    "updated": "2026-10-26T12:23:49.077Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/100x100/1dd798355a32e775c39d68db809fb0ea.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/736x736/1dd798355a32e775c39d68db809fb0ea.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/736x736/1dd798355a32e775c39d68db809fb0ea.jpg|https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/736x736/a80bbfb110a80a8f6ce23b92e07518fb.jpg|https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/736x736/d0e946f68af54642d41cad8ed814a715.jpg|https://media-resize.immowebstatic.be/classifieds/a3cc5e68-9711-4dfb-902d-308ea4979e4a/736x736/e00d81f96a1f0505fc3c937e13aa0a21.jpg",
@@ -2271,7 +2337,7 @@
     "eur_per_m2": 10.6,
     "agency": "Rochtus Vastgoed",
     "flag": "new",
-    "updated": "2026-10-25T19:35:39.075Z",
+    "updated": "2026-10-26T19:32:30.040Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/100x100/8aeaf57e40810d924c84239da0d91267.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/736x736/8aeaf57e40810d924c84239da0d91267.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/736x736/8aeaf57e40810d924c84239da0d91267.jpg|https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/736x736/968ed50954144d97912ca64692463dab.jpg|https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/736x736/9e5e9ef70f0dcdf6c10cb3d6b5d33daa.jpg|https://media-resize.immowebstatic.be/classifieds/43979173-bae0-46b7-8a26-f4d955381e79/736x736/0ede3ac1461c10c3aa985ec0c3051ec3.jpg",
@@ -2369,7 +2435,7 @@
     "total_eur": 1025,
     "eur_per_m2": 13.4,
     "agency": "PRIVATE",
-    "flag": "new",
+    "flag": null,
     "updated": "2026-10-11T15:45:49.811Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/9bde9ce5-3ffc-41cd-a037-115f5e1b095f/100x100/668f8b14049c12388cb3483c20e412ac.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/9bde9ce5-3ffc-41cd-a037-115f5e1b095f/736x736/668f8b14049c12388cb3483c20e412ac.jpg",
@@ -2745,39 +2811,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.432453,
-     51.2802223
-    ]
-   },
-   "properties": {
-    "id": 21910014,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "Biesheuvellaan 13 box 1",
-    "postal_code": "2180",
-    "locality": "Antwerpen",
-    "place": null,
-    "floor": 1,
-    "bedrooms": 2,
-    "surface_m2": 74,
-    "rent_eur": 975,
-    "costs_eur": 50,
-    "total_eur": 1025,
-    "eur_per_m2": 13.2,
-    "agency": "PRIVATE",
-    "flag": "new",
-    "updated": "2026-10-13T08:05:39.718Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/100x100/d71277b514dd22ac1677968d7d16c43f.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/736x736/d71277b514dd22ac1677968d7d16c43f.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/736x736/d71277b514dd22ac1677968d7d16c43f.jpg|https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/736x736/db6009a1b9d58d429f0ffc1c8c998225.jpg|https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/736x736/464759ffb1cca918daa85f7fada69043.jpg|https://media-resize.immowebstatic.be/classifieds/c111abce-050d-4098-9a3b-2c0644f899a2/736x736/5dfb24d4a8d62e5d2b1cf4e4b2011e19.jpg",
-    "url": "https://www.immoweb.be/en/classified/21910014"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.4694834,
      51.1686256
     ]
@@ -3062,45 +3095,12 @@
     "total_eur": 1020,
     "eur_per_m2": 14.6,
     "agency": "Provas",
-    "flag": null,
-    "updated": "2026-10-19T16:01:07.576Z",
+    "flag": "under_option",
+    "updated": "2026-10-26T13:01:13.573Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/100x100/2311cfe240b3da17c31e37edabda84e2.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/736x736/2311cfe240b3da17c31e37edabda84e2.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/736x736/2311cfe240b3da17c31e37edabda84e2.jpg|https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/736x736/2bdda35c14bfdbd47e3903e3c5e992fb.jpg|https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/736x736/0e82be5193658d4d774f510655212408.jpg|https://media-resize.immowebstatic.be/classifieds/be491890-d6c5-4175-9b7b-7750b71ac8f0/736x736/a637d21e687ce450a76ac2dba82551e5.jpg",
     "url": "https://www.immoweb.be/en/classified/21905719"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     4.348750799999999,
-     51.1782844
-    ]
-   },
-   "properties": {
-    "id": 21925405,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "Roodenbekehoek 5 box 202",
-    "postal_code": "2660",
-    "locality": "Antwerpen",
-    "place": "Groen Zuid",
-    "floor": 2,
-    "bedrooms": 2,
-    "surface_m2": 78,
-    "rent_eur": 990,
-    "costs_eur": 75,
-    "total_eur": 1065,
-    "eur_per_m2": 12.7,
-    "agency": "Innclusive BV",
-    "flag": "under_option",
-    "updated": "2026-10-21T14:10:03.335Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/100x100/8d6d6c9804a3a38c809cdba29370e245.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/736x736/8d6d6c9804a3a38c809cdba29370e245.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/736x736/8d6d6c9804a3a38c809cdba29370e245.jpg|https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/736x736/ef6dc9306f43450b127eaf04cc336882.jpg|https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/736x736/ead90595e4bcade77096cdc9f147031a.jpg|https://media-resize.immowebstatic.be/classifieds/4e0ed71b-a0a5-4c8f-ad68-3a0fbc383826/736x736/e8cbadd283387934c79d4007fc5af5bc.jpg",
-    "url": "https://www.immoweb.be/en/classified/21925405"
    }
   },
   {
@@ -3360,7 +3360,7 @@
     "eur_per_m2": 12.6,
     "agency": "Coprimmo Immobiliën",
     "flag": "under_option",
-    "updated": "2026-10-25T02:15:16.894Z",
+    "updated": "2026-10-27T02:14:53.517Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/100x100/80093756d2303faafc3f0cbfe50ec82c.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/736x736/80093756d2303faafc3f0cbfe50ec82c.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/736x736/80093756d2303faafc3f0cbfe50ec82c.jpg|https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/736x736/d6ace25e17da896d0d6fff4da17bf514.jpg|https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/736x736/24ed02f7cc70e876d6891bc4f95293e2.jpg|https://media-resize.immowebstatic.be/classifieds/c65889c5-df18-4099-8504-d8ab26e46d61/736x736/6f0500d395650cd85320720ef7bdd274.jpg",
@@ -3491,7 +3491,7 @@
     "total_eur": 1120,
     "eur_per_m2": null,
     "agency": "PRIVATE",
-    "flag": "new",
+    "flag": null,
     "updated": "2026-10-11T12:06:33.082Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/c2b21905-4a62-4dd0-91b0-db0a7d23b013/100x100/e25445b2b19e65e49db2abba744cfbf1.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/c2b21905-4a62-4dd0-91b0-db0a7d23b013/736x736/e25445b2b19e65e49db2abba744cfbf1.jpg",
@@ -3524,7 +3524,7 @@
     "total_eur": 995,
     "eur_per_m2": 14.2,
     "agency": "Goetstouwers Immobiliën",
-    "flag": "new",
+    "flag": null,
     "updated": "2026-10-25T04:06:15.524Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/66408f55-eaf9-4d15-b069-2a01163df031/100x100/6eaf06297dfe152f06f0ebaf01bc875f.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/66408f55-eaf9-4d15-b069-2a01163df031/736x736/6eaf06297dfe152f06f0ebaf01bc875f.jpg",
@@ -3591,7 +3591,7 @@
     "eur_per_m2": 9.4,
     "agency": "Coprimmo Immobiliën",
     "flag": null,
-    "updated": "2026-10-15T15:54:02.634Z",
+    "updated": "2026-10-26T11:06:01.535Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/100x100/f73b90e79142811e9369396388dc0e81.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/736x736/f73b90e79142811e9369396388dc0e81.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/736x736/f73b90e79142811e9369396388dc0e81.jpg|https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/736x736/ae979289b1837c1d3104570090c2738f.jpg|https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/736x736/071bc84a48774cd432c9f4a059d20f90.jpg|https://media-resize.immowebstatic.be/classifieds/38be05a0-b56d-427f-8e4d-2c45773f616b/736x736/44d34c27eba6f4507b64045baa948a66.jpg",
@@ -3629,39 +3629,6 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/2517b689-d4c8-44cd-87c2-fe95107a8392/736x736/078f9aa3f1756842f45c9455a38a9def.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/2517b689-d4c8-44cd-87c2-fe95107a8392/736x736/078f9aa3f1756842f45c9455a38a9def.jpg|https://media-resize.immowebstatic.be/classifieds/2517b689-d4c8-44cd-87c2-fe95107a8392/736x736/fd83562b1aa761731de4394cdfa11db5.jpg|https://media-resize.immowebstatic.be/classifieds/2517b689-d4c8-44cd-87c2-fe95107a8392/736x736/0c4a767aeb7df485453072ce4a814bf7.jpg|https://media-resize.immowebstatic.be/classifieds/2517b689-d4c8-44cd-87c2-fe95107a8392/736x736/646269278000afeee43c865341d25498.jpg",
     "url": "https://www.immoweb.be/en/classified/21750178"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     4.3950681,
-     51.1915499
-    ]
-   },
-   "properties": {
-    "id": 21860620,
-    "title": "Ruim appartement met 2 slaapkamers in Tentoonstellingswijk",
-    "subtype": "APARTMENT",
-    "street": "Camille Huysmanslaan 46-48 box 3",
-    "postal_code": "2020",
-    "locality": "Antwerpen (2020)",
-    "place": "",
-    "floor": 1,
-    "bedrooms": 2,
-    "surface_m2": 95,
-    "rent_eur": 1000,
-    "costs_eur": 200,
-    "total_eur": 1200,
-    "eur_per_m2": 10.5,
-    "agency": "Onid Real Estate",
-    "flag": null,
-    "updated": "2026-10-22T18:09:42.159Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/100x100/21086378156f0561ac92f6c49084f5cc.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/736x736/21086378156f0561ac92f6c49084f5cc.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/736x736/21086378156f0561ac92f6c49084f5cc.jpg|https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/736x736/51cbc773dfe99a2d58141bc52159eb22.jpg|https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/736x736/0621cd4376e0959e325e9e8d091bb797.jpg|https://media-resize.immowebstatic.be/classifieds/63bfd55e-c903-41dc-b78b-213014557e8d/736x736/fd09bc034287c2a824f5525ab686dda5.jpg",
-    "url": "https://www.immoweb.be/en/classified/21860620"
    }
   },
   {
@@ -3966,39 +3933,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.4210762,
-     51.1870795
-    ]
-   },
-   "properties": {
-    "id": 21878126,
-    "title": "Appartement",
-    "subtype": "APARTMENT",
-    "street": "Koninklijkelaan 91 box 101",
-    "postal_code": "2600",
-    "locality": "BERCHEM",
-    "place": "",
-    "floor": 1,
-    "bedrooms": 2,
-    "surface_m2": 85,
-    "rent_eur": 1025,
-    "costs_eur": 150,
-    "total_eur": 1175,
-    "eur_per_m2": 12.1,
-    "agency": "Coprimmo Immobiliën",
-    "flag": "under_option",
-    "updated": "2026-10-23T01:17:38.870Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/100x100/ed2c97e6eeaf1ccc6a9d0758c03dfdb0.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/736x736/ed2c97e6eeaf1ccc6a9d0758c03dfdb0.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/736x736/ed2c97e6eeaf1ccc6a9d0758c03dfdb0.jpg|https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/736x736/dece650fc44fe363b1567a79a310b63a.jpg|https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/736x736/a99e1dced2cca6d8299431283dfbd3b4.jpg|https://media-resize.immowebstatic.be/classifieds/ca6615d0-ec85-4f54-bef1-5a9bfa07136e/736x736/3278aefd8b49f2a6c187811bf785e32b.jpg",
-    "url": "https://www.immoweb.be/en/classified/21878126"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.3644675,
      51.2167497
     ]
@@ -4065,6 +3999,72 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
+     4.438340999999999,
+     51.1809754
+    ]
+   },
+   "properties": {
+    "id": 21945274,
+    "title": "Apartment",
+    "subtype": "APARTMENT",
+    "street": "Deken De Winterstraat 8 box 4B",
+    "postal_code": "2600",
+    "locality": "BERCHEM",
+    "place": "",
+    "floor": 2,
+    "bedrooms": 2,
+    "surface_m2": 93,
+    "rent_eur": 1050,
+    "costs_eur": 175,
+    "total_eur": 1225,
+    "eur_per_m2": 11.3,
+    "agency": "Habicom Vastgoed",
+    "flag": "new",
+    "updated": "2026-10-27T03:56:04.706Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/100x100/86a9ad8a38fd0508752428bab65a9a5c.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/736x736/86a9ad8a38fd0508752428bab65a9a5c.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/736x736/86a9ad8a38fd0508752428bab65a9a5c.jpg|https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/736x736/84ad0b2ef2fb9c5510ecd212c0436d1d.jpg|https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/736x736/a19e1efd6463ecd0f57b3d5d5ba7f9ae.jpg|https://media-resize.immowebstatic.be/classifieds/9a95b1fc-c72d-45a2-bc88-a9f2653198a6/736x736/9babd3634ae843ad1d4393e7a558706b.jpg",
+    "url": "https://www.immoweb.be/en/classified/21945274"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.432138699999999,
+     51.230106
+    ]
+   },
+   "properties": {
+    "id": 21880539,
+    "title": "Bright new-build 2br apartment with terrace",
+    "subtype": "APARTMENT",
+    "street": "Eugene de Plynstraat 29 box 304",
+    "postal_code": "2060",
+    "locality": "Antwerpen",
+    "place": null,
+    "floor": 3,
+    "bedrooms": 2,
+    "surface_m2": 68,
+    "rent_eur": 1050,
+    "costs_eur": 200,
+    "total_eur": 1250,
+    "eur_per_m2": 15.4,
+    "agency": "Skyline Renting Services",
+    "flag": null,
+    "updated": "2026-10-26T14:06:49.606Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/100x100/cd240a11688266db0f5cb1012e72c928.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/736x736/cd240a11688266db0f5cb1012e72c928.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/736x736/cd240a11688266db0f5cb1012e72c928.jpg|https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/736x736/072cc1418efbb5f8595b3de78b17e532.jpg|https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/736x736/09b220c4c5b01d25ededa5719c2df9fb.jpg|https://media-resize.immowebstatic.be/classifieds/67369647-2a86-4bf9-813c-38414ab687ab/736x736/a8a5e1e21c257acdf21e96bb18fe97da.jpg",
+    "url": "https://www.immoweb.be/en/classified/21880539"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
      4.3932652,
      51.1611547
     ]
@@ -4119,7 +4119,7 @@
     "eur_per_m2": 10.5,
     "agency": "Coprimmo Immobiliën",
     "flag": "new",
-    "updated": "2026-10-17T01:15:31.100Z",
+    "updated": "2026-10-26T11:05:09.823Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/100x100/7a2998ad6c082750d9d8076116dd693a.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/736x736/7a2998ad6c082750d9d8076116dd693a.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/736x736/7a2998ad6c082750d9d8076116dd693a.jpg|https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/736x736/37b9039a086d46f2b2835735ba3d20fb.jpg|https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/736x736/7ea85f3e31055fa119965e2e8da6b2d4.jpg|https://media-resize.immowebstatic.be/classifieds/8f693f21-1e7d-44ea-abb9-0b6e83963f15/736x736/ade7977eed2e13acb22a0b60ba45b249.jpg",
@@ -4164,39 +4164,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.37947,
-     51.2174202
-    ]
-   },
-   "properties": {
-    "id": 21913982,
-    "title": "TE HUUR / Recent gerenoveerd 2 slpk appartement vlak bij ...",
-    "subtype": "APARTMENT",
-    "street": "Pluvierstraat 37 box 003",
-    "postal_code": "2050",
-    "locality": "Linkeroever",
-    "place": "",
-    "floor": 2,
-    "bedrooms": 2,
-    "surface_m2": 88,
-    "rent_eur": 1050,
-    "costs_eur": 0,
-    "total_eur": 1050,
-    "eur_per_m2": 11.9,
-    "agency": "Straf Vastgoed",
-    "flag": "new",
-    "updated": "2026-10-25T20:42:08.980Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/100x100/704964f392859b9c198cc91375097e57.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/736x736/704964f392859b9c198cc91375097e57.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/736x736/704964f392859b9c198cc91375097e57.jpg|https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/736x736/826c9d21da87cd35784dcc1766867f21.jpg|https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/736x736/3902c8597ae85f977785b86e64ca9481.jpg|https://media-resize.immowebstatic.be/classifieds/359fecf5-a50a-4c38-bb49-94b0b7e28984/736x736/a5fd3023df862ac99a9326a496fc7b3b.jpg",
-    "url": "https://www.immoweb.be/en/classified/21913982"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.3942327,
      51.1859232
     ]
@@ -4230,39 +4197,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.476437,
-     51.1990691
-    ]
-   },
-   "properties": {
-    "id": 21909495,
-    "title": "gelijkvloers appartement",
-    "subtype": "GROUND_FLOOR",
-    "street": "Wenigerstraat 56 box 001",
-    "postal_code": "2100",
-    "locality": "BORSBEEK",
-    "place": "",
-    "floor": 0,
-    "bedrooms": 2,
-    "surface_m2": null,
-    "rent_eur": 1050,
-    "costs_eur": 25,
-    "total_eur": 1075,
-    "eur_per_m2": null,
-    "agency": "Verlimmo",
-    "flag": "new",
-    "updated": "2026-10-24T21:34:39.103Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/100x100/32b466dbd879440b2aaf4a7ddb7deb96.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/32b466dbd879440b2aaf4a7ddb7deb96.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/32b466dbd879440b2aaf4a7ddb7deb96.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/d909ada2d6190873ca24d08833560607.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/d5d46f2e0ea5c2153ae30e96a74b603c.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/49cf8add33f0d8445ea05d085ae04ee8.jpg",
-    "url": "https://www.immoweb.be/en/classified/21909495"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.3966772,
      51.20613179999999
     ]
@@ -4289,6 +4223,39 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/4bcf21d2-3aa0-4e5f-93fa-aac0ff27310c/736x736/abe6fb6b5b74b727d2b19e993b8bf873.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/4bcf21d2-3aa0-4e5f-93fa-aac0ff27310c/736x736/abe6fb6b5b74b727d2b19e993b8bf873.jpg|https://media-resize.immowebstatic.be/classifieds/4bcf21d2-3aa0-4e5f-93fa-aac0ff27310c/736x736/9d4d0715882181eeba3ae7e623cc6487.jpg|https://media-resize.immowebstatic.be/classifieds/4bcf21d2-3aa0-4e5f-93fa-aac0ff27310c/736x736/8db0c4315a36caf68c363a5c2695e9e0.jpg|https://media-resize.immowebstatic.be/classifieds/4bcf21d2-3aa0-4e5f-93fa-aac0ff27310c/736x736/9efbec1c971c03688de7994fc6ecda69.jpg",
     "url": "https://www.immoweb.be/en/classified/21883143"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.476437,
+     51.1990691
+    ]
+   },
+   "properties": {
+    "id": 21909495,
+    "title": "gelijkvloers appartement",
+    "subtype": "GROUND_FLOOR",
+    "street": "Wenigerstraat 56 box 001",
+    "postal_code": "2100",
+    "locality": "BORSBEEK",
+    "place": "",
+    "floor": 0,
+    "bedrooms": 2,
+    "surface_m2": null,
+    "rent_eur": 1050,
+    "costs_eur": 25,
+    "total_eur": 1075,
+    "eur_per_m2": null,
+    "agency": "Verlimmo",
+    "flag": "new",
+    "updated": "2026-10-26T10:40:59.129Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/100x100/32b466dbd879440b2aaf4a7ddb7deb96.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/32b466dbd879440b2aaf4a7ddb7deb96.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/32b466dbd879440b2aaf4a7ddb7deb96.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/d909ada2d6190873ca24d08833560607.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/d5d46f2e0ea5c2153ae30e96a74b603c.jpg|https://media-resize.immowebstatic.be/classifieds/76d502ff-aa52-45db-ae7c-57373290cee2/736x736/49cf8add33f0d8445ea05d085ae04ee8.jpg",
+    "url": "https://www.immoweb.be/en/classified/21909495"
    }
   },
   {
@@ -4350,7 +4317,7 @@
     "eur_per_m2": 13.6,
     "agency": "Innclusive BV",
     "flag": "new",
-    "updated": "2026-10-15T13:22:03.899Z",
+    "updated": "2026-10-26T11:06:40.306Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/100x100/bdb226ec039755e754626d72c60ad2c7.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/736x736/bdb226ec039755e754626d72c60ad2c7.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/736x736/bdb226ec039755e754626d72c60ad2c7.jpg|https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/736x736/6e29a55f830172fb4ca95710cc7e6396.jpg|https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/736x736/69e9c5a115a643463c8b28bea8549363.jpg|https://media-resize.immowebstatic.be/classifieds/dea085da-fbb6-4f42-a2e8-3695fa4f976c/736x736/7156a91ec8d6153931790d0d7c240539.jpg",
@@ -4421,72 +4388,6 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/3bea9b7a-0534-4ce0-8ae0-e6a45d8687f2/736x736/0ee23f371ec49915d4240359e6c3cbb8.heic",
     "photos": "https://media-resize.immowebstatic.be/classifieds/3bea9b7a-0534-4ce0-8ae0-e6a45d8687f2/736x736/0ee23f371ec49915d4240359e6c3cbb8.heic|https://media-resize.immowebstatic.be/classifieds/3bea9b7a-0534-4ce0-8ae0-e6a45d8687f2/736x736/2bc3d23fca2c47c232a79e49e9f0f294.heic|https://media-resize.immowebstatic.be/classifieds/3bea9b7a-0534-4ce0-8ae0-e6a45d8687f2/736x736/37cd60b783fa8a7e12c4187df2269dcf.heic|https://media-resize.immowebstatic.be/classifieds/3bea9b7a-0534-4ce0-8ae0-e6a45d8687f2/736x736/626354c0a7e83bc109ce87fd419aa916.heic",
     "url": "https://www.immoweb.be/en/classified/21941547"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     4.4096541,
-     51.2130497
-    ]
-   },
-   "properties": {
-    "id": 21910175,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "Frankrijklei 160",
-    "postal_code": "2000",
-    "locality": "Antwerpen",
-    "place": null,
-    "floor": 2,
-    "bedrooms": 2,
-    "surface_m2": 66,
-    "rent_eur": 1050,
-    "costs_eur": 180,
-    "total_eur": 1230,
-    "eur_per_m2": 15.9,
-    "agency": "Walls Vastgoedmakelaars",
-    "flag": "new",
-    "updated": "2026-10-21T10:21:32.107Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/100x100/e6a0332f03ce3122d904b93f9863ead4.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/736x736/e6a0332f03ce3122d904b93f9863ead4.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/736x736/e6a0332f03ce3122d904b93f9863ead4.jpg|https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/736x736/59f2847bfbf5b74aad8dfc8b2e110f32.jpg|https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/736x736/5b55bc72c2d8939bbe15b48740794807.jpg|https://media-resize.immowebstatic.be/classifieds/edd99065-012b-40c4-9c84-a86df5d0ce48/736x736/7ab920121e65d5770a6b340925284901.jpg",
-    "url": "https://www.immoweb.be/en/classified/21910175"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     4.391915099999999,
-     51.1995233
-    ]
-   },
-   "properties": {
-    "id": 21793022,
-    "title": null,
-    "subtype": "APARTMENT",
-    "street": "Victor Driessensstraat 2a box 101",
-    "postal_code": "2018",
-    "locality": "Antwerpen",
-    "place": null,
-    "floor": 1,
-    "bedrooms": 2,
-    "surface_m2": 80,
-    "rent_eur": 1050,
-    "costs_eur": 50,
-    "total_eur": 1100,
-    "eur_per_m2": 13.1,
-    "agency": "PRIVATE",
-    "flag": null,
-    "updated": "2026-09-17T17:09:51.253Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/100x100/28ceab1140c448b0dc9496753f979837.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/736x736/28ceab1140c448b0dc9496753f979837.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/736x736/28ceab1140c448b0dc9496753f979837.jpg|https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/736x736/ebb6e27fca979eb9f9e71a1a1e5edf2e.jpg|https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/736x736/bfcfdb8b4f6767c19d5c8d488f7c0aa4.jpg|https://media-resize.immowebstatic.be/classifieds/fca6c019-1593-49bb-b76a-3c7a9ce6b2e5/736x736/1f4178b8b3d35494ceb9d71654355184.jpg",
-    "url": "https://www.immoweb.be/en/classified/21793022"
    }
   },
   {
@@ -4845,7 +4746,7 @@
     "eur_per_m2": 11.1,
     "agency": "Heylen Vastgoed Mortsel",
     "flag": "new",
-    "updated": "2026-10-18T03:46:16.899Z",
+    "updated": "2026-10-26T11:04:04.073Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/100x100/0295d2f68bf1e71a96a359910e21188c.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/736x736/0295d2f68bf1e71a96a359910e21188c.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/736x736/0295d2f68bf1e71a96a359910e21188c.jpg|https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/736x736/b76e5a4b051f60b15134b3f38dc34bb1.jpg|https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/736x736/d5ebb9635cce4f9db86b0328b16aead4.jpg|https://media-resize.immowebstatic.be/classifieds/a3f0c7f1-9276-4c24-b482-24f4d19eff0a/736x736/a2ae2bd33730a4fe33d2b9f1722a955f.jpg",
@@ -4883,6 +4784,39 @@
     "image_large": "https://media-resize.immowebstatic.be/classifieds/40aed454-834b-4d64-9102-34dccf99d437/736x736/4e5b14063f9d9dc6d073376674716606.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/40aed454-834b-4d64-9102-34dccf99d437/736x736/4e5b14063f9d9dc6d073376674716606.jpg|https://media-resize.immowebstatic.be/classifieds/40aed454-834b-4d64-9102-34dccf99d437/736x736/d057ab2d366b382243b3cbd1852ee785.jpg|https://media-resize.immowebstatic.be/classifieds/40aed454-834b-4d64-9102-34dccf99d437/736x736/586b2d408e4ddbfa9eb8937d92296610.jpg|https://media-resize.immowebstatic.be/classifieds/40aed454-834b-4d64-9102-34dccf99d437/736x736/bb0d787b0c11bdd98235a105d4586a90.jpg",
     "url": "https://www.immoweb.be/en/classified/21883810"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     4.4034466,
+     51.223702
+    ]
+   },
+   "properties": {
+    "id": 21944193,
+    "title": null,
+    "subtype": "APARTMENT",
+    "street": "Klapdorp 2",
+    "postal_code": "2000",
+    "locality": "Antwerpen",
+    "place": null,
+    "floor": 2,
+    "bedrooms": 2,
+    "surface_m2": 75,
+    "rent_eur": 1080,
+    "costs_eur": 25,
+    "total_eur": 1105,
+    "eur_per_m2": 14.4,
+    "agency": "PRIVATE",
+    "flag": "new",
+    "updated": "2026-10-26T17:36:06.635Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/100x100/47e8b65743445e64a1050ad39a225714.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/736x736/47e8b65743445e64a1050ad39a225714.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/736x736/47e8b65743445e64a1050ad39a225714.jpg|https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/736x736/50ac2aa97ebf69b78d9b3539d20cc94e.jpg|https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/736x736/c663587170266466f9ad64faf307eada.jpg|https://media-resize.immowebstatic.be/classifieds/973b9671-af4c-403d-a7ce-49ef3cf464e2/736x736/1ea33a945289be2419536bdf7ec7c322.jpg",
+    "url": "https://www.immoweb.be/en/classified/21944193"
    }
   },
   {
@@ -5010,7 +4944,7 @@
     "eur_per_m2": 12.8,
     "agency": "Heylen Vastgoed Ekeren",
     "flag": "new",
-    "updated": "2026-10-18T20:10:20.145Z",
+    "updated": "2026-10-26T11:03:00.469Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/100x100/7965db3d6adbed5669e6c85626340e07.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/736x736/7965db3d6adbed5669e6c85626340e07.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/736x736/7965db3d6adbed5669e6c85626340e07.jpg|https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/736x736/6d638a163adcd7babe5494dd4716bda2.jpg|https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/736x736/10b5650f796e0806a47e3dceaa7f70ad.jpg|https://media-resize.immowebstatic.be/classifieds/fd883c6b-8a06-42c5-9deb-cd123a2db1b5/736x736/ea5b052a19b6ce8c2d7c388077e798c8.jpg",
@@ -5187,6 +5121,39 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
+     4.400074700000001,
+     51.2097561
+    ]
+   },
+   "properties": {
+    "id": 21945476,
+    "title": null,
+    "subtype": "APARTMENT",
+    "street": "Verbondstraat 53",
+    "postal_code": "2000",
+    "locality": "Antwerpen",
+    "place": null,
+    "floor": 0,
+    "bedrooms": 2,
+    "surface_m2": 120,
+    "rent_eur": 1095,
+    "costs_eur": 45,
+    "total_eur": 1140,
+    "eur_per_m2": 9.1,
+    "agency": "PRIVATE",
+    "flag": "new",
+    "updated": "2026-10-27T06:04:25.673Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/100x100/6d61142cba0bc8d2d1dd21f7611be3d4.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/736x736/6d61142cba0bc8d2d1dd21f7611be3d4.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/736x736/6d61142cba0bc8d2d1dd21f7611be3d4.jpg|https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/736x736/f6cdc6b9fadb097279691d0cd95ab199.jpg|https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/736x736/dfab585bef9555ad051169fd89e25125.jpg|https://media-resize.immowebstatic.be/classifieds/418b5775-7efc-4ff6-bb1f-0201ab046bcb/736x736/d6163644f83e3f7907bf12746be06ea4.jpg",
+    "url": "https://www.immoweb.be/en/classified/21945476"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
      4.3920268,
      51.204947
     ]
@@ -5207,7 +5174,7 @@
     "total_eur": 1095,
     "eur_per_m2": 18.2,
     "agency": "PRIVATE",
-    "flag": "new",
+    "flag": null,
     "updated": "2026-10-14T12:45:50.998Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/2da5900c-f99f-4e37-a68a-b740045b0d5e/100x100/9749e189a41f17e4134cc0499c6f3450.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/2da5900c-f99f-4e37-a68a-b740045b0d5e/736x736/9749e189a41f17e4134cc0499c6f3450.jpg",
@@ -5274,7 +5241,7 @@
     "eur_per_m2": 12.2,
     "agency": "RESA vastgoed",
     "flag": "new",
-    "updated": "2026-10-24T17:41:53.032Z",
+    "updated": "2026-10-27T02:45:32.585Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/100x100/9c084c742f173fd493bbfd05d3f7e889.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/736x736/9c084c742f173fd493bbfd05d3f7e889.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/736x736/9c084c742f173fd493bbfd05d3f7e889.jpg|https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/736x736/f4c8c19210f5b2142e2e37eb1a3ab9f5.jpg|https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/736x736/f81bccfb94db960c173b9c48c422612e.jpg|https://media-resize.immowebstatic.be/classifieds/fc720eb0-9cef-4ef3-b029-5496dfa6799e/736x736/1ee89acd73097cf4b9b43fba9a171cb8.jpg",
@@ -5465,14 +5432,14 @@
     "place": "",
     "floor": 4,
     "bedrooms": 2,
-    "surface_m2": 103,
+    "surface_m2": 110,
     "rent_eur": 1100,
     "costs_eur": 150,
     "total_eur": 1250,
-    "eur_per_m2": 10.7,
+    "eur_per_m2": 10.0,
     "agency": "Coprimmo Immobiliën",
     "flag": "new",
-    "updated": "2026-10-15T01:18:34.126Z",
+    "updated": "2026-10-27T02:14:56.053Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/100x100/2e38e2ec2f3924c5f9ef1dcbc86a4679.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/736x736/2e38e2ec2f3924c5f9ef1dcbc86a4679.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/736x736/2e38e2ec2f3924c5f9ef1dcbc86a4679.jpg|https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/736x736/58f3e6be8e4a3639c5849d37ca21a601.jpg|https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/736x736/35dcf59c2cc6c4cc0f3cbb5da8fe06c3.jpg|https://media-resize.immowebstatic.be/classifieds/e0b36d52-7ff3-41f9-aded-27403cd6da6a/736x736/81b1dd97717768dc7e6b440b670aedda.jpg",
@@ -5649,39 +5616,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     4.4451496,
-     51.2031853
-    ]
-   },
-   "properties": {
-    "id": 21928792,
-    "title": null,
-    "subtype": "DUPLEX",
-    "street": "Berchemlei 248",
-    "postal_code": "2140",
-    "locality": "Antwerpen",
-    "place": null,
-    "floor": 1,
-    "bedrooms": 2,
-    "surface_m2": 76,
-    "rent_eur": 1100,
-    "costs_eur": 0,
-    "total_eur": 1100,
-    "eur_per_m2": 14.5,
-    "agency": "PRIVATE",
-    "flag": "new",
-    "updated": "2026-10-20T18:26:30.579Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/100x100/33a23b83fc8c5628fbeee81138836198.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/736x736/33a23b83fc8c5628fbeee81138836198.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/736x736/33a23b83fc8c5628fbeee81138836198.jpg|https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/736x736/884e3bd9c31914465b4533e1da5430b0.jpg|https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/736x736/d7859cfaf869606fa646706b0c7958b5.jpg|https://media-resize.immowebstatic.be/classifieds/96dbb144-cb74-4cbb-8e6a-7d3b129ad0bc/736x736/f5f0b77f120e9d8865d46e79c3d99071.jpg",
-    "url": "https://www.immoweb.be/en/classified/21928792"
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      4.402457,
      51.2212261
     ]
@@ -5736,10 +5670,10 @@
     "eur_per_m2": 12.4,
     "agency": "PRIVATE",
     "flag": "new",
-    "updated": "2026-10-13T13:05:24.368Z",
-    "image": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/100x100/b69a5a9bd11bead4713246977db6a8b0.jpg",
-    "image_large": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/b69a5a9bd11bead4713246977db6a8b0.jpg",
-    "photos": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/b69a5a9bd11bead4713246977db6a8b0.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/2aa6267c6d0fede87302ae62f8241cc6.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/f4d12dac16f35e8f71b3654e46be3d59.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/e844cc3ef58bd1296866b0593348aaaf.jpg",
+    "updated": "2026-10-26T11:44:23.275Z",
+    "image": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/100x100/f4d12dac16f35e8f71b3654e46be3d59.jpg",
+    "image_large": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/f4d12dac16f35e8f71b3654e46be3d59.jpg",
+    "photos": "https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/f4d12dac16f35e8f71b3654e46be3d59.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/b69a5a9bd11bead4713246977db6a8b0.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/2aa6267c6d0fede87302ae62f8241cc6.jpg|https://media-resize.immowebstatic.be/classifieds/6a68ee67-7d8b-48a2-ad37-617a07d70bc2/736x736/e844cc3ef58bd1296866b0593348aaaf.jpg",
     "url": "https://www.immoweb.be/en/classified/21911412"
    }
   },
@@ -5901,7 +5835,7 @@
     "eur_per_m2": 13.8,
     "agency": "VBN Vastgoed",
     "flag": null,
-    "updated": "2026-10-25T20:57:31.226Z",
+    "updated": "2026-10-26T20:52:25.278Z",
     "image": "https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/100x100/50b82ec36263627f6895a166e74e00ab.jpg",
     "image_large": "https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/736x736/50b82ec36263627f6895a166e74e00ab.jpg",
     "photos": "https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/736x736/50b82ec36263627f6895a166e74e00ab.jpg|https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/736x736/d32f8468d14c1acf8eddad479c69c96b.jpg|https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/736x736/bbbc606062676e6ecd9ad0b3a87200f3.jpg|https://media-resize.immowebstatic.be/classifieds/a1198ec0-9e40-4e1c-82a0-7f2ad8ebf2e8/736x736/099a0b2cac7a53159e21aa275253dd9c.jpg",
