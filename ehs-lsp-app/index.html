@@ -225,7 +225,7 @@
       <p>But there was a problem.</p>
       <p>The app was terrible.</p>
       <figure>
-        <img src="figures/submit-old.webp" width="1550" height="620" alt="The original application&#x27;s main menu: a paragraph of instructions, then headings with doubled periods for Lab Personnel and Training, Plans in process, Plans pending approval and Approved Plans, each followed by rows of small blue links, and a Create a New Plan link at the bottom.">
+        <img src="figures/main-menu-old.webp" width="772" height="764" alt="The original application&#x27;s main menu: a paragraph of instructions, headings with doubled periods, rows of small blue links for each plan, a Create a New Plan link, and below it a table of plans pending EHS approval with the investigators&#x27; names blurred.">
         <figcaption>The application's main menu.</figcaption>
       </figure>
       <p>A lot of my time was spent helping frustrated and confused users, not with the content of their safety plans, but with things like navigation and technical bugs.</p>
@@ -300,8 +300,17 @@
       </figure>
       <p>Then I designed a new version of the app in Figma.</p>
 
+      <!-- MAIN MENU -->
+      <p>Every plan started at that main menu.</p>
+      <p>Each plan was a row of small, identical links. Nothing showed which plans needed attention, and starting a new one meant finding a link at the very bottom.</p>
+      <p>So I gave each plan its own card, with its status and a single Action menu. And Start a New Plan became a clear button.</p>
+      <figure>
+        <img src="figures/main-menu-new.webp" width="1040" height="720" alt="The proposed main menu: one card for an approved plan marked Noncompliant, one card for a plan in process marked Not Submitted, each with an Action drop-down, and a Start a New Plan button below.">
+        <figcaption>The proposed main menu.</figcaption>
+      </figure>
+
       <!-- MENU -->
-      <p>The biggest problem was navigation. Users lost track of where they were in the plan.</p>
+      <p>Inside a plan, the biggest problem was navigation. Users lost track of their place.</p>
       <p>The navigation menu changed from page to page, and it never marked the current page.</p>
       <figure class="narrow">
         <div class="menus">
@@ -322,20 +331,86 @@
         <figcaption>The new menu on the same two pages.</figcaption>
       </figure>
 
+      <!-- ROOMS -->
+      <p>The first task was listing the lab's rooms and what each one was used for.</p>
+      <p>But the page buried that task under a wall of text about entrance signs and hazard categories. And the Add Room button sat at the bottom, next to Save and Save &amp; Continue.</p>
+      <figure>
+        <img src="figures/rooms-old.webp" width="778" height="573" alt="The original Room Use Entry page: a long block of text about laboratory entrance signs and hazard category definitions, with small Add Room, Save and Save &amp; Continue buttons in a row at the bottom.">
+        <figcaption>The original Room Use Entry page.</figcaption>
+      </figure>
+      <p>No one read that text. No one ever reads a wall of text, and no one should be expected to.</p>
+      <p>Our job at EHS was to make it easy for people to comply, by making compliance intuitive.</p>
+      <p>So I replaced the text with an information icon for each hazard category. Each explanation stayed out of the way until a user asked for more.</p>
+      <p>I moved Add Room to the top, where people would look for it, and it no longer opened a different screen. And Save and Save &amp; Continue became clear Back and Continue buttons.</p>
+      <figure>
+        <img src="figures/rooms-new-full.webp" width="1100" height="620" alt="The proposed Room Use Entry page: a room drop-down with an Add Room button beside it, a table of rooms with a checkbox for each hazard category and an information icon under each category name, and Back and Continue buttons at the bottom.">
+        <figcaption>The proposed Room Use Entry page.</figcaption>
+      </figure>
+
       <!-- CHEMICAL INVENTORY -->
-      <p>But finding the right page was only half the job. Once there, could users tell whether they needed to do anything?</p>
-      <p>Take the Chemical Inventory page. Every lab had to update its inventory once a year.</p>
-      <p>The original page buried that under paragraphs of instructions, links that just said "here," and a long notice about federal anti-terrorism standards.</p>
+      <p>Many pages also used weak language.</p>
+      <p>The Chemical Inventory page said labs "should maintain" their inventory, then printed a web address. It repeated itself, with links that just said "here."</p>
+      <p>And a long federal security notice, which applied to only a few labs, carried as much visual weight as everything else.</p>
       <figure>
         <img src="figures/chem-old.webp" width="1590" height="474" alt="An original page: four paragraphs, three links labeled only &quot;here,&quot; and a long block of regulatory text.">
         <figcaption>The original Chemical Inventory page.</figcaption>
       </figure>
-      <p>The notice only applied to labs with certain high-risk chemicals. But it took up as much space as everything else.</p>
-      <p>So I put the lab's status first, right beside the link to update its inventory.</p>
-      <p>And I moved the notice to the bottom, in smaller type, under a heading that said who it was for. Labs with high-risk chemicals could still find their notice, and everyone else could skip straight to the update.</p>
+      <p>So I stated the requirement plainly: "You must keep a complete chemical inventory and update it yearly."</p>
+      <p>I cut the repetition, and gave every link a descriptive label.</p>
+      <p>Then I used visual hierarchy to show each lab its status at a glance. An "out of compliance" warning, in a WCAG-compliant dark red, sat right beside a link to the inventory portal.</p>
+      <p>And I shrank the security notice and moved it to the bottom, where it no longer cluttered the page.</p>
       <figure>
         <img src="figures/chem-new.webp" width="920" height="345" alt="The same page in the proposed design: a requirement, a red out-of-compliance status beside a link to the inventory portal, a help link, and a smaller note at the bottom with a heading saying who it is for.">
         <figcaption>The same page in the proposed design.</figcaption>
+      </figure>
+
+      <!-- CHEMICAL WASTE -->
+      <p>I knew the next page from the other side. Before this job, I worked in hazardous waste collection.</p>
+      <p>I saw plenty of chemical waste that wasn't collected, stored, or labeled properly.</p>
+      <p>No wonder. Some of the researchers we interviewed didn't know what a "halogenated solvent" was.</p>
+      <p>And the Chemical Waste Disposal page gave them little help. Its answer boxes were blank, and users asked us for examples.</p>
+      <figure>
+        <img src="figures/waste-old.webp" width="785" height="740" alt="The original Chemical Waste Disposal page: three paragraphs of instructions, two large empty text boxes marked with red asterisks, and a checklist of waste streams such as halogenated and non-halogenated solvents.">
+        <figcaption>The original Chemical Waste Disposal page.</figcaption>
+      </figure>
+      <p>So I put an example in every box, showing the kind of answer EHS was looking for.</p>
+      <p>I labeled required questions "(Required)" in plain words, following design guidance I'd read. And the waste questions only appeared once a lab said it produced waste.</p>
+      <figure>
+        <img src="figures/waste-new.webp" width="1000" height="1340" alt="The proposed Chemical Waste Disposal page: short bulleted guidelines, a required yes-or-no question answered Yes, waste type checkboxes, and answer boxes with grey example text such as High-performance Liquid Chromatography and 19L/week.">
+        <figcaption>The proposed Chemical Waste Disposal page.</figcaption>
+      </figure>
+
+      <!-- MACHINERY -->
+      <p>Then there was the Machinery Use page. It asked users to scroll through a list of nearly every machine imaginable, checking off each one their lab used.</p>
+      <figure class="tall">
+        <img src="figures/machinery-old.webp" width="864" height="2470" alt="An entire original page shrunk to fit the screen: a single narrow column of tiny checkboxes running the full height of an otherwise empty page.">
+        <figcaption>The original Machinery Use page, scaled to fit.</figcaption>
+      </figure>
+      <p>When a lab missed a machine on that list, it never wrote a standard operating procedure, or SOP, for that machine.</p>
+      <p>Without an SOP, no one was trained to use the machine safely.</p>
+      <p>And people got hurt. I saw it happen.</p>
+      <p>So I replaced the checklist with a search box.</p>
+      <figure>
+        <img src="figures/machinery-search.webp" width="1050" height="180" alt="The proposed search box: the user has typed 3, and the suggestion below reads 3D Printer.">
+        <figcaption>The proposed machinery search.</figcaption>
+      </figure>
+
+      <!-- PROGRESS -->
+      <p>Finally, users couldn't tell how far along they were, or when they were done.</p>
+      <p>The link to submit a finished plan was buried among other links on the main menu.</p>
+      <figure>
+        <img src="figures/submit-links.webp" width="1540" height="110" alt="Two rows from the original main menu. Each plan has a row of links: Update, View, Submit for Approval, Delete, Change Building.">
+        <figcaption>Links for each plan on the original main menu.</figcaption>
+      </figure>
+      <p>That broke Nielsen Norman Group's first heuristic, visibility of system status. A progress indicator shows users how far they've come and how much is left.</p>
+      <p>So I added a progress ring for each section, and a submit button that unlocked when the plan was complete.</p>
+      <figure>
+        <img src="figures/schedule-incomplete.webp" width="960" height="540" alt="The proposed overview page: one section&#x27;s progress ring shows 0% and the other 15%. The Submit Plan for Approval button is grey.">
+        <figcaption>The proposed overview page, with a plan in progress.</figcaption>
+      </figure>
+      <figure>
+        <img src="figures/schedule-complete.webp" width="960" height="540" alt="The same page with both progress rings at 100% and the Submit Plan for Approval button active.">
+        <figcaption>The same page, with the plan complete.</figcaption>
       </figure>
 
       <!-- OUTCOME -->
