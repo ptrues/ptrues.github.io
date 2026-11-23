@@ -78,7 +78,7 @@
 }
 
 /* Media */
-.proj-media { margin: 0; }
+.proj-media { margin: 0; max-width: 500px; }
 .proj-media img {
   display: block;
   width: 100%;
