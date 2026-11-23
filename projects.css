@@ -26,6 +26,32 @@
   .project:nth-child(even) .proj-media { order: 1; }
 }
 
+/* Award tag above a project title */
+.proj-award {
+  width: fit-content;
+  margin: 0 0 0.6rem 0;
+  padding: 0.35em 0.7em;
+  font-family: "Source Code Pro", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #7a5c24;
+  background: #efe7d8;
+  border-radius: 3px;
+}
+
+.proj-award .nowrap { white-space: nowrap; }
+
+.proj-award a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.proj-award a:hover {
+  text-decoration: underline;
+}
+
 /* Project typography only (use your global fonts) */
 .proj-title {
   margin: 0 0 0.5rem 0;
