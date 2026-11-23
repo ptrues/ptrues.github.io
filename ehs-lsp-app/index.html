@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finding Your Way – P. R. Truesdell</title>
+  <meta name="description" content="User research and a proposed redesign of UNC's Laboratory Safety Plan application.">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="icon" href="../favicon-tight.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-tight-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-tight-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-tight-180x180.png">
+  <style>
+    :root {
+      --soft: #5f5a54;
+      --line: #dedad3;
+      --card: #f1eee8;
+      --measure: 40rem;
+      --figure: 48rem;
+      --mono: "Source Code Pro", ui-monospace, monospace;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: 1fr min(var(--measure), 100%) 1fr;
+      row-gap: 1.25rem;
+      padding-block: 8px 80px;
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+    .story > * { grid-column: 2; margin: 0; }
+    .story > figure {
+      grid-column: 1 / -1;
+      width: min(var(--figure), 100%);
+      margin: 1rem auto 1.5rem;
+    }
+    .story > figure.narrow { width: min(32rem, 100%); }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    .story h1 {
+      font-size: clamp(2.1rem, 6vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+      margin-top: -0.4rem;
+    }
+    .dek {
+      font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+      line-height: 1.4;
+      color: var(--soft);
+      margin-bottom: 1.5rem !important;
+    }
+    .story a { color: inherit; text-underline-offset: 3px; }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    figcaption {
+      margin: 0.7rem auto 0;
+      max-width: var(--measure);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.45;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    /* Two menus from the same state, shown together */
+    .menus {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .menus p {
+      margin: 0.4rem 0 0;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    /* The whole Machinery Use page, shrunk to fit */
+    .tall img {
+      width: auto;
+      max-width: 100%;
+      max-height: 80vh;
+      margin-inline: auto;
+    }
+
+    /* Personas */
+    .personas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    .persona {
+      background: var(--card);
+      border-radius: 4px;
+      padding: 1rem 1.1rem 1.1rem;
+    }
+    .persona h3 { margin: 0; font-size: 1.05rem; }
+    .persona .role {
+      margin: 0.1rem 0 0.6rem;
+      font-size: 0.9rem;
+      color: var(--soft);
+    }
+    .persona blockquote {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    /* Book covers, side by side at the same height */
+    .books {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+    .books img {
+      width: auto;
+      height: min(300px, 55vw);
+      border: none;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+    }
+
+    /* Course certificates, two by two */
+    .certs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Titles stand out from an italic caption */
+    figcaption cite { font-style: normal; }
+
+    /* The ten heuristics, colour-coded */
+    .heuristics {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem 2rem;
+      margin: 0;
+      padding: 1.5rem 1.75rem;
+      background: var(--card);
+      border-radius: 4px;
+    }
+    .heuristics li {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      align-items: center;
+    }
+    .heuristics .num {
+      font-family: var(--mono);
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--c);
+    }
+    .heuristics .name {
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 720px) {
+      .story { font-size: 1.0625rem; }
+      .personas { grid-template-columns: 1fr; }
+      .certs, .heuristics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner container">
+      <h1 class="site-title">
+        <a href="../" class="site-title-link">P. R. Truesdell</a>
+      </h1>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav">
+        <a href="../" class="home-link">Home</a>
+        <a href="../projects/">Projects</a>
+        <a href="../about-me/">About Me</a>
+      </nav>
+      <div class="menu-overlay" id="menuOverlay">
+        <button class="close-overlay" aria-label="Close menu">&times;</button>
+        <nav class="overlay-nav">
+          <a href="../" class="home-link">Home</a>
+          <a href="../projects/">Projects</a>
+          <a href="../about-me/">About Me</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="story">
+      <p class="kicker">Case study · UX research and design</p>
+      <h1>Finding your way through a laboratory safety plan</h1>
+      <p class="dek">User research and a proposed redesign of UNC's Laboratory Safety Plan application</p>
+
+
+      <!-- WHY -->
+      <p>I used to work in UNC-Chapel Hill's Environment, Health and Safety department.</p>
+      <p>Every research lab on campus had to maintain a laboratory safety plan, documenting its hazards and safety procedures. Labs maintained their plans using our in-house web application.</p>
+      <p>But there was a problem.</p>
+      <p>The app was terrible.</p>
+      <figure>
+        <img src="figures/submit-old.webp" width="1550" height="620" alt="The original application&#x27;s main menu: a paragraph of instructions, then headings with doubled periods for Lab Personnel and Training, Plans in process, Plans pending approval and Approved Plans, each followed by rows of small blue links, and a Create a New Plan link at the bottom.">
+        <figcaption>The application's main menu.</figcaption>
+      </figure>
+      <p>A lot of my time was spent helping frustrated and confused users, not with the content of their safety plans, but with things like navigation and technical bugs.</p>
+      <p>And when I walked around campus, I routinely saw safety violations that could be traced back to our systems.</p>
+      <p>Blaming users would have been a mistake. The violations were a design problem.</p>
+      <p>And something had to be done.</p>
+
+      <!-- LEARNING -->
+      <p>That's when I became obsessed with usability.</p>
+      <p>I read books.</p>
+      <figure>
+        <div class="books">
+          <img src="figures/book-norman.webp" width="258" height="400" alt="Cover of The Design of Everyday Things by Don Norman, revised and expanded edition, with a red teapot whose spout is on the same side as its handle.">
+          <img src="figures/book-krug.webp" width="311" height="400" alt="Cover of Don&#x27;t Make Me Think, Revisited by Steve Krug.">
+        </div>
+        <figcaption>Some of my favorite books.</figcaption>
+      </figure>
+      <p>I took courses.</p>
+      <figure>
+        <div class="certs">
+          <img src="figures/certificate-1.webp" width="1400" height="1082" alt="LinkedIn Learning certificate for HTML Essential Training (2020), completed November 27, 2022.">
+          <img src="figures/certificate-2.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Foundations of User Experience (UX) Design, completed December 2, 2022.">
+          <img src="figures/certificate-3.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Start the UX Design Process: Empathize, Define, and Ideate, completed December 2, 2022.">
+          <img src="figures/certificate-4.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Build Wireframes and Low-Fidelity Prototypes, completed January 28, 2023.">
+        </div>
+        <figcaption>I took several online courses.</figcaption>
+      </figure>
+      <p>And I enrolled in <em>Systems Analysis</em> (INLS 582) with the primary aim to fix the EHS application.</p>
+
+      <!-- RESEARCH -->
+      <p>My group started by watching real users work. We moderated think-aloud sessions, asking users to narrate their thoughts as they worked through each task.</p>
+      <p>Then we interviewed them, and distilled our findings into a list of design considerations and personas.</p>
+      <figure>
+        <div class="personas">
+          <div class="persona">
+            <h3>Dr. Anne Thompson</h3>
+            <p class="role">Clinical researcher, 15 years at UNC</p>
+            <blockquote>“I just need to get this lab safety plan done so I can get back to my real work.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Dr. Alex Martinez</h3>
+            <p class="role">Professor, new to UNC</p>
+            <blockquote>“I wish this lab safety plan wasn&#x27;t taking up so much of my time.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Dr. Eva Novak</h3>
+            <p class="role">Postdoc, runs a makerspace</p>
+            <blockquote>“There is a lot that doesn&#x27;t apply to me.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Wei Chen</h3>
+            <p class="role">Graduate student and new safety supervisor</p>
+            <blockquote>“It&#x27;s hard to keep up with so many new responsibilities.”</blockquote>
+          </div>
+        </div>
+        <figcaption>Our four personas.</figcaption>
+      </figure>
+      <p>We also conducted a heuristic evaluation, checking every app screen against <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">Nielsen Norman Group's ten usability heuristics</a>.</p>
+      <figure>
+        <ol class="heuristics">
+          <li style="--c:#2f6db5"><span class="num">1</span><span class="name">Visibility of system status</span></li>
+          <li style="--c:#17807e"><span class="num">2</span><span class="name">Match between the system and the real world</span></li>
+          <li style="--c:#3d8a2f"><span class="num">3</span><span class="name">User control and freedom</span></li>
+          <li style="--c:#86760f"><span class="num">4</span><span class="name">Consistency and standards</span></li>
+          <li style="--c:#c0571a"><span class="num">5</span><span class="name">Error prevention</span></li>
+          <li style="--c:#b8322a"><span class="num">6</span><span class="name">Recognition rather than recall</span></li>
+          <li style="--c:#a8336f"><span class="num">7</span><span class="name">Flexibility and efficiency of use</span></li>
+          <li style="--c:#7446a8"><span class="num">8</span><span class="name">Aesthetic and minimalist design</span></li>
+          <li style="--c:#4552a8"><span class="num">9</span><span class="name">Help users recognize, diagnose, and recover from errors</span></li>
+          <li style="--c:#4a6878"><span class="num">10</span><span class="name">Help and documentation</span></li>
+        </ol>
+        <figcaption>Nielsen Norman Group's ten usability heuristics.</figcaption>
+      </figure>
+      <p>Here's what we found.</p>
+
+      <!-- LOCATION -->
+      <p>The biggest problem was navigation. Users lost track of where they were in the plan.</p>
+      <p>The navigation menu changed from page to page, and it never marked the current page.</p>
+      <figure class="narrow">
+        <div class="menus">
+          <div><img src="figures/nav-old-demographic.webp" width="356" height="800" alt="Original menu on one page, listing the Project Information sections with checkboxes. Nothing marks the current page."></div>
+          <div><img src="figures/nav-old-chem-inv.webp" width="356" height="800" alt="Original menu on another page. The Project Information sections are gone, replaced by Hazardous Chemicals sections."></div>
+        </div>
+        <figcaption>The original menu on two different pages.</figcaption>
+      </figure>
+      <p>In <em>Don't Make Me Think</em>, Steve Krug compares navigation to street signs. It should look the same on every page, with a clear "You are here" marker.</p>
+      <p>So I designed a new nav menu that stayed the same on every page, and highlighted the current one.</p>
+      <figure class="narrow">
+        <div class="menus">
+          <div><img src="figures/nav-new-demographic.webp" width="283" height="748" alt="Proposed menu on the first page. Both main sections are listed. The first is open, and the current page is in bold."></div>
+          <div><img src="figures/nav-new-chem-inv.webp" width="283" height="748" alt="Proposed menu on the second page. Both main sections are still listed. The second is open, and the current page is in bold."></div>
+        </div>
+        <figcaption>The new menu on the same two pages.</figcaption>
+      </figure>
+
+      <!-- PROGRESS -->
+      <p>They also couldn't tell how far along they were, or when they were done.</p>
+      <p>The link to submit a finished plan was buried among other links on the main menu.</p>
+      <figure>
+        <img src="figures/submit-links.webp" width="1540" height="110" alt="Two rows from the original main menu. Each plan has a row of links: Update, View, Submit for Approval, Delete, Change Building.">
+        <figcaption>Links for each plan on the original main menu.</figcaption>
+      </figure>
+      <p>That broke Nielsen Norman Group's first heuristic, visibility of system status. A progress indicator shows users how far they've come and how much is left.</p>
+      <p>And a grey button that unlocks when you're ready is a familiar convention, with nothing new for users to learn.</p>
+      <p>So I added a progress ring for each section, and a submit button that unlocked when the plan was complete.</p>
+      <figure>
+        <img src="figures/schedule-incomplete.webp" width="960" height="540" alt="The proposed overview page: one section&#x27;s progress ring shows 0% and the other 15%. The Submit Plan for Approval button is grey.">
+        <figcaption>The proposed overview page, with a plan in progress.</figcaption>
+      </figure>
+      <figure>
+        <img src="figures/schedule-complete.webp" width="960" height="540" alt="The same page with both progress rings at 100% and the Submit Plan for Approval button active.">
+        <figcaption>The same page, with the plan complete.</figcaption>
+      </figure>
+
+      <!-- REQUIREMENTS -->
+      <p>And they didn't know what to prepare.</p>
+      <p>Some requirements appeared several pages after the related task.</p>
+      <p>Users uploaded their lab's floor plan early on. Several pages later, another page asked them to mark eating and drinking areas on that plan.</p>
+      <p>By then, a user might have to go back and redo finished work.</p>
+      <p>So I put each requirement on the same page as its task.</p>
+      <figure>
+        <img src="figures/floorplan-new.webp" width="1020" height="590" alt="The proposed floor plan page: a list of everything a floor plan must show, above the upload controls.">
+        <figcaption>The proposed Floor Plans page.</figcaption>
+      </figure>
+
+      <!-- LANGUAGE -->
+      <p>The instructions didn't help, either. Pages were packed with regulatory jargon and links that just said "here."</p>
+      <figure>
+        <img src="figures/chem-old.webp" width="1590" height="474" alt="An original page: four paragraphs, three links labeled only &quot;here,&quot; and a long block of regulatory text.">
+        <figcaption>The original Chemical Inventory page.</figcaption>
+      </figure>
+      <p>So I cut each page down to what users needed, and gave every link a descriptive label.</p>
+      <figure>
+        <img src="figures/chem-new.webp" width="920" height="345" alt="The same page in the proposed design: two short sentences with descriptive links, and a shorter note with a heading saying who it is for.">
+        <figcaption>The same page in the proposed design.</figcaption>
+      </figure>
+
+      <!-- SAFETY -->
+      <p>Getting lost and decoding jargon cost users time. But some problems put people at risk.</p>
+      <p>One page was simply unusable. It asked users to scroll through a list of nearly every machine imaginable, checking off each one their lab used.</p>
+      <figure class="tall">
+        <img src="figures/machinery-old.webp" width="864" height="2470" alt="An entire original page shrunk to fit the screen: a single narrow column of tiny checkboxes running the full height of an otherwise empty page.">
+        <figcaption>The original Machinery Use page, scaled to fit.</figcaption>
+      </figure>
+      <p>When a lab missed a machine on that list, it never wrote a standard operating procedure, or SOP, for that machine.</p>
+      <p>Without an SOP, no one was trained to use the machine safely.</p>
+      <p>And people got hurt. I saw it happen.</p>
+      <p>So I replaced the checklist with a search box.</p>
+      <figure>
+        <img src="figures/machinery-search.webp" width="1050" height="180" alt="The proposed search box: the user has typed 3, and the suggestion below reads 3D Printer.">
+        <figcaption>The proposed machinery search.</figcaption>
+      </figure>
+
+      <!-- EHS REQUIREMENTS -->
+      <p>The plan also had to collect what EHS needed to keep labs safe and compliant. But the forms let it slip through.</p>
+      <p>One page asked for three required items in a single box, including the designated work area for highly toxic chemicals.</p>
+      <figure>
+        <img src="figures/rules-old.webp" width="1580" height="854" alt="The original Laboratory Safety Rules and Procedures page: three bulleted requirements above one large text box containing only &quot;abcd&quot;, and a checked box certifying that no additional information is needed.">
+        <figcaption>The original Laboratory Safety Rules and Procedures page.</figcaption>
+      </figure>
+      <p>I lost count of the labs I walked into where highly toxic chemical work areas weren't signed or labeled. No one knew the signs were required.</p>
+      <p>So I gave each item its own field, with a Not Applicable option for the optional ones.</p>
+      <figure class="narrow">
+        <img src="figures/rules-new.webp" width="960" height="1100" alt="The proposed form with a separate labeled box for lab rules and each procedure, and a Not Applicable checkbox beside the optional ones.">
+        <figcaption>The proposed Laboratory Safety Rules and Procedures page.</figcaption>
+      </figure>
+      <p>Every plan also had to say where lab workers could find key safety documents. But nothing enforced it, and nothing showed what each field expected.</p>
+      <p>Text boxes accepted anything, even nonsense.</p>
+      <figure>
+        <img src="figures/training-old.webp" width="1590" height="638" alt="An original form. The answer boxes contain test entries such as abc, punctuation symbols, in a book, and on a shelf.">
+        <figcaption>The original Employee Information and Training form, with test entries.</figcaption>
+      </figure>
+      <p>So I replaced free text with a list of valid locations.</p>
+      <figure>
+        <img src="figures/training-new.webp" width="940" height="260" alt="The proposed form: each answer is a drop-down. One is open, showing only valid choices.">
+        <figcaption>The proposed form, with one drop-down open.</figcaption>
+      </figure>
+
+      <!-- OUTCOME -->
+      <p>I presented our findings and my redesign to the EHS director and the IT team.</p>
+      <p>They adopted a plan to fix the most serious bugs and typos from our evaluation.</p>
+      <p>The director also named navigation as a sensible next priority.</p>
+      <p>My redesign was only partially implemented. The course ended before we could test the prototype with users, so its benefits remain unproven.</p>
+      <p>This was my first real-world UX project, a side project without a UX job title.</p>
+      <p>With the title, I would have had more confidence.</p>
+      <p>But the biggest lesson was about the organization, not the interface.</p>
+      <p>I should have planned how to communicate with IT from the start, and shared findings along the way.</p>
+      <p>Instead, I gave one big presentation at the end. Getting IT invested from the beginning would have led to better results.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer container" aria-label="Site footer">
+    <small class="footer-note">© 2026 Site handcrafted by P. R. Truesdell</small>
+  </footer>
+  <script src="../menu.js"></script>
+</body>
+</html>
