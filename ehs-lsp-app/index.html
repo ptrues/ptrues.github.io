@@ -214,6 +214,11 @@
       <p class="dek">User research and a proposed redesign of UNC's Laboratory Safety Plan application</p>
 
 
+      <!-- LOOKING BACK -->
+      <p>This was my first UX project.</p>
+      <p>Since then, making maps has trained my eye for visual hierarchy. And writing scripts for video taught me to think like a storyteller, and to hold an audience's attention.</p>
+      <p>Looking back, I can see where both began.</p>
+
       <!-- WHY -->
       <p>I used to work in UNC-Chapel Hill's Environment, Health and Safety department.</p>
       <p>Every research lab on campus had to maintain a laboratory safety plan, documenting its hazards and safety procedures. Labs maintained their plans using our in-house web application.</p>
@@ -258,7 +263,6 @@
           <div class="persona">
             <h3>Dr. Anne Thompson</h3>
             <p class="role">Clinical researcher, 15 years at UNC</p>
-            <blockquote>“I just need to get this lab safety plan done so I can get back to my real work.”</blockquote>
           </div>
           <div class="persona">
             <h3>Dr. Alex Martinez</h3>
@@ -294,9 +298,9 @@
         </ol>
         <figcaption>Nielsen Norman Group's ten usability heuristics.</figcaption>
       </figure>
-      <p>Here's what we found.</p>
+      <p>Then I designed a new version of the app in Figma.</p>
 
-      <!-- LOCATION -->
+      <!-- MENU -->
       <p>The biggest problem was navigation. Users lost track of where they were in the plan.</p>
       <p>The navigation menu changed from page to page, and it never marked the current page.</p>
       <figure class="narrow">
@@ -306,8 +310,10 @@
         </div>
         <figcaption>The original menu on two different pages.</figcaption>
       </figure>
+      <p>How could anyone learn their way around a plan when the menu kept changing?</p>
       <p>In <em>Don't Make Me Think</em>, Steve Krug compares navigation to street signs. It should look the same on every page, with a clear "You are here" marker.</p>
       <p>So I designed a new nav menu that stayed the same on every page, and highlighted the current one.</p>
+      <p>I kept the sections returning users already knew. But both main sections were always listed, with the current one open.</p>
       <figure class="narrow">
         <div class="menus">
           <div><img src="figures/nav-new-demographic.webp" width="283" height="748" alt="Proposed menu on the first page. Both main sections are listed. The first is open, and the current page is in bold."></div>
@@ -316,99 +322,32 @@
         <figcaption>The new menu on the same two pages.</figcaption>
       </figure>
 
-      <!-- PROGRESS -->
-      <p>They also couldn't tell how far along they were, or when they were done.</p>
-      <p>The link to submit a finished plan was buried among other links on the main menu.</p>
-      <figure>
-        <img src="figures/submit-links.webp" width="1540" height="110" alt="Two rows from the original main menu. Each plan has a row of links: Update, View, Submit for Approval, Delete, Change Building.">
-        <figcaption>Links for each plan on the original main menu.</figcaption>
-      </figure>
-      <p>That broke Nielsen Norman Group's first heuristic, visibility of system status. A progress indicator shows users how far they've come and how much is left.</p>
-      <p>And a grey button that unlocks when you're ready is a familiar convention, with nothing new for users to learn.</p>
-      <p>So I added a progress ring for each section, and a submit button that unlocked when the plan was complete.</p>
-      <figure>
-        <img src="figures/schedule-incomplete.webp" width="960" height="540" alt="The proposed overview page: one section&#x27;s progress ring shows 0% and the other 15%. The Submit Plan for Approval button is grey.">
-        <figcaption>The proposed overview page, with a plan in progress.</figcaption>
-      </figure>
-      <figure>
-        <img src="figures/schedule-complete.webp" width="960" height="540" alt="The same page with both progress rings at 100% and the Submit Plan for Approval button active.">
-        <figcaption>The same page, with the plan complete.</figcaption>
-      </figure>
-
-      <!-- REQUIREMENTS -->
-      <p>And they didn't know what to prepare.</p>
-      <p>Some requirements appeared several pages after the related task.</p>
-      <p>Users uploaded their lab's floor plan early on. Several pages later, another page asked them to mark eating and drinking areas on that plan.</p>
-      <p>By then, a user might have to go back and redo finished work.</p>
-      <p>So I put each requirement on the same page as its task.</p>
-      <figure>
-        <img src="figures/floorplan-new.webp" width="1020" height="590" alt="The proposed floor plan page: a list of everything a floor plan must show, above the upload controls.">
-        <figcaption>The proposed Floor Plans page.</figcaption>
-      </figure>
-
-      <!-- LANGUAGE -->
-      <p>The instructions didn't help, either. Pages were packed with regulatory jargon and links that just said "here."</p>
+      <!-- CHEMICAL INVENTORY -->
+      <p>But finding the right page was only half the job. Once there, could users tell whether they needed to do anything?</p>
+      <p>Take the Chemical Inventory page. Every lab had to update its inventory once a year.</p>
+      <p>The original page buried that under paragraphs of instructions, links that just said "here," and a long notice about federal anti-terrorism standards.</p>
       <figure>
         <img src="figures/chem-old.webp" width="1590" height="474" alt="An original page: four paragraphs, three links labeled only &quot;here,&quot; and a long block of regulatory text.">
         <figcaption>The original Chemical Inventory page.</figcaption>
       </figure>
-      <p>So I cut each page down to what users needed, and gave every link a descriptive label.</p>
+      <p>The notice only applied to labs with certain high-risk chemicals. But it took up as much space as everything else.</p>
+      <p>So I put the lab's status first, right beside the link to update its inventory.</p>
+      <p>And I moved the notice to the bottom, in smaller type, under a heading that said who it was for. Labs with high-risk chemicals could still find their notice, and everyone else could skip straight to the update.</p>
       <figure>
-        <img src="figures/chem-new.webp" width="920" height="345" alt="The same page in the proposed design: two short sentences with descriptive links, and a shorter note with a heading saying who it is for.">
+        <img src="figures/chem-new.webp" width="920" height="345" alt="The same page in the proposed design: a requirement, a red out-of-compliance status beside a link to the inventory portal, a help link, and a smaller note at the bottom with a heading saying who it is for.">
         <figcaption>The same page in the proposed design.</figcaption>
       </figure>
 
-      <!-- SAFETY -->
-      <p>Getting lost and decoding jargon cost users time. But some problems put people at risk.</p>
-      <p>One page was simply unusable. It asked users to scroll through a list of nearly every machine imaginable, checking off each one their lab used.</p>
-      <figure class="tall">
-        <img src="figures/machinery-old.webp" width="864" height="2470" alt="An entire original page shrunk to fit the screen: a single narrow column of tiny checkboxes running the full height of an otherwise empty page.">
-        <figcaption>The original Machinery Use page, scaled to fit.</figcaption>
-      </figure>
-      <p>When a lab missed a machine on that list, it never wrote a standard operating procedure, or SOP, for that machine.</p>
-      <p>Without an SOP, no one was trained to use the machine safely.</p>
-      <p>And people got hurt. I saw it happen.</p>
-      <p>So I replaced the checklist with a search box.</p>
-      <figure>
-        <img src="figures/machinery-search.webp" width="1050" height="180" alt="The proposed search box: the user has typed 3, and the suggestion below reads 3D Printer.">
-        <figcaption>The proposed machinery search.</figcaption>
-      </figure>
-
-      <!-- EHS REQUIREMENTS -->
-      <p>The plan also had to collect what EHS needed to keep labs safe and compliant. But the forms let it slip through.</p>
-      <p>One page asked for three required items in a single box, including the designated work area for highly toxic chemicals.</p>
-      <figure>
-        <img src="figures/rules-old.webp" width="1580" height="854" alt="The original Laboratory Safety Rules and Procedures page: three bulleted requirements above one large text box containing only &quot;abcd&quot;, and a checked box certifying that no additional information is needed.">
-        <figcaption>The original Laboratory Safety Rules and Procedures page.</figcaption>
-      </figure>
-      <p>I lost count of the labs I walked into where highly toxic chemical work areas weren't signed or labeled. No one knew the signs were required.</p>
-      <p>So I gave each item its own field, with a Not Applicable option for the optional ones.</p>
-      <figure class="narrow">
-        <img src="figures/rules-new.webp" width="960" height="1100" alt="The proposed form with a separate labeled box for lab rules and each procedure, and a Not Applicable checkbox beside the optional ones.">
-        <figcaption>The proposed Laboratory Safety Rules and Procedures page.</figcaption>
-      </figure>
-      <p>Every plan also had to say where lab workers could find key safety documents. But nothing enforced it, and nothing showed what each field expected.</p>
-      <p>Text boxes accepted anything, even nonsense.</p>
-      <figure>
-        <img src="figures/training-old.webp" width="1590" height="638" alt="An original form. The answer boxes contain test entries such as abc, punctuation symbols, in a book, and on a shelf.">
-        <figcaption>The original Employee Information and Training form, with test entries.</figcaption>
-      </figure>
-      <p>So I replaced free text with a list of valid locations.</p>
-      <figure>
-        <img src="figures/training-new.webp" width="940" height="260" alt="The proposed form: each answer is a drop-down. One is open, showing only valid choices.">
-        <figcaption>The proposed form, with one drop-down open.</figcaption>
-      </figure>
-
       <!-- OUTCOME -->
-      <p>I presented our findings and my redesign to the EHS director and the IT team.</p>
-      <p>They adopted a plan to fix the most serious bugs and typos from our evaluation.</p>
-      <p>The director also named navigation as a sensible next priority.</p>
-      <p>My redesign was only partially implemented. The course ended before we could test the prototype with users, so its benefits remain unproven.</p>
-      <p>This was my first real-world UX project, a side project without a UX job title.</p>
-      <p>With the title, I would have had more confidence.</p>
-      <p>But the biggest lesson was about the organization, not the interface.</p>
-      <p>I should have planned how to communicate with IT from the start, and shared findings along the way.</p>
-      <p>Instead, I gave one big presentation at the end. Getting IT invested from the beginning would have led to better results.</p>
+      <p>I presented our findings and my prototype to the EHS director and the IT team.</p>
+      <p>They adopted a plan to fix the most serious bugs and typos from our evaluation. The director also named navigation as a sensible next priority.</p>
+      <p>My redesign was only partially implemented. The course ended before we could test the prototype with users.</p>
+
+      <!-- ENDING -->
+      <p>Back at EHS, I spent a lot of time helping users find their way through the app.</p>
+      <p>But for them, even a smooth trip through it was time away from their research.</p>
+      <p>Good navigation doesn't need to impress anyone. It needs to feel familiar, so people can keep their attention on the lab.</p>
+      <p>Or, as our clinical researcher persona put it: “I just need to get this lab safety plan done so I can get back to my real work.”</p>
     </article>
   </main>
 
