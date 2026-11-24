@@ -41,7 +41,7 @@ jobs:
         run: rm -rf tools
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v4  # v5 artifacts not found by deploy-pages@v4 (2026-11-24 deploys)
         with:
           path: .
 
