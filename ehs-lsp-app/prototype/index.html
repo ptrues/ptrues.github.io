@@ -1,0 +1,1246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab Safety Plan prototype</title>
+<!--
+  Clickable prototype of the proposed Lab Safety Plan application, restyled in 2026.
+  Screens, content and navigation follow the Figma export (data/raw/figma-ehs-lsp-web-app-2026/:
+  the screen images and flows.md). Colors are sampled from those screens: navy #13294b
+  (top bar), EHS blue #2071a1 (logo, active menu item), link blue #0645ad.
+  Type follows UNC's brand fonts (references/docs/unc-visual-identity-2026/): Open Sans, with Arial as UNC's fallback.
+  Nothing is saved; reloading starts over.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #13294b;
+    --blue: #2071a1;
+    /* Text colors pass WCAG AAA (7:1) over the darkest backdrop the glass can show;
+       scripts/analysis/check_prototype_contrast.mjs measures every text run. */
+    --blue-ink: #154b6a; /* the EHS blue, deepened for text and for buttons with white text */
+    --link: #0640a1;
+    --ink: #13294b;
+    --soft: #3b4859;
+    --line: rgb(19 41 75 / 0.14);
+    --field: rgb(255 255 255 / 0.86);
+    --glass: rgb(255 255 255 / 0.8);
+    --glass-strong: rgb(255 255 255 / 0.88);
+    --glass-edge: rgb(255 255 255 / 0.75);
+    --red: #8a1d17;
+    --amber: #634000;
+    --green: #1e4f31;
+    --r-lg: 18px;
+    --r-md: 12px;
+    --r-sm: 8px;
+    --blur: blur(18px) saturate(150%);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: #e6eef4;
+  }
+  /* The field behind the glass: soft washes of the two brand blues */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(40rem 32rem at 8% 12%, rgb(32 113 161 / 0.38), transparent 70%),
+      radial-gradient(36rem 30rem at 92% 30%, rgb(19 41 75 / 0.28), transparent 70%),
+      radial-gradient(44rem 34rem at 60% 105%, rgb(120 180 215 / 0.50), transparent 70%),
+      #e6eef4;
+  }
+
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 18px 40px -22px rgb(19 41 75 / 0.45);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass { background: rgb(255 255 255 / 0.92); }
+  }
+
+  a { color: var(--link); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+  #sheet:focus { outline: none; }
+
+  /* Top bar */
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 1.5rem;
+    color: #fff;
+    background: rgb(19 41 75 / 0.92);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    border-bottom: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .brand { display: flex; flex-direction: column; line-height: 1.2; }
+  .brand b { font-size: 1.05rem; font-weight: 600; letter-spacing: 0.01em; }
+  .brand span { font-size: 0.78rem; color: rgb(255 255 255 / 0.85); }
+  .top .note {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    font-size: 0.78rem;
+    color: rgb(255 255 255 / 0.85);
+  }
+  .top .user { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgb(255 255 255 / 0.12);
+    font-size: 0.75rem; font-weight: 600;
+  }
+
+  /* Shell */
+  .shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 1.25rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 1.25rem;
+    align-items: start;
+  }
+  .rail {
+    position: sticky;
+    top: 4.6rem;
+    border-radius: var(--r-lg);
+    padding: 0.75rem;
+    max-height: calc(100vh - 5.8rem);
+    overflow: auto;
+  }
+  .rail h2 {
+    margin: 0.4rem 0.6rem 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .rail ul { list-style: none; margin: 0; padding: 0; }
+  .rail button.item {
+    display: flex; align-items: center; gap: 0.6rem;
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 0; border-radius: var(--r-sm);
+    background: none;
+    font: inherit; font-size: 0.9rem; color: var(--ink); text-align: left;
+    cursor: pointer;
+  }
+  .rail button.item:hover { background: rgb(255 255 255 / 0.55); }
+  .rail button.item[aria-current="page"] {
+    background: var(--glass-strong);
+    font-weight: 600;
+    color: var(--blue-ink);
+    box-shadow: inset 3px 0 0 var(--blue);
+  }
+  .rail .group > button.item { font-weight: 500; }
+  .rail .group ul { margin: 0.1rem 0 0.4rem 0.9rem; border-left: 1px solid var(--line); padding-left: 0.35rem; }
+  .rail .group ul button.item { font-size: 0.86rem; padding: 0.38rem 0.6rem; }
+  .rail .chev { margin-left: auto; transition: transform 0.2s; }
+  .rail .group.open .chev { transform: rotate(90deg); }
+  .rail .divider { height: 1px; background: var(--line); margin: 0.6rem 0.4rem; }
+  .mark {
+    flex: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid rgb(19 41 75 / 0.35);
+    display: grid; place-items: center;
+  }
+  .mark.done { background: var(--blue); border-color: var(--blue); }
+  .mark.done::after {
+    content: ""; width: 7px; height: 4px;
+    border: 2px solid #fff; border-top: 0; border-right: 0;
+    transform: translateY(-1px) rotate(-45deg);
+  }
+  .ico { width: 18px; height: 18px; flex: none; }
+
+  /* Main sheet */
+  .sheet {
+    border-radius: var(--r-lg);
+    padding: 1.75rem 2.25rem 1.5rem;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .context {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem;
+    font-size: 0.82rem; color: var(--soft);
+    margin-bottom: 1.1rem;
+  }
+  .context b { color: var(--ink); font-weight: 600; }
+  .sheet h1 {
+    margin: 0 0 0.35rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .lede { margin: 0 0 1.5rem; max-width: 62ch; color: var(--soft); }
+  .sheet h2 { font-size: 1.1rem; font-weight: 600; margin: 1.6rem 0 0.6rem; }
+  .sheet h3 { font-size: 0.95rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
+  .sheet p, .sheet li { max-width: 70ch; }
+  .sheet ul.plain { padding-left: 1.2rem; margin: 0.3rem 0 1rem; }
+  .sheet ul.plain li { margin: 0.2rem 0; }
+  .small { font-size: 0.85rem; color: var(--soft); }
+  .body { flex: 1; }
+
+  /* Wizard footer */
+  .steps {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    margin-top: 2rem; padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .steps .where { font-size: 0.82rem; color: var(--soft); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    min-height: 42px;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgb(19 41 75 / 0.22);
+    background: var(--glass-strong);
+    font: inherit; font-weight: 500; color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #fff; }
+  .btn.primary { background: var(--blue-ink); border-color: var(--blue-ink); color: #fff; }
+  .btn.primary:hover { background: #0f3a54; }
+  .btn.small-btn { min-height: 34px; padding: 0.35rem 0.85rem; font-size: 0.88rem; }
+  /* Disabled: solid grey, not faded, so the label still reads at 7:1 */
+  .btn:disabled, .btn.primary:disabled { background: #e4e8ed; border-color: #e4e8ed; color: var(--soft); cursor: not-allowed; }
+  .btn.quiet { border-color: transparent; background: none; color: var(--link); padding-inline: 0.4rem; }
+  .btn.danger { color: var(--red); }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* Fields */
+  label { font-size: 0.88rem; }
+  .field { display: grid; gap: 0.3rem; margin: 0 0 0.9rem; max-width: 34rem; }
+  .field > span { font-size: 0.86rem; font-weight: 500; }
+  .req { color: var(--soft); font-weight: 400; }
+  input[type=text], input[type=email], input[type=tel], select, textarea, .input {
+    font: inherit; font-size: 0.92rem; color: var(--ink);
+    min-height: 40px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgb(19 41 75 / 0.2);
+    border-radius: var(--r-sm);
+    background: var(--field);
+    width: 100%;
+  }
+  textarea { min-height: 96px; resize: vertical; }
+  ::placeholder { color: var(--soft); opacity: 1; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; max-width: 46rem; }
+  .check { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+  input[type=checkbox], input[type=radio] { width: 18px; height: 18px; accent-color: var(--blue); margin: 0; flex: none; }
+  .yesno { display: inline-flex; gap: 0.25rem; padding: 3px; border-radius: 999px; background: rgb(19 41 75 / 0.07); }
+  .yesno label { position: relative; }
+  .yesno input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; margin: 0; }
+  .yesno span { display: block; padding: 0.3rem 0.95rem; border-radius: 999px; font-size: 0.86rem; font-weight: 500; }
+  .yesno input:checked + span { background: #fff; color: var(--blue-ink); box-shadow: 0 1px 3px rgb(19 41 75 / 0.18); }
+  .yesno input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 1px; }
+  /* Answers fixed in the demo: selection stays readable, the control doesn't respond */
+  .yesno.locked { cursor: not-allowed; }
+  .yesno.locked input { pointer-events: none; }
+  .yesno.locked input:not(:checked) + span { color: var(--soft); }
+
+  /* Panels inside the sheet: one step more solid than the sheet */
+  .panel {
+    border-radius: var(--r-md);
+    background: rgb(255 255 255 / 0.55);
+    border: 1px solid rgb(255 255 255 / 0.8);
+    padding: 1rem 1.2rem;
+    margin: 0 0 1rem;
+  }
+
+  /* Info tips */
+  .tip { position: relative; display: inline-flex; vertical-align: middle; }
+  .tip > button {
+    width: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font: 600 11px/18px "Open Sans", Arial, sans-serif; cursor: help;
+  }
+  /* Tip text stays in the markup for screen readers; #tipbox shows it on screen.
+     #tipbox sits outside the glass panels so no table or panel can clip it. */
+  .tip > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  #tipbox {
+    position: fixed; z-index: 50; top: 0; left: 0;
+    width: max-content; max-width: 16rem;
+    padding: 0.5rem 0.7rem; border-radius: var(--r-sm);
+    background: var(--navy); color: #fff;
+    font-size: 0.8rem; font-weight: 400; line-height: 1.4; text-align: left;
+    opacity: 0; pointer-events: none; transition: opacity 0.15s;
+  }
+  #tipbox.on { opacity: 1; }
+
+  /* Main menu plans */
+  .plans h2 { font-size: 0.95rem; font-weight: 600; color: var(--soft); margin: 1.4rem 0 0.6rem; }
+  .plan {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+    padding: 1.1rem 1.3rem;
+    border-radius: var(--r-md);
+    background: rgb(255 255 255 / 0.62);
+    border: 1px solid rgb(255 255 255 / 0.85);
+    margin-bottom: 0.8rem;
+  }
+  .plan h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+  .plan h3 a { color: var(--ink); text-decoration: none; }
+  .plan h3 a:hover { color: var(--blue-ink); text-decoration: underline; }
+  .plan .meta { font-size: 0.84rem; color: var(--soft); display: flex; flex-wrap: wrap; gap: 0.2rem 1.1rem; margin-top: 0.25rem; }
+  .plan .actions { display: flex; align-items: center; gap: 0.5rem; }
+  .plan .actions select { width: auto; min-width: 11rem; }
+  .status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.84rem; font-weight: 600; }
+  .status i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .status.red { color: var(--red); } .status.red i { background: var(--red); }
+  .status.amber { color: var(--amber); } .status.amber i { background: #e0a100; }
+  .status.none { color: var(--soft); } .status.none i { border: 1.5px solid var(--soft); }
+  .late { color: var(--red); font-weight: 600; }
+
+  /* Schedule selection */
+  .sched { display: grid; gap: 0.8rem; max-width: 40rem; }
+  .sched button {
+    display: flex; align-items: center; gap: 1.1rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--r-md);
+    border: 1px solid rgb(255 255 255 / 0.85);
+    background: rgb(255 255 255 / 0.6);
+    font: inherit; color: var(--ink); text-align: left; cursor: pointer;
+  }
+  .sched button:hover { background: rgb(255 255 255 / 0.85); }
+  .sched b { display: block; font-size: 1.02rem; font-weight: 600; }
+  .sched small { color: var(--soft); font-size: 0.84rem; }
+  .ring { width: 56px; height: 56px; flex: none; position: relative; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring circle { fill: none; stroke-width: 5; }
+  .ring .track { stroke: rgb(19 41 75 / 0.12); }
+  .ring .fill { stroke: var(--blue); stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+  .ring span { position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.78rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .submit-wrap { margin-top: 1.6rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; border-radius: var(--r-md); border: 1px solid rgb(255 255 255 / 0.85); background: rgb(255 255 255 / 0.55); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+  th, td { padding: 0.6rem 0.7rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; font-size: 0.8rem; color: var(--soft); vertical-align: bottom; }
+  tr:last-child td { border-bottom: 0; }
+  td.c, th.c { text-align: center; }
+  .rooms th, .rooms td { padding: 0.55rem 0.35rem; }
+  .rooms th { font-size: 0.74rem; line-height: 1.3; }
+  .rooms th:first-child, .rooms td:first-child { padding-left: 0.8rem; }
+  .rooms th div { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-align: center; }
+  /* Room uses switched off in the demo: greyed, with a note on hover or focus */
+  .demo-off { position: relative; display: inline-flex; align-items: center; gap: .35rem; cursor: not-allowed; }
+  .demo-off > * { pointer-events: none; }
+  .demo-off > input { opacity: .35; }
+  .demo-off > select { color: var(--soft); opacity: 1; border-style: dashed; }
+  .room-err { color: var(--red); font-size: .85rem; margin: -.4rem 0 .9rem; }
+  .combo li.hint { padding: .45rem .6rem; font-size: .85rem; color: var(--soft); }
+  .empty { padding: 1.4rem; text-align: center; color: var(--soft); }
+  .icon-btn { border: 0; background: none; padding: 4px; border-radius: 6px; cursor: pointer; color: var(--soft); display: inline-grid; }
+  .icon-btn:hover { color: var(--red); background: rgb(179 38 30 / 0.08); }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  /* Upload */
+  .drop {
+    display: grid; place-items: center; gap: 0.6rem;
+    padding: 1.6rem;
+    border: 1.5px dashed rgb(19 41 75 / 0.28);
+    border-radius: var(--r-md);
+    background: rgb(255 255 255 / 0.45);
+    text-align: center; color: var(--soft);
+  }
+  .files { list-style: none; padding: 0; margin: 0.6rem 0 0; }
+  .files li { display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  .needs { display: flex; gap: 0.6rem; align-items: baseline; padding: 0.7rem 0.9rem; border-radius: var(--r-sm); background: rgb(179 38 30 / 0.07); color: var(--red); font-size: 0.88rem; margin-top: 0.8rem; }
+  .ok { background: rgb(46 122 75 / 0.09); color: var(--green); }
+
+  /* Notices */
+  .alert { padding: 0.9rem 1.1rem; border-radius: var(--r-md); background: rgb(179 38 30 / 0.07); border: 1px solid rgb(179 38 30 / 0.18); margin: 0 0 1rem; max-width: 46rem; }
+  .alert b { color: var(--red); }
+  .aside { font-size: 0.85rem; color: var(--soft); border-top: 1px solid var(--line); padding-top: 0.9rem; margin-top: 1.4rem; max-width: 62ch; }
+  .aside h3 { margin-top: 0; font-size: 0.85rem; color: var(--ink); }
+
+  /* Questions */
+  .q { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: 0.9rem 0; border-bottom: 1px solid var(--line); max-width: 52rem; }
+  .q:last-child { border-bottom: 0; }
+  .q p { margin: 0; }
+  .q .small { margin-top: 0.2rem; display: block; }
+  .reveal { animation: reveal 0.25s ease; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } }
+
+  /* Disclosure */
+  details.panel summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; align-items: center; gap: 0.5rem; }
+  details.panel summary::-webkit-details-marker { display: none; }
+  details.panel[open] { padding-bottom: 1.3rem; }
+  details.panel summary::after { content: ""; margin-left: auto; width: 8px; height: 8px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform 0.2s; }
+  details.panel[open] summary::after { transform: rotate(-135deg); }
+  /* General procedures: one topic per column, never split across columns */
+  .gp { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem 2.25rem; font-size: 0.86rem; margin-top: 0.9rem; }
+  .gp h3 { margin: 0 0 0.4rem; font-size: 0.95rem; }
+  .gp ul, .gp ol { margin: 0; padding-left: 1.1rem; }
+  .gp li { margin: 0.3rem 0; }
+  .gp li > ul, .gp li > ol { margin: 0.2rem 0 0.5rem; color: var(--soft); }
+  .gp li > ul li, .gp li > ol li { margin: 0.12rem 0; }
+  .gp li > ul { list-style: circle; }
+  .gp ul.race { list-style: none; padding-left: 0.4rem; }
+  .gp ul.race b { color: var(--blue-ink); }
+
+  /* Search suggestions */
+  .combo { position: relative; flex: 1; min-width: 14rem; max-width: 26rem; }
+  .combo ul { position: absolute; z-index: 10; top: calc(100% + 4px); left: 0; right: 0; list-style: none; margin: 0; padding: 0.3rem; border-radius: var(--r-sm); background: #fff; box-shadow: 0 10px 30px -10px rgb(19 41 75 / 0.4); }
+  .combo li button { width: 100%; text-align: left; border: 0; background: none; padding: 0.45rem 0.6rem; border-radius: 6px; font: inherit; font-size: 0.9rem; cursor: pointer; }
+  .combo li button:hover, .combo li button:focus { background: rgb(32 113 161 / 0.1); }
+
+  /* Dialog */
+  dialog {
+    border: 1px solid var(--glass-edge);
+    border-radius: var(--r-lg);
+    padding: 1.6rem 1.8rem;
+    max-width: 26rem;
+    color: var(--ink);
+    background: rgb(255 255 255 / 0.92);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    box-shadow: 0 30px 60px -20px rgb(19 41 75 / 0.5);
+  }
+  dialog::backdrop { background: rgb(19 41 75 / 0.25); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  dialog h2 { margin: 0 0 0.4rem; font-size: 1.2rem; font-weight: 600; }
+  dialog p { margin: 0 0 1.2rem; color: var(--soft); }
+  dialog .row { justify-content: flex-end; }
+
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; padding: 0.75rem; }
+    .rail { position: static; max-height: none; }
+    .sheet { padding: 1.25rem 1rem; }
+    .plan { grid-template-columns: 1fr; }
+    .grid2 { grid-template-columns: 1fr; }
+    .top .note { display: none; }
+    .q { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  @media print {
+    body::before, .top, .rail, .steps { display: none; }
+    .shell { display: block; }
+    .glass { background: #fff; box-shadow: none; border: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>Lab Safety Plan</b><span>Environment, Health and Safety</span></div>
+  <div class="user"><span class="avatar" aria-hidden="true">AM</span><span>Dr. Alex Martinez</span></div>
+</header>
+
+<div class="shell">
+  <nav class="rail glass" id="rail" aria-label="Plan navigation"></nav>
+  <main class="sheet glass" id="sheet" tabindex="-1"></main>
+</div>
+
+<dialog id="dlg"></dialog>
+<div id="tipbox" aria-hidden="true"></div>
+
+<script src="rooms.js"></script>
+<script>
+const $ =(s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const ICON = {
+  home: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
+  user: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+  help: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>',
+  out: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4"/><path d="M6 12h10"/></svg>',
+  chev: '<svg class="ico chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>',
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>',
+  next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>',
+  file: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>',
+};
+const tip = text => `<span class="tip"><button type="button" aria-label="More information">i</button><span role="tooltip">${esc(text)}</span></span>`;
+
+/* ---------- State ---------- */
+const S = {
+  route: "menu",
+  building: "Building One",
+  plan: "in-process",            // in-process | pending
+  plans: { two: true, one: true },
+  rooms: [],                      // {num, haz:{}}
+  done: new Set(),
+  hazchem: {},
+  waste: null, processes: 1,
+  mercury: [], mercuryForm: false,
+  dea: { checked: {}, added: {} },
+  machines: [],
+  ppe: {}, ppeRows: [],
+  floorplans: {}, sops: [], emFiles: [],
+  openSection: null,
+};
+
+const A = [
+  ["demographic", "Demographic information"],
+  ["training", "Employee information and training"],
+  ["floorplans", "Floor plans"],
+  ["sops", "Standard operating procedures"],
+];
+const B = [
+  ["hazchem", "Hazardous chemicals and equipment"],
+  ["cheminv", "Chemical inventory"],
+  ["rules", "Safety rules and procedures"],
+  ["waste", "Chemical waste disposal"],
+  ["mercury", "Mercury use"],
+  ["dea", "DEA controlled substances"],
+  ["machinery", "Machinery use"],
+  ["emergency", "Emergency procedures"],
+  ["ppe", "Personal protective equipment"],
+];
+const SECTION = { A: { name: "Project information", sched: "Schedule A", pages: A }, B: { name: "Hazardous chemicals and equipment", sched: "Schedule B", pages: B } };
+const sectionOf = id => A.some(p => p[0] === id) ? "A" : B.some(p => p[0] === id) ? "B" : null;
+const pct = k => Math.round(100 * SECTION[k].pages.filter(p => S.done.has(p[0])).length / SECTION[k].pages.length);
+
+/* ---------- Rail ---------- */
+function renderRail() {
+  const inPlan = !["menu", "pi", "help", "logout", "building"].includes(S.route);
+  const item = (id, label, icon = "") =>
+    `<li><button class="item" data-go="${id}" ${S.route === id ? 'aria-current="page"' : ""}>${icon}${label}</button></li>`;
+  let html = `<ul>${item("menu", "Main menu", ICON.home)}${item("pi", "Select PI", ICON.user)}${item("help", "Help", ICON.help)}${item("logout", "Log out", ICON.out)}</ul>`;
+  if (inPlan) {
+    const sec = k => {
+      const open = S.openSection === k;
+      const pages = SECTION[k].pages.map(([id, label]) =>
+        `<li><button class="item" data-go="${id}" ${S.route === id ? 'aria-current="page"' : ""}><span class="mark ${S.done.has(id) ? "done" : ""}" aria-hidden="true"></span>${label}<span class="sr">${S.done.has(id) ? ", complete" : ""}</span></button></li>`).join("");
+      return `<li class="group ${open ? "open" : ""}"><button class="item" data-toggle="${k}" aria-expanded="${open}"><span>${SECTION[k].sched}<br><span class="small">${SECTION[k].name}</span></span>${ICON.chev}</button>${open ? `<ul>${pages}</ul>` : ""}</li>`;
+    };
+    html += `<div class="divider"></div><h2>${esc(S.building)}</h2><ul>${item("rooms", "Room use")}${item("schedule", "Schedule selection")}${sec("A")}${sec("B")}</ul>`;
+  }
+  $("#rail").innerHTML = html;
+}
+
+/* ---------- Page helpers ---------- */
+const context = () => `<div class="context"><span>PI: <b>Dr. Alex Martinez</b></span>${["menu", "pi", "help", "building"].includes(S.route) ? "" : `<span>Building: <b>${esc(S.building)}</b></span>`}<span>Company: <b>UNC-Chapel Hill</b></span></div>`;
+function steps(back, next, opts = {}) {
+  const k = sectionOf(S.route);
+  let where = "";
+  if (k) {
+    const i = SECTION[k].pages.findIndex(p => p[0] === S.route);
+    where = `${SECTION[k].sched}, page ${i + 1} of ${SECTION[k].pages.length}`;
+  }
+  return `<div class="steps">
+    ${back ? `<button class="btn" data-back="${back}">${ICON.back}Back</button>` : "<span></span>"}
+    <span class="where">${where}</span>
+    ${next ? `<button class="btn primary" data-next="${next}" ${opts.disabled ? "disabled" : ""}>${opts.label || "Continue"}${ICON.next}</button>` : "<span></span>"}
+  </div>`;
+}
+const nextIn = id => {
+  const k = sectionOf(id), pages = SECTION[k].pages, i = pages.findIndex(p => p[0] === id);
+  return i < pages.length - 1 ? pages[i + 1][0] : "schedule";
+};
+const prevIn = id => {
+  const k = sectionOf(id), pages = SECTION[k].pages, i = pages.findIndex(p => p[0] === id);
+  return i > 0 ? pages[i - 1][0] : "schedule";
+};
+const roomOptions = sel => (S.rooms.length ? S.rooms : [{ num: "123" }]).map(r => `<option ${r.num === sel ? "selected" : ""}>${esc(r.num)}</option>`).join("");
+
+/* ---------- Pages ---------- */
+const P = {};
+
+P.menu = () => `
+  ${context()}
+  <h1>Main menu</h1>
+  <div class="plans body">
+    ${S.plans.two ? `<h2>Approved plans</h2>
+    <div class="plan">
+      <div>
+        <h3><a href="#" data-open-plan="two">Building Two</a></h3>
+        <div class="meta"><span>Plan #987654321</span><span>Approved <span class="late">01/01/2022</span></span>
+          <span class="status red"><i></i>Noncompliant</span>${tip("This plan is more than a year old. Update it to bring it back into compliance.")}</div>
+      </div>
+      <div class="actions">
+        <label class="sr" for="act-two">Action for Building Two</label>
+        <select id="act-two"><option>Update plan</option><option>View plan</option></select>
+        <button class="btn small-btn" data-go="rooms">Go</button>
+        <button class="icon-btn" data-delete="two" aria-label="Delete the plan for Building Two">${ICON.trash}</button>
+      </div>
+    </div>` : ""}
+    ${S.plans.one ? `<h2>Plans in process</h2>
+    <div class="plan">
+      <div>
+        <h3><a href="#" data-open-plan="one">Building One</a></h3>
+        <div class="meta"><span>Plan #123456789</span>
+          ${S.plan === "pending"
+            ? `<span class="status amber"><i></i>Pending approval</span>${tip("EHS is reviewing this plan. You'll get an email when it's approved.")}`
+            : `<span class="status none"><i></i>Not submitted</span>${tip("This plan hasn't been sent to EHS. Finish both schedules, then submit it for approval.")}`}
+        </div>
+      </div>
+      <div class="actions">
+        <label class="sr" for="act-one">Action for Building One</label>
+        <select id="act-one">${S.plan === "pending" ? "<option>View plan</option>" : "<option>Continue editing</option><option>View plan</option>"}</select>
+        <button class="btn small-btn" data-go="${S.plan === "pending" ? "schedule" : "rooms"}">Go</button>
+        <button class="icon-btn" data-delete="one" aria-label="Delete the plan for Building One">${ICON.trash}</button>
+      </div>
+    </div>` : ""}
+    <div style="margin-top:1.6rem"><button class="btn primary" data-go="building">${ICON.plus}Start a new plan</button></div>
+  </div>`;
+
+P.building = () => `
+  ${context()}
+  <h1>Building selection</h1>
+  <p class="lede">Choose the building this plan covers. You'll add its rooms next.</p>
+  <div class="body">
+    <label class="field"><span>Building</span>
+      <select id="bld"><option>Building One</option><option>Building Two</option><option>Building Three</option></select></label>
+  </div>
+  ${steps("menu-confirm", "rooms")}`;
+
+const HAZ = [
+  ["chem", "Hazardous chemicals", "Any chemical with a hazard label, or equipment that uses one."],
+  ["rad", "Radioactive materials", "Radioisotopes, sealed sources, or equipment that contains them."],
+  ["xray", "X-ray equipment", "Diffractometers, cabinet X-ray units, and other X-ray producing equipment."],
+  ["laser", "Laser equipment", "Lasers used for research, not laser pointers or barcode scanners."],
+  ["bsl", "Biological safety level", "The biosafety level the room is registered for."],
+  ["rsna", "rsNA", "Recombinant or synthetic nucleic acid molecules."],
+  ["trans", "Transgenic animals/plants", "Animals or plants with altered genetic material."],
+  ["ship", "Shipping", "Packing or shipping hazardous materials from this room."],
+  ["clin", "Clinical lab", "Work with human clinical samples."],
+];
+P.rooms = () => `
+  ${context()}
+  <h1>Room use entry</h1>
+  <p class="lede">Add each room in your lab, then indicate its use.</p>
+  <div class="body">
+    <div class="row" style="margin-bottom:1rem">
+      <div class="combo" style="max-width:22rem"><label class="sr" for="room-q">Room or lab bay number</label>
+        <input type="text" id="room-q" placeholder="Type a room or lab bay number, ex: 101A" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="room-list" aria-describedby="room-err"><ul id="room-list" hidden></ul></div>
+      <button class="btn small-btn" id="add-room">${ICON.plus}Add room</button>
+    </div>
+    ${S.roomErr ? `<p class="room-err" id="room-err" role="alert">${esc(S.roomErr)}</p>` : ""}
+    <div class="table-wrap">
+      <table class="rooms">
+        <thead><tr><th>Room</th>${HAZ.map(([, l, t]) => `<th class="c"><div>${l}${tip(t)}</div></th>`).join("")}</tr></thead>
+        <tbody>${S.rooms.length ? S.rooms.map((r, i) => `<tr>
+          <td><span class="row" style="gap:.3rem;flex-wrap:nowrap"><button class="icon-btn" data-del-room="${i}" aria-label="Remove room ${esc(r.num)}">${ICON.trash}</button><b>${esc(r.num)}</b></span></td>
+          ${HAZ.map(([k, l]) => `<td class="c">${k === "chem" || S.allUses
+            ? `<span class="row" style="gap:.35rem;flex-wrap:nowrap;justify-content:center"><input type="checkbox" data-haz="${i}:${k}" ${r.haz[k] ? "checked" : ""} aria-label="${l}, room ${esc(r.num)}">${k === "bsl" ? `<select aria-label="Biosafety level, room ${esc(r.num)}" style="width:auto;min-height:32px;padding:.2rem .4rem"><option>BSL 1</option><option>BSL 2</option><option>BSL 3</option></select>` : ""}</span>`
+            : `<span class="demo-off" role="img" tabindex="0" data-tip="Demo: only hazardous chemicals can be selected in this prototype." aria-label="${l}, room ${esc(r.num)}: not available in this demo"><input type="checkbox" disabled tabindex="-1" aria-hidden="true">${k === "bsl" ? `<select disabled tabindex="-1" aria-hidden="true" style="width:auto;min-height:32px;padding:.2rem .4rem"><option>BSL 1</option></select>` : ""}</span>`}</td>`).join("")}
+        </tr>`).join("") : `<tr><td colspan="10" class="empty">No rooms yet. Type a room or lab bay number above to add it.</td></tr>`}</tbody>
+      </table>
+    </div>
+  </div>
+  ${steps("menu", "schedule", { disabled: !S.rooms.length })}`;
+
+const ring = v => {
+  const c = 2 * Math.PI * 23;
+  return `<span class="ring"><svg viewBox="0 0 56 56" aria-hidden="true"><circle class="track" cx="28" cy="28" r="23"/><circle class="fill" cx="28" cy="28" r="23" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - v / 100)}"/></svg><span>${v}%</span></span>`;
+};
+P.schedule = () => {
+  const a = pct("A"), b = pct("B"), ready = a === 100 && b === 100;
+  return `
+  ${context()}
+  <h1>Schedule selection</h1>
+  <p class="lede">Your plan has <strong>two</strong> schedules. Finish each, then submit the plan to EHS for approval.</p>
+  <div class="body">
+    <div class="sched">
+      ${["A", "B"].map(k => `<button data-go="${SECTION[k].pages.find(p => !S.done.has(p[0]))?.[0] || SECTION[k].pages[0][0]}" data-open="${k}">
+        ${ring(pct(k))}<span><b>${SECTION[k].name} (${SECTION[k].sched})</b><small>${SECTION[k].pages.filter(p => S.done.has(p[0])).length} of ${SECTION[k].pages.length} pages complete</small></span></button>`).join("")}
+    </div>
+    <div class="submit-wrap">
+      ${S.plan === "pending"
+        ? `<span class="status amber"><i></i>Submitted. Pending approval.</span>`
+        : `<button class="btn primary" id="submit" ${ready ? "" : "disabled"}>Submit plan for approval</button>
+           <span class="small">${ready ? "Both schedules are complete." : "Finish both schedules to submit."}</span>`}
+    </div>
+  </div>
+  ${steps("rooms", null)}`;
+};
+
+P.demographic = () => `
+  ${context()}
+  <h1>Demographic information</h1>
+  <p class="lede">Who's responsible for this lab, and how emergency responders can reach them.</p>
+  <div class="body">
+    <h2>Principal investigator</h2>
+    <div class="grid2">
+      <label class="field"><span>Position title <span class="req">(required)</span></span><input type="text" required placeholder="ex: Associate Professor"></label>
+      <label class="field"><span>Department <span class="req">(required)</span></span><input type="text" required placeholder="ex: Chemistry"></label>
+      <label class="field"><span>After-hours phone <span class="req">(required)</span></span><input type="tel" required placeholder="(201) 555-1234"></label>
+      <label class="field"><span>Daytime phone <span class="req">(required)</span></span><input type="tel" required placeholder="(201) 555-1234"></label>
+      <label class="field"><span>Email <span class="req">(required)</span></span><input type="email" required placeholder="name@unc.edu"></label>
+    </div>
+    <label class="check small"><input type="checkbox"> Daytime phone is the same as after-hours</label>
+    <h2>Safety supervisor</h2>
+    <p class="small" style="margin-top:-.3rem">Someone in your group who is responsible for safety when the PI is away.</p>
+    <label class="check" style="margin-bottom:.9rem"><input type="checkbox"> Same as the principal investigator</label>
+    <div class="grid2">
+      <label class="field"><span>Name <span class="req">(required)</span></span><input type="text" required></label>
+      <label class="field"><span>Email <span class="req">(required)</span></span><input type="email" required placeholder="name@unc.edu"></label>
+      <label class="field"><span>Daytime phone <span class="req">(required)</span></span><input type="tel" required placeholder="(201) 555-1234"></label>
+      <label class="field"><span>After-hours phone <span class="req">(required)</span></span><input type="tel" required placeholder="(201) 555-1234"></label>
+    </div>
+    <h2>Company name</h2>
+    <label class="field"><span>Company <span class="req">(only if you have a Facilities Use Agreement with UNC)</span></span><input type="text"></label>
+  </div>
+  ${steps("schedule", nextIn("demographic"))}`;
+
+const INFO = ["Chemical hygiene plan (Lab Safety Manual and Lab Safety Plan)", "Safety Data Sheets", "Records that each employee has completed EHS training", "Each person's documented annual review of the Lab Safety Plan"];
+P.training = () => `
+  ${context()}
+  <h1>Employee information and training</h1>
+  <p class="lede">OSHA requires labs to tell employees about chemical hazards when they start and whenever exposure changes. Tell us where your lab keeps each record.</p>
+  <div class="body">
+    <div class="table-wrap" style="max-width:46rem">
+      <table><thead><tr><th>Information</th><th style="width:12rem">Location</th></tr></thead>
+      <tbody>${INFO.map((t, i) => `<tr><td>${t}</td><td><label class="sr" for="loc${i}">Location of ${t}</label><select id="loc${i}"><option>Online</option>${roomOptions()}</select></td></tr>`).join("")}</tbody></table>
+    </div>
+  </div>
+  ${steps(prevIn("training"), nextIn("training"))}`;
+
+P.floorplans = () => {
+  const rooms = S.rooms.length ? S.rooms : [{ num: "123" }];
+  return `
+  ${context()}
+  <h1>Floor plans</h1>
+  <p class="lede">Attach a floor plan for each room. On each one, mark any of these the room has:</p>
+  <div class="body">
+    <ul class="plain">
+      <li>Permitted areas for eating and drinking</li>
+      <li>Location and class of hazardous materials, including chemicals and hazardous waste</li>
+      <li>Benches, desks, fume hoods, biological safety cabinets and other equipment</li>
+      <li>Fire extinguishers and spill control supplies</li>
+      <li>Anything else that can help emergency responders</li>
+    </ul>
+    <p><a href="#" onclick="return false">See sample floor plans</a></p>
+    <div class="drop" style="max-width:40rem">
+      <span>Drag a file here, or</span>
+      <div class="row" style="justify-content:center">
+        <label class="sr" for="fp-room">Room</label><select id="fp-room" style="width:auto">${roomOptions()}</select>
+        <button class="btn small-btn" id="fp-add">Choose file</button>
+      </div>
+      <span class="small">PDF or image, up to 25 MB</span>
+    </div>
+    ${rooms.map(r => S.floorplans[r.num]
+      ? `<div class="needs ok">${ICON.file}<span><b>Room ${esc(r.num)}</b>: floor-plan-${esc(r.num)}.pdf attached</span></div>`
+      : `<div class="needs"><b>Room ${esc(r.num)}</b><span>needs a floor plan.</span></div>`).join("")}
+  </div>
+  ${steps(prevIn("floorplans"), nextIn("floorplans"))}`;
+};
+
+P.sops = () => `
+  ${context()}
+  <h1>Standard operating procedures</h1>
+  <p class="lede">An SOP is a set of written instructions for working safely with hazardous materials, equipment or operations. <a href="#" onclick="return false">Download an SOP template</a>.</p>
+  <div class="body">
+    <p>An SOP can cover:</p>
+    <ul class="plain">
+      <li>One hazardous material, class of materials, or piece of equipment, used in a particular procedure</li>
+      <li>General use of a hazardous material, class of materials, or piece of equipment</li>
+      <li>A general procedure covering several hazardous materials or types of equipment</li>
+    </ul>
+    <div class="row"><button class="btn" id="sop-add">${ICON.plus}Attach an SOP</button><span class="small">PDF or Word, up to 25 MB</span></div>
+    <h3>Attached SOPs</h3>
+    ${S.sops.length ? `<ul class="files">${S.sops.map(f => `<li>${ICON.file}${esc(f)}</li>`).join("")}</ul>` : `<p class="small">None yet.</p>`}
+  </div>
+  ${steps(prevIn("sops"), nextIn("sops"))}`;
+
+// [key, question, link, list the plan's rooms after the question]
+const HQ = [
+  ["hg", "Do you have elemental mercury or mercury-containing items (such as thermometers, manometers, bubblers or lamps) in any of these rooms?", "", true],
+  ["dea", "Do you use or store any DEA controlled substances in any of these rooms?", "List of DEA controlled substances", true],
+  ["mach", "Do you have hazardous machinery, such as a lathe, drill press, welding equipment, saw, soldering equipment, milling or grinding machine, in any of these rooms?", "", true],
+  ["coi", "Do you use or store any Department of Homeland Security Chemicals of Interest in any of these rooms?", "Chemicals of Interest reference chart", true],
+  ["dark", "Are any of the rooms used as darkrooms or for photo development?", "Fact sheet on photographic waste", false],
+];
+P.hazchem = () => `
+  ${context()}
+  <h1>Hazardous chemicals and equipment</h1>
+  <p class="lede">Your answers decide which pages of Schedule B apply to your rooms.</p>
+  <div class="body">
+    ${HQ.map(([k, q, link, rooms]) => `<div class="q"><p>${q}${rooms ? ` <b>${esc(S.rooms.map(r => r.num).join(", ") || "123")}</b>` : ""}${link ? `<a class="small" href="#" onclick="return false">${link}</a>` : ""}</p>
+      <span class="yesno locked" role="radiogroup" tabindex="0" aria-label="${esc(q)} Answer fixed in this demo." data-tip="Demo: these answers can't be changed in this prototype.">
+        <label><input type="radio" name="hq-${k}" value="y" disabled tabindex="-1" ${S.hazchem[k] === "y" ? "checked" : ""}><span>Yes</span></label>
+        <label><input type="radio" name="hq-${k}" value="n" disabled tabindex="-1" ${S.hazchem[k] === "n" ? "checked" : ""}><span>No</span></label>
+      </span></div>`).join("")}
+  </div>
+  ${steps(prevIn("hazchem"), nextIn("hazchem"))}`;
+
+P.cheminv = () => `
+  ${context()}
+  <h1>Chemical inventory</h1>
+  <p class="lede">You must keep a complete chemical inventory and update it yearly.</p>
+  <div class="body">
+    <div class="alert">You are <b>out of compliance</b> with your annual inventory update. Please log into the <a href="#" onclick="return false">chemical inventory portal</a> to complete the update.</div>
+    <p>For assistance, <a href="#" onclick="return false">contact Chemical Safety</a>.</p>
+    <div class="aside">
+      <h3>For labs with Chemicals of Interest</h3>
+      You must keep your inventory up-to-date to comply with Department of Homeland Security's Chemical Facility Anti-Terrorism Standards (CFATS). Check your inventory regularly to prevent theft or diversion. The Principal Investigator or Safety Supervisor must verify CFATS compliance during the annual update. <a href="#" onclick="return false">More about chemical security requirements.</a>
+    </div>
+  </div>
+  ${steps(prevIn("cheminv"), nextIn("cheminv"))}`;
+
+P.rules = () => `
+  ${context()}
+  <h1>Safety rules and procedures</h1>
+  <p class="lede">Add the rules and procedures that are specific to your lab. They supplement the <a href="#" onclick="return false">Lab Safety Manual</a>.</p>
+  <div class="body">
+    <label class="field" style="max-width:42rem"><span>Lab rules <span class="req">(required)</span></span><textarea required placeholder="ex: No one works alone after 6 pm."></textarea></label>
+    ${[["Procedures for <a href=\"#\" onclick=\"return false\">toxic and carcinogenic chemicals</a>", "ex: Weigh carcinogens only in the fume hood in room 123."],
+       ["Procedures restricted to a fume hood", "ex: All work with concentrated acids."],
+       ["Designated food and drink areas, as shown on the floor plan", "ex: The desk area by the door in room 123."]].map(([l, ph], i) => `
+      <div class="field" style="max-width:42rem"><span>${l} <span class="req">(if applicable)</span></span><textarea id="rule${i}" placeholder="${ph}"></textarea>
+      <label class="check small"><input type="checkbox" data-na="rule${i}"> Doesn't apply to my lab</label></div>`).join("")}
+    <label class="check" style="margin-top:.6rem"><input type="checkbox" required> I certify that no other information is needed <span class="req">(required)</span></label>
+  </div>
+  ${steps(prevIn("rules"), nextIn("rules"))}`;
+
+const WASTE = [["Acids", "pH below 7, such as hydrochloric or sulfuric acid."], ["Heavy metals", "Such as lead, cadmium, chromium or mercury compounds."], ["Bases", "pH above 7, such as sodium hydroxide."], ["Oxidizers", "Chemicals that can start or feed a fire, such as nitrates and peroxides."], ["Non-halogenated solvents", "Such as acetone, ethanol, hexane or toluene."], ["Peroxide-forming chemicals", "Such as diethyl ether and THF, which form explosive peroxides over time."], ["Halogenated solvents", "Solvents containing chlorine, bromine or fluorine, such as dichloromethane."], ["Highly toxic", "Chemicals that are harmful in very small amounts."]];
+P.waste = () => `
+  ${context()}
+  <h1>Chemical waste disposal</h1>
+  <div class="body">
+    <ul class="plain" style="margin-bottom:1.2rem">
+      <li><b>Unwanted material:</b> chemical waste generated in labs. Attach the <a href="#" onclick="return false">unwanted material label</a> when a material has no further use.</li>
+      <li><b>Timely removal:</b> remove unwanted material within 12 months of the accumulation start date on its label.</li>
+      <li><b>Request pickup:</b> fill out the <a href="#" onclick="return false">chemical waste pickup form</a> when a container is nearly full.</li>
+    </ul>
+    <p class="small">More in the <a href="#" onclick="return false">Laboratory Waste Management Plan</a>.</p>
+    <div class="q"><p><b>Does your lab produce chemical waste?</b> <span class="req">(required)</span></p>
+      <span class="yesno" role="radiogroup" aria-label="Does your lab produce chemical waste?" aria-required="true">
+        <label><input type="radio" name="waste" value="y" ${S.waste === "y" ? "checked" : ""}><span>Yes</span></label>
+        <label><input type="radio" name="waste" value="n" ${S.waste === "n" ? "checked" : ""}><span>No</span></label>
+      </span></div>
+    ${S.waste === "y" ? `<div class="reveal">
+      <h2>Which types of waste does your lab produce?</h2>
+      <div class="grid2">${WASTE.map(([w, t]) => `<label class="check" style="margin:.3rem 0"><input type="checkbox"> ${w} ${tip(t)}</label>`).join("")}</div>
+      <h2>Which processes produce waste? <span class="req">(required)</span></h2>
+      ${Array.from({ length: S.processes }, (_, i) => `<div class="panel" style="max-width:42rem"><div class="row">
+        <label class="field" style="flex:2;min-width:14rem;margin:0"><span>Process ${i + 1}</span><input type="text" placeholder="ex: High-performance liquid chromatography"></label>
+        <label class="field" style="flex:1;min-width:9rem;margin:0"><span>Waste generated</span><input type="text" placeholder="ex: 19 L/week"></label></div></div>`).join("")}
+      <button class="btn quiet" id="add-process">${ICON.plus}Add another process</button>
+      <h2>How will you separate incompatible wastes? <span class="req">(required)</span></h2>
+      <p class="small">For example, store acids apart from bases with secondary containment or a separate location. See the <a href="#" onclick="return false">chemical incompatibility chart</a>.</p>
+      <label class="field" style="max-width:42rem"><span class="sr">How you separate incompatible wastes</span><textarea required placeholder="ex: Acid waste is stored in a plastic tray, apart from base waste."></textarea></label>
+    </div>` : ""}
+  </div>
+  ${steps(prevIn("waste"), nextIn("waste"))}`;
+
+P.mercury = () => `
+  ${context()}
+  <h1>Essential use mercury registration</h1>
+  <p class="lede">Elemental mercury is allowed in campus labs only for essential use: where no acceptable alternative exists, or an alternative would cause significant financial hardship. See the <a href="#" onclick="return false">Mercury-Free UNC Policy</a>.</p>
+  <div class="body">
+    ${S.mercuryForm ? `<div class="panel reveal" style="max-width:40rem">
+      <h3 style="margin-top:0">Register a mercury item</h3>
+      <label class="field"><span>Item</span><input type="text" id="hg-item" placeholder="ex: Mercury thermometer"></label>
+      <div class="grid2">
+        <label class="field"><span>Room</span><select id="hg-room">${roomOptions()}</select></label>
+        <label class="field"><span>Location in room</span><input type="text" id="hg-loc" placeholder="ex: Fume hood SN 12345678"></label>
+      </div>
+      <label class="field"><span>Why it's essential</span><input type="text" id="hg-why" placeholder="ex: Calibration accuracy"></label>
+      <div class="row"><button class="btn primary small-btn" id="hg-save">Register item</button><button class="btn quiet" id="hg-cancel">Cancel</button></div>
+    </div>` : `<button class="btn" id="hg-new">${ICON.plus}Register a mercury item</button>`}
+    <h2>Registered items</h2>
+    ${S.mercury.length ? `<ul class="files">${S.mercury.map(m => `<li><b>${esc(m.item)}</b><span class="small">Room ${esc(m.room)}${m.loc ? ", " + esc(m.loc) : ""}</span></li>`).join("")}</ul>` : `<p class="small">None registered.</p>`}
+  </div>
+  ${steps(prevIn("mercury"), nextIn("mercury"))}`;
+
+// Examples are substances commonly held in university research labs: animal anesthesia,
+// analgesia and euthanasia, and neuroscience and addiction research.
+const DEA = [
+  ["I", "High potential for abuse, no currently accepted medical use in the United States, and a lack of accepted safety for use under medical supervision.", ["Psilocybin", "MDMA", "LSD"]],
+  ["II", "High potential for abuse; currently accepted medical use, or accepted use with severe restrictions; abuse may lead to severe psychological or physical dependence.", ["Pentobarbital", "Fentanyl", "Morphine", "Cocaine"]],
+  ["III", "Potential for abuse less than Schedules I and II; currently accepted medical use; abuse may lead to moderate or low physical dependence or high psychological dependence.", ["Ketamine", "Buprenorphine", "Tiletamine-zolazepam (Telazol)", "Testosterone"]],
+  ["IV", "Low potential for abuse relative to Schedule III; currently accepted medical use; abuse may lead to limited dependence relative to Schedule III.", ["Diazepam", "Midazolam", "Butorphanol", "Phenobarbital"]],
+  ["V", "Low potential for abuse relative to Schedule IV; currently accepted medical use; abuse may lead to limited dependence relative to Schedule IV.", ["Pregabalin", "Codeine preparations <200 mg/100 g"]],
+];
+P.dea = () => `
+  ${context()}
+  <h1>DEA controlled substances</h1>
+  <p class="lede">Controlled substances have special rules for buying, storage, security, record keeping and disposal. See <a href="#" onclick="return false">Chapter 9 of the Lab Safety Manual</a>.</p>
+  <div class="body">
+    <p class="small">Check each schedule your lab uses, then add the substances.</p>
+    ${DEA.map(([n, d, subs]) => `<div class="panel" style="max-width:46rem">
+      <label class="check" style="align-items:flex-start"><input type="checkbox" data-dea="${n}" ${S.dea.checked[n] ? "checked" : ""} style="margin-top:3px">
+        <span><b>Schedule ${n}</b><br><span class="small">${d}</span><br><span class="small">ex: ${subs.map(esc).join(", ")}</span></span></label>
+      ${S.dea.checked[n] ? `<div class="reveal" style="margin:.8rem 0 0 1.7rem">
+        <div class="row"><label class="sr" for="dea-sel-${n}">Schedule ${n} substance</label>
+          <select id="dea-sel-${n}" style="max-width:20rem"><option value="">Choose a substance</option>${subs.map(s => `<option>${esc(s)}</option>`).join("")}</select>
+          <button class="btn small-btn" data-dea-add="${n}">${ICON.plus}Add</button></div>
+        ${(S.dea.added[n] || []).length ? `<ul class="files">${S.dea.added[n].map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
+      </div>` : ""}
+    </div>`).join("")}
+  </div>
+  ${steps(prevIn("dea"), nextIn("dea"))}`;
+
+const MACHINES = ["3D printer", "Band saw", "Drill press", "Grinder", "Lathe", "Laser cutter", "Milling machine", "Soldering station", "Table saw", "Welding equipment"];
+P.machinery = () => `
+  ${context()}
+  <h1>Machinery use</h1>
+  <p class="lede">Add each machine in your lab, then tell us its model, its room and its SOP.</p>
+  <div class="body">
+    <div class="row" style="margin-bottom:1rem">
+      <div class="combo"><label class="sr" for="mach-q">Search machinery</label>
+        <input type="text" id="mach-q" placeholder="Search machinery, ex: 3D printer" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="mach-list"><ul id="mach-list" hidden></ul></div>
+    </div>
+    ${S.machines.length ? `<div class="table-wrap"><table>
+      <thead><tr><th>Machine</th><th>Model ${tip("The make and model, ex: Ultimaker 3.")}</th><th>Room</th><th>SOP</th><th></th></tr></thead>
+      <tbody>${S.machines.map((m, i) => `<tr><td><b>${esc(m)}</b></td>
+        <td><input type="text" aria-label="Model of ${esc(m)}" placeholder="ex: Ultimaker 3" style="min-width:9rem"></td>
+        <td><select aria-label="Room for ${esc(m)}" style="width:auto">${roomOptions()}</select></td>
+        <td><button class="btn quiet small-btn" data-mach-sop="${i}">${S.machineSops?.[i] ? esc(S.machineSops[i]) : "Attach SOP"}</button></td>
+        <td><button class="icon-btn" data-del-mach="${i}" aria-label="Remove ${esc(m)}">${ICON.trash}</button></td></tr>`).join("")}</tbody></table></div>`
+      : `<p class="small">No machinery added. Search above to add a machine.</p>`}
+    <p class="small" style="margin-top:1rem">Need an SOP? <a href="#" onclick="return false">Download an SOP template</a>.</p>
+  </div>
+  ${steps(prevIn("machinery"), nextIn("machinery"))}`;
+
+P.emergency = () => `
+  ${context()}
+  <h1>Emergency procedures</h1>
+  <p class="lede">Every lab follows the <a href="#" onclick="return false">general emergency procedures</a>. Add the procedures specific to your lab, then print and post them.</p>
+  <div class="body">
+    <details class="panel" open>
+      <summary>General procedures</summary>
+      <div class="gp">
+        <section>
+          <h3>Fire</h3>
+          <ul>
+            <li>Have plans for fire, chemical spills and other emergencies in your lab.</li>
+            <li>Know the emergency plans and evacuation routes for your building.</li>
+            <li>In an alarm, remember RACE:
+              <ul class="race">
+                <li><b>R</b>emove anyone from immediate danger</li>
+                <li><b>A</b>ctivate the building fire alarm and call 911</li>
+                <li><b>C</b>onfine the fire by closing all windows and doors</li>
+                <li><b>E</b>vacuate the building</li>
+              </ul></li>
+            <li>To get out of a building fire:
+              <ul>
+                <li>Crawl if there is smoke</li>
+                <li>Feel doors before opening them</li>
+                <li>Go to the nearest exit</li>
+                <li>Use an exit stair, never an elevator</li>
+                <li>Close doors behind you</li>
+              </ul></li>
+            <li>Use a fire extinguisher only if the fire is very small and you know how to use it safely.</li>
+            <li>If you are on fire: stop, drop and roll.</li>
+            <li>If you are trapped:
+              <ul>
+                <li>Close the door and seal cracks</li>
+                <li>Open the windows if it's safe</li>
+                <li>Signal for help and call 911</li>
+                <li>Don't jump. The fire department will reach you.</li>
+              </ul></li>
+            <li>If you have a physical impairment, plan ahead and know your "areas of refuge," such as stair enclosures or the far side of corridor fire doors.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Chemical spills</h3>
+          <ul>
+            <li>Call EHS at (919) 962-5507 if a spill involves:
+              <ul>
+                <li>A respiratory hazard</li>
+                <li>A threat of fire or explosion</li>
+                <li>More than 100 mL of an OSHA-regulated carcinogen or highly toxic chemical</li>
+                <li>More than 1 L of a volatile or flammable solvent</li>
+                <li>More than 1 L of a corrosive (acid or base) liquid</li>
+                <li>Elemental (liquid) mercury</li>
+              </ul></li>
+            <li>Keep protective clothing and spill cleanup materials for small, low-hazard spills.</li>
+            <li>Buy spill kits for chemicals and corrosives, or make your own. See <a href="#" onclick="return false">Chapter One of the Lab Safety Manual</a>.</li>
+            <li>To respond to a spill:
+              <ol>
+                <li>Leave and control the spill area</li>
+                <li>Help injured personnel</li>
+                <li>Evaluate the hazard</li>
+                <li>Clean up the spill</li>
+              </ol></li>
+          </ul>
+        </section>
+      </div>
+    </details>
+    <h2>Lab-specific procedures</h2>
+    <p class="small">How your lab prepares for and responds to fire, flood, spills, a dangerous person, equipment failure, explosions or structural damage. Consider:</p>
+    <ul class="plain small" style="columns:2 14rem">
+      <li>Spill kits, safety showers, eyewash stations and extinguishers</li><li>Training: CPR, first aid, fire extinguisher</li><li>Evacuation routes and meeting points</li><li>Communication plans</li><li>Chemical storage and labeling</li><li>Housekeeping</li><li>Getting medical attention</li><li>Preventing theft of controlled substances</li>
+    </ul>
+    <label class="field" style="max-width:46rem"><span class="sr">Lab-specific procedures</span><textarea style="min-height:140px" placeholder="ex: Spill kit is under the sink in room 123. Meet at the flagpole on the north lawn."></textarea></label>
+    <div class="row"><button class="btn" id="em-add">${ICON.plus}Attach a file</button><span class="small">PDF or Word, up to 25 MB</span></div>
+    ${S.emFiles.length ? `<ul class="files">${S.emFiles.map(f => `<li>${ICON.file}${esc(f)}</li>`).join("")}</ul>` : ""}
+    <div class="row" style="margin-top:1.2rem"><button class="btn" onclick="window.print()">Print procedures</button><span class="small">Post a printed copy in each room.</span></div>
+  </div>
+  ${steps(prevIn("emergency"), nextIn("emergency"))}`;
+
+// [checkbox label, short name, default hazard, default PPE, example operation or chemical]
+const PPE_HAZ = [
+  ["Working with chemicals, under 1 liter per container", "Chemicals <1 L/container", "Skin contact; eye and face exposure", "Gloves (specify type), safety glasses with side shields, lab coat", "ethanol"],
+  ["Working with chemicals, over 1 liter per container", "Chemicals >1 L/container", "", "", "dispensing acetone from 4 L bottles"],
+  ["Highly toxic or carcinogenic chemicals", "Highly toxic or carcinogenic", "", "", "formaldehyde"],
+  ["Animals treated with highly toxic or carcinogenic chemicals", "Treated animals", "", "", "mice dosed with cisplatin"],
+  ["Glassware under reduced or elevated pressure", "Pressurized glassware", "", "", "rotary evaporator"],
+  ["Handling hot or cold materials", "Hot or cold materials", "", "", "liquid nitrogen"],
+  ["Broken glass, or inserting glass tubes into stoppers", "Sharp-edged glass", "", "", "fitting glass tubing into stoppers"],
+  ["Explosion hazards", "Explosion hazards", "", "", "picric acid"],
+  ["Nanomaterials", "Nanomaterials", "", "", "carbon nanotubes"],
+  ["Cytotoxic or antineoplastic agents", "Cytotoxic agents", "", "", "doxorubicin"],
+  ["Other hazardous operations", "Other", "", "", "high-voltage electrophoresis"],
+];
+P.ppe = () => `
+  ${context()}
+  <h1>Personal protective equipment</h1>
+  <p class="lede">Check each hazard in your lab and name the operation or chemical behind it. Then add any PPE the table is missing.</p>
+  <div class="body">
+    ${PPE_HAZ.map(([l, , , , ex], i) => `<div style="margin:.35rem 0">
+      <label class="check"><input type="checkbox" data-ppe="${i}" ${S.ppe[i] ? "checked" : ""}> ${l}</label>
+      ${S.ppe[i] ? `<div class="row reveal" style="margin:.45rem 0 .6rem 1.7rem">
+        <label class="sr" for="ppe-in-${i}">Operation or chemical</label>
+        <input type="text" id="ppe-in-${i}" placeholder="ex: ${ex}" style="max-width:20rem">
+        <button class="btn small-btn" data-ppe-add="${i}">${ICON.plus}Add to table</button></div>` : ""}
+    </div>`).join("")}
+    ${S.ppeRows.length ? `<div class="table-wrap" style="margin-top:1.2rem"><table>
+      <thead><tr><th>Operation</th><th>Hazard ${tip("Risk to personnel during this operation")}</th><th>PPE ${tip("Protective equipment required for this operation")}</th><th></th></tr></thead>
+      <tbody>${S.ppeRows.map((r, i) => { const h = PPE_HAZ[r.h]; return `<tr>
+        <td><b>${esc(r.what)}</b><br><span class="small">${h[1]}</span></td>
+        <td>${h[2] ? h[2] : `<input type="text" aria-label="Hazard for ${esc(r.what)}" placeholder="Describe the hazard">`}</td>
+        <td>${h[3] ? h[3] : `<input type="text" aria-label="Required PPE for ${esc(r.what)}" placeholder="List the required PPE">`}</td>
+        <td><button class="icon-btn" data-del-ppe="${i}" aria-label="Remove ${esc(r.what)}">${ICON.trash}</button></td></tr>`; }).join("")}</tbody></table></div>` : ""}
+  </div>
+  ${steps(prevIn("ppe"), nextIn("ppe"))}`;
+
+P.help = () => `
+  ${context()}
+  <h1>Help</h1>
+  <p class="lede">Questions about your lab safety plan go to the EHS team for that schedule.</p>
+  <div class="body">
+    <div class="table-wrap" style="max-width:40rem"><table><tbody>
+      <tr><td>Schedules A and B</td><td><a href="#" onclick="return false">Chemical Safety</a></td></tr>
+      <tr><td>Schedules C, D and E</td><td><a href="#" onclick="return false">Radiation Safety</a></td></tr>
+      <tr><td>Schedules F, G, I and J</td><td><a href="#" onclick="return false">Biological Safety</a></td></tr>
+    </tbody></table></div>
+    <h2>Ask a general question</h2>
+    <div class="grid2">
+      <label class="field"><span>Name</span><input type="text"></label>
+      <label class="field"><span>Email</span><input type="email" placeholder="name@unc.edu"></label>
+    </div>
+    <label class="field" style="max-width:46rem"><span>Question</span><textarea></textarea></label>
+    <div class="row"><button class="btn small-btn">Attach a screenshot</button><button class="btn primary" data-go="menu">Send question</button></div>
+  </div>`;
+
+P.pi = () => `
+  ${context()}
+  <h1>Select PI</h1>
+  <p class="lede">Work on plans for a principal investigator you support.</p>
+  <div class="body">
+    <label class="field"><span>Principal investigator</span>
+      <select><option>Dr. Alex Martinez</option><option>Dr. Anne Thompson</option><option>Dr. Eva Novak</option></select></label>
+    <button class="btn primary" data-go="menu">Show their plans</button>
+  </div>`;
+
+P.logout = () => `
+  <h1>You're logged out</h1>
+  <p class="lede">Your plan is saved as you go. Log in again to continue.</p>
+  <div class="body"><button class="btn primary" data-go="menu">Log in</button></div>`;
+
+/* ---------- Tooltips: place above the icon, or below if there's no room ---------- */
+function showTip(e) {
+  const box = $("#tipbox");
+  const t = e.target.closest?.(".tip, [data-tip]");
+  if (!t) { box.classList.remove("on"); return; }
+  box.textContent = t.dataset.tip || t.querySelector("span").textContent;
+  const b = (t.querySelector("button") || t).getBoundingClientRect();
+  const w = box.offsetWidth, h = box.offsetHeight;
+  box.style.left = Math.min(Math.max(8, b.left + b.width / 2 - w / 2), window.innerWidth - w - 8) + "px";
+  box.style.top = (b.top - h - 8 >= 8 ? b.top - h - 8 : b.bottom + 8) + "px";
+  box.classList.add("on");
+}
+document.addEventListener("mouseover", showTip);
+document.addEventListener("focusin", showTip);
+document.addEventListener("focusout", () => $("#tipbox").classList.remove("on"));
+window.addEventListener("scroll", () => $("#tipbox").classList.remove("on"), { passive: true });
+
+/* ---------- Render and events ---------- */
+function go(route) {
+  S.route = route;
+  S.roomErr = "";
+  const k = sectionOf(route);
+  if (k) S.openSection = k;
+  renderRail();
+  $("#sheet").innerHTML = P[route]();
+  bind();
+  window.scrollTo({ top: 0 });
+  $("#sheet").focus({ preventScroll: true });
+}
+const rerender = () => { const y = window.scrollY; renderRail(); $("#sheet").innerHTML = P[S.route](); bind(); window.scrollTo({ top: y }); };
+
+// A link in the text (data-go) closes the dialog and opens that screen; onLink runs first.
+function dialog(title, text, buttons, onLink) {
+  const d = $("#dlg");
+  d.innerHTML = `<h2>${title}</h2><p>${text}</p><div class="row">${buttons.map((b, i) => `<button class="btn ${b.primary ? "primary" : ""} ${b.danger ? "danger" : ""}" data-i="${i}">${b.label}</button>`).join("")}</div>`;
+  $$("button", d).forEach(btn => btn.onclick = () => { d.close(); buttons[btn.dataset.i].do?.(); });
+  $$("a[data-go]", d).forEach(a => a.onclick = e => { e.preventDefault(); d.close(); onLink?.(); go(a.dataset.go); });
+  d.showModal();
+}
+
+function bind() {
+  const sheet = $("#sheet");
+  $$("[data-go]").forEach(el => el.onclick = e => { e.preventDefault(); if (el.dataset.open) S.openSection = el.dataset.open; go(el.dataset.go); });
+  $$("[data-toggle]").forEach(el => el.onclick = () => { S.openSection = S.openSection === el.dataset.toggle ? null : el.dataset.toggle; renderRail(); bind(); });
+  $$("[data-open-plan]", sheet).forEach(el => el.onclick = e => { e.preventDefault(); go(el.dataset.openPlan === "one" && S.plan === "pending" ? "schedule" : "rooms"); });
+  $$("[data-back]", sheet).forEach(el => el.onclick = () => {
+    if (el.dataset.back === "menu-confirm") return dialog("Leave without starting a plan?", "You haven't started a plan for this building yet.", [{ label: "Stay" }, { label: "Leave", primary: true, do: () => go("menu") }]);
+    go(el.dataset.back);
+  });
+  $$("[data-next]", sheet).forEach(el => el.onclick = () => {
+    if (sectionOf(S.route)) S.done.add(S.route);
+    if (S.route === "building") S.building = $("#bld").value;
+    go(el.dataset.next);
+  });
+
+  // Main menu
+  $$("[data-delete]", sheet).forEach(el => el.onclick = () => {
+    const name = el.dataset.delete === "two" ? "Building Two" : "Building One";
+    dialog(`Delete the plan for ${name}?`, "The plan and its attachments are removed. This can't be undone.", [{ label: "Keep plan" }, { label: "Delete plan", danger: true, do: () => { S.plans[el.dataset.delete] = false; rerender(); } }]);
+  });
+
+  // Rooms
+  const add = $("#add-room"), rq = $("#room-q");
+  if (rq) {
+    const list = $("#room-list");
+    const valid = (window.ROOMS || {})[S.building] || [];
+    const addRoom = v => {
+      v = v.trim().toUpperCase();
+      if (!v) S.roomErr = "Type a room or lab bay number to add it.";
+      else if (!valid.includes(v)) S.roomErr = `Room ${v} isn't in ${S.building}. Check the number, or pick one from the list.`;
+      else if (S.rooms.some(r => r.num === v)) S.roomErr = `Room ${v} is already in this plan.`;
+      else { S.roomErr = ""; S.rooms.push({ num: v, haz: {} }); }
+      rerender(); $("#room-q").focus();
+    };
+    const show = () => {
+      const t = rq.value.trim().toUpperCase();
+      const hits = t ? valid.filter(r => r.startsWith(t) && !S.rooms.some(x => x.num === r)).slice(0, 8) : [];
+      list.innerHTML = hits.map(r => `<li><button type="button">${r}</button></li>`).join("")
+        || (t ? `<li class="hint">No room ${esc(t)} in ${esc(S.building)}.</li>` : "");
+      list.hidden = !t; rq.setAttribute("aria-expanded", String(!!t));
+      $$("button", list).forEach(b => {
+        b.onclick = () => addRoom(b.textContent);
+        b.onkeydown = e => {
+          if (e.key === "ArrowDown") { e.preventDefault(); b.parentElement.nextElementSibling?.querySelector("button")?.focus(); }
+          if (e.key === "ArrowUp") { e.preventDefault(); (b.parentElement.previousElementSibling?.querySelector("button") || rq).focus(); }
+          if (e.key === "Escape") { list.hidden = true; rq.focus(); }
+        };
+      });
+    };
+    rq.oninput = show;
+    rq.onkeydown = e => {
+      if (e.key === "ArrowDown") { const b = $("button", list); if (b) { e.preventDefault(); b.focus(); } }
+      if (e.key === "Enter") { e.preventDefault(); const hits = $$("button", list); addRoom(hits.length === 1 ? hits[0].textContent : rq.value); }
+      if (e.key === "Escape") list.hidden = true;
+    };
+    add.onclick = () => addRoom(rq.value);
+  }
+  $$("[data-haz]", sheet).forEach(el => el.onchange = () => { const [i, k] = el.dataset.haz.split(":"); S.rooms[i].haz[k] = el.checked; if (k === "bsl") rerender(); });
+  $$("[data-del-room]", sheet).forEach(el => el.onclick = () => { S.rooms.splice(+el.dataset.delRoom, 1); rerender(); });
+
+  // Schedule
+  const sub = $("#submit");
+  if (sub) sub.onclick = () => dialog("Plan submitted", `EHS will review your plan for Building One and may contact you for additional details. You'll get an email when it's approved. For questions, refer to the <a href="#" data-go="help">Help page</a>.`, [{ label: "Back to main menu", primary: true, do: () => { S.plan = "pending"; go("menu"); } }], () => { S.plan = "pending"; });
+
+  // Floor plans, SOPs
+  const fp = $("#fp-add");
+  if (fp) fp.onclick = () => { S.floorplans[$("#fp-room").value] = true; rerender(); };
+  const sop = $("#sop-add");
+  if (sop) sop.onclick = () => { S.sops.push(S.sops.length ? `Standard Operating Procedure ${S.sops.length + 1}.pdf` : "Standard Operating Procedure.pdf"); rerender(); };
+
+  const em = $("#em-add");
+  if (em) em.onclick = () => { S.emFiles.push(S.emFiles.length ? `Emergency Procedures ${S.emFiles.length + 1}.pdf` : "Emergency Procedures.pdf"); rerender(); };
+
+  // Haz chem
+  $$("input[name^=hq-]", sheet).forEach(el => el.onchange = () => { S.hazchem[el.name.slice(3)] = el.value; });
+
+  // Rules: "doesn't apply" disables its box
+  $$("[data-na]", sheet).forEach(el => el.onchange = () => { const t = $("#" + el.dataset.na); t.disabled = el.checked; if (el.checked) t.value = ""; });
+
+  // Waste
+  $$("input[name=waste]", sheet).forEach(el => el.onchange = () => { S.waste = el.value; rerender(); });
+  const ap = $("#add-process");
+  if (ap) ap.onclick = () => { S.processes++; rerender(); };
+
+  // Mercury
+  const hn = $("#hg-new"); if (hn) hn.onclick = () => { S.mercuryForm = true; rerender(); $("#hg-item").focus(); };
+  const hc = $("#hg-cancel"); if (hc) hc.onclick = () => { S.mercuryForm = false; rerender(); };
+  const hs = $("#hg-save"); if (hs) hs.onclick = () => {
+    const item = $("#hg-item").value.trim();
+    if (!item) { $("#hg-item").focus(); $("#hg-item").placeholder = "Name the item to register it"; return; }
+    S.mercury.push({ item, room: $("#hg-room").value, loc: $("#hg-loc").value.trim() }); S.mercuryForm = false; rerender();
+  };
+
+  // DEA
+  $$("[data-dea]", sheet).forEach(el => el.onchange = () => { S.dea.checked[el.dataset.dea] = el.checked; rerender(); });
+  $$("[data-dea-add]", sheet).forEach(el => el.onclick = () => {
+    const n = el.dataset.deaAdd, v = $("#dea-sel-" + n).value;
+    if (!v) return; (S.dea.added[n] ||= []); if (!S.dea.added[n].includes(v)) S.dea.added[n].push(v); rerender();
+  });
+
+  // Machinery search
+  const q = $("#mach-q");
+  if (q) {
+    const list = $("#mach-list");
+    const show = () => {
+      const t = q.value.trim().toLowerCase();
+      const hits = t ? MACHINES.filter(m => m.toLowerCase().includes(t) && !S.machines.includes(m)) : [];
+      list.innerHTML = hits.map(m => `<li><button type="button">${m}</button></li>`).join("") || (t ? `<li class="small" style="padding:.45rem .6rem">No match. Check the spelling, or ask Chemical Safety to add it.</li>` : "");
+      list.hidden = !t; q.setAttribute("aria-expanded", String(!!t));
+      $$("button", list).forEach(b => b.onclick = () => { S.machines.push(b.textContent); rerender(); $("#mach-q").focus(); });
+    };
+    q.oninput = show;
+    q.onkeydown = e => { if (e.key === "ArrowDown") { const b = $("button", list); if (b) { e.preventDefault(); b.focus(); } } };
+  }
+  $$("[data-del-mach]", sheet).forEach(el => el.onclick = () => { S.machines.splice(+el.dataset.delMach, 1); rerender(); });
+  $$("[data-mach-sop]", sheet).forEach(el => el.onclick = () => { S.machineSops ||= {}; S.machineSops[el.dataset.machSop] = `${S.machines[el.dataset.machSop]} SOP.pdf`; rerender(); });
+
+  // PPE
+  $$("[data-ppe]", sheet).forEach(el => el.onchange = () => { S.ppe[el.dataset.ppe] = el.checked; rerender(); });
+  $$("[data-ppe-add]", sheet).forEach(el => el.onclick = () => {
+    const i = +el.dataset.ppeAdd, inp = $("#ppe-in-" + i), what = inp.value.trim();
+    if (!what) { inp.focus(); return; }
+    S.ppeRows.push({ h: i, what }); rerender();
+  });
+  $$("[data-del-ppe]", sheet).forEach(el => el.onclick = () => { S.ppeRows.splice(+el.dataset.delPpe, 1); rerender(); });
+}
+
+// The plan in process starts where the Figma file shows it: room 123 added, the first page of Schedule B done.
+S.rooms.push({ num: "123", haz: { chem: true } });
+S.done.add("hazchem");
+// Hazard answers are fixed in the demo: yes to everything except photo development.
+S.hazchem = { hg: "y", dea: "y", mach: "y", coi: "y", dark: "n" };
+// A screen named in the URL opens directly, ex: index.html#waste
+const start = location.hash.slice(1);
+if (start === "waste-yes") { S.waste = "y"; }
+// For the case-study screenshot only: every room use enabled. The working demo (#rooms) keeps them off.
+if (start === "rooms-all") { S.allUses = true; }
+const screen = start.replace(/-(yes|all)$/, "");
+go(P[screen] ? screen : "menu");
+</script>
+</body>
+</html>
