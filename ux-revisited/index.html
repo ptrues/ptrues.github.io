@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EHS App Redesign</title>
+  <meta name="description" content="User research and a proposed redesign of UNC's Laboratory Safety Plan application.">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="icon" href="../favicon-tight.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-tight-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-tight-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-tight-180x180.png">
+  <style>
+    :root {
+      --soft: #5f5a54;
+      --line: #dedad3;
+      --card: #f1eee8;
+      --measure: 40rem;
+      --figure: 48rem;
+      --mono: "Source Code Pro", ui-monospace, monospace;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: 1fr min(var(--measure), 100%) 1fr;
+      row-gap: 1.25rem;
+      padding-block: clamp(48px, 8vw, 96px) 80px;
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+    .story > * { grid-column: 2; margin: 0; }
+    .story > figure {
+      grid-column: 1 / -1;
+      width: min(var(--figure), 100%);
+      margin: 1rem auto 1.5rem;
+    }
+    .story > figure.narrow { width: min(32rem, 100%); }
+    /* The live prototype: wide enough for its desktop layout, which starts at 861px */
+    .story > figure.embed { width: min(72rem, 100%); }
+    .embed iframe {
+      display: block;
+      width: 100%;
+      height: min(80vh, 800px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #e8eef5;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    .story h1 {
+      font-size: clamp(2.1rem, 6vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+      margin-top: -0.4rem;
+      margin-bottom: 1rem;
+    }
+    .dek {
+      font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+      line-height: 1.4;
+      color: var(--soft);
+      margin-bottom: 1.5rem !important;
+    }
+    .story a { color: inherit; text-underline-offset: 3px; }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    figcaption {
+      margin: 0.7rem auto 0;
+      max-width: var(--measure);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.45;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    /* Two menus from the same state, shown together */
+    .menus {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .menus p {
+      margin: 0.4rem 0 0;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    /* The whole Machinery Use page, shrunk to fit */
+    .tall img {
+      width: auto;
+      max-width: 100%;
+      max-height: 80vh;
+      margin-inline: auto;
+    }
+
+    /* Personas */
+    .personas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    .persona {
+      background: var(--card);
+      border-radius: 4px;
+      padding: 1rem 1.1rem 1.1rem;
+    }
+    .persona h3 { margin: 0; font-size: 1.05rem; }
+    .persona .role {
+      margin: 0.1rem 0 0.6rem;
+      font-size: 0.9rem;
+      color: var(--soft);
+    }
+    .persona blockquote {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    /* Navigation buttons, original above proposed, at their own size */
+    .buttons {
+      display: grid;
+      justify-items: center;
+      gap: 1.25rem;
+    }
+    .buttons img {
+      width: auto;
+      max-width: 100%;
+    }
+
+    /* Book covers, side by side at the same height */
+    .books {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+    .books img {
+      width: auto;
+      height: min(300px, 55vw);
+      border: none;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+    }
+
+    /* Course certificates, two by two */
+    .certs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Titles stand out from an italic caption */
+    figcaption cite { font-style: normal; }
+
+    /* The ten heuristics, colour-coded */
+    .heuristics {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem 2rem;
+      margin: 0;
+      padding: 1.5rem 1.75rem;
+      background: var(--card);
+      border-radius: 4px;
+    }
+    .heuristics li {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      align-items: center;
+    }
+    .heuristics .num {
+      font-family: var(--mono);
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--c);
+    }
+    .heuristics .name {
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 720px) {
+      .story { font-size: 1.0625rem; }
+      .personas { grid-template-columns: 1fr; }
+      .certs, .heuristics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <article class="story">
+      <h1>That time I redesigned my organization's web app</h1>
+
+      <!-- LOOKING BACK -->
+      <p>Back in 2023, I worked at The University of North Carolina Department of Environment, Health &amp; Safety.</p>
+      <p>While I was there, I was vexed by this one web interface that confused all of our users.</p>
+      <p>So I drew up a wireframe to fix it.</p>
+      <p>Since then, AI has progressed an insane amount, and I've grown my skills quite a bit too.</p>
+      <p>So I thought it would be fun to take my old Figma wireframe and turn it into an interactive working prototype, with styled HTML, and tell the story of how I entered the world of web design.</p>
+      <figure>
+        <img src="figures/figma-canvas.webp" width="2109" height="1399" alt="The Figma editor zoomed out on the EHS LSP Web App file: dozens of wireframe screens laid out in rows and columns on a dark canvas, with blue arrows marking the flow, and the layers panel listing screens such as Machinery Use, Emergency Procs. and PPE.">
+        <figcaption>My old Figma wireframe.</figcaption>
+      </figure>
+
+      <!-- WHY -->
+      <p>See, every research lab on campus had to maintain a laboratory safety plan that documented hazards and safety procedures. Labs were supposed to maintain their plans using our in-house web application.</p>
+      <p>But there was a problem.</p>
+      <p>The app was terrible.</p>
+      <p>The interface hadn't changed since the 90s. Navigation was buggy. Links were broken.</p>
+      <figure>
+        <img src="figures/main-menu-old.webp" width="1854" height="944" alt="The original application&#x27;s main menu: the EHS header and links, a pale blue left menu, a paragraph of instructions, headings with doubled periods, rows of small blue links for each plan, and a Create a New Plan link at the bottom.">
+        <figcaption>The application's main menu.</figcaption>
+      </figure>
+      <p>A lot of my time was spent helping frustrated and confused users, not with the content of their plans, but with understanding how to use our online systems.</p>
+      <p>And when I walked around campus, I routinely saw safety violations that could be traced back to the app.</p>
+      <p>Blaming users would have been a mistake. The violations were a design problem.</p>
+      <p>And something had to be done.</p>
+
+      <!-- LEARNING -->
+      <p>That's when I became obsessed with usability.</p>
+      <p>I read books.</p>
+      <figure>
+        <div class="books">
+          <img src="figures/book-norman.webp" width="258" height="400" alt="Cover of The Design of Everyday Things by Don Norman, revised and expanded edition, with a red teapot whose spout is on the same side as its handle.">
+          <img src="figures/book-krug.webp" width="311" height="400" alt="Cover of Don&#x27;t Make Me Think, Revisited by Steve Krug.">
+        </div>
+        <figcaption>Some of my favorite books.</figcaption>
+      </figure>
+      <p>I took courses.</p>
+      <figure>
+        <div class="certs">
+          <img src="figures/certificate-1.webp" width="1400" height="1082" alt="LinkedIn Learning certificate for HTML Essential Training (2020), completed November 27, 2022.">
+          <img src="figures/certificate-2.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Foundations of User Experience (UX) Design, completed December 2, 2022.">
+          <img src="figures/certificate-3.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Start the UX Design Process: Empathize, Define, and Ideate, completed December 2, 2022.">
+          <img src="figures/certificate-4.webp" width="1400" height="1082" alt="Coursera certificate for Google&#x27;s Build Wireframes and Low-Fidelity Prototypes, completed January 28, 2023.">
+        </div>
+        <figcaption>I took several online courses.</figcaption>
+      </figure>
+      <p>And I enrolled in <em>Systems Analysis</em> (INLS 582) with the primary aim to fix the lab safety plan application.</p>
+
+      <!-- RESEARCH -->
+      <p>My group started by watching real users work. We moderated think-aloud sessions, asking users to narrate their thoughts as they worked through each task.</p>
+      <p>Then we interviewed them, and distilled our findings into a list of design considerations and personas.</p>
+      <figure>
+        <div class="personas">
+          <div class="persona">
+            <h3>Dr. Anne Thompson</h3>
+            <p class="role">Clinical researcher, 15 years at UNC</p>
+            <blockquote>“I just need to get this lab safety plan done so I can get back to my real work.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Dr. Alex Martinez</h3>
+            <p class="role">Professor, new to UNC</p>
+            <blockquote>“I wish this lab safety plan wasn&#x27;t taking up so much of my time.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Dr. Eva Novak</h3>
+            <p class="role">Postdoc, runs a makerspace</p>
+            <blockquote>“There is a lot that doesn&#x27;t apply to me.”</blockquote>
+          </div>
+          <div class="persona">
+            <h3>Wei Chen</h3>
+            <p class="role">Graduate student and new safety supervisor</p>
+            <blockquote>“It&#x27;s hard to keep up with so many new responsibilities.”</blockquote>
+          </div>
+        </div>
+        <figcaption>Our four personas.</figcaption>
+      </figure>
+      <p>We also conducted a heuristic evaluation, checking every app screen against <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">Nielsen Norman Group's ten usability heuristics</a>.</p>
+      <figure>
+        <ol class="heuristics">
+          <li style="--c:#2f6db5"><span class="num">1</span><span class="name">Visibility of system status</span></li>
+          <li style="--c:#17807e"><span class="num">2</span><span class="name">Match between the system and the real world</span></li>
+          <li style="--c:#3d8a2f"><span class="num">3</span><span class="name">User control and freedom</span></li>
+          <li style="--c:#86760f"><span class="num">4</span><span class="name">Consistency and standards</span></li>
+          <li style="--c:#c0571a"><span class="num">5</span><span class="name">Error prevention</span></li>
+          <li style="--c:#b8322a"><span class="num">6</span><span class="name">Recognition rather than recall</span></li>
+          <li style="--c:#a8336f"><span class="num">7</span><span class="name">Flexibility and efficiency of use</span></li>
+          <li style="--c:#7446a8"><span class="num">8</span><span class="name">Aesthetic and minimalist design</span></li>
+          <li style="--c:#4552a8"><span class="num">9</span><span class="name">Help users recognize, diagnose, and recover from errors</span></li>
+          <li style="--c:#4a6878"><span class="num">10</span><span class="name">Help and documentation</span></li>
+        </ol>
+        <figcaption>Nielsen Norman Group's ten usability heuristics.</figcaption>
+      </figure>
+      <p>There were problems on every screen.</p>
+
+      <!-- MAIN MENU -->
+      <p>On the main menu, each plan was shown as a row of small, identical links.</p>
+      <p>A lack of visual hierarchy made everything blur together. The biggest call to action on the page was a small button at the bottom.</p>
+      <figure>
+        <img src="figures/main-menu-plans-old.webp" width="1536" height="380" alt="The plan lists on the original main menu: two plans in process, each with a row of small links (Update, View, Submit for Approval, Delete, Change Building), empty lists for pending and approved plans, and a Create a New Plan link at the bottom.">
+        <figcaption>The plans on the original main menu.</figcaption>
+      </figure>
+      <p>So I made a new wireframe in Figma.</p>
+      <p>I gave each plan its own card, with a status indicator and a simple menu to make edits. Starting a new plan was a given a clear action button.</p>
+      <figure>
+        <img src="figures/main-menu-new.webp" width="1040" height="720" alt="The main menu in the wireframe: one card for an approved plan marked Noncompliant, one card for a plan in process marked Not Submitted, each with an Action drop-down, and a &#x27;Start a New Plan&#x27; button below.">
+        <figcaption>The main menu in the wireframe.</figcaption>
+      </figure>
+      <p>Revisiting that wireframe today, I turned it into a full redesign. A working prototype in HTML.</p>
+      <p>For my revamped prototype, I went with a sophisticated glassmorphic visual style, to inspire confidence in the institution behind the app. Its type and colors follow the University's branding and style guidelines.</p>
+      <figure>
+        <img src="figures/proto-menu.webp" width="1280" height="720" alt="The main menu in the revamped prototype: frosted glass panels on a pale blue background, a navy header, a side menu with line icons, a card for each plan with its status and an action menu, and a &#x27;Start a new plan&#x27; button.">
+        <figcaption>The main menu in the revamped prototype.</figcaption>
+      </figure>
+      <p>Not too shabby! Let's see what's next.</p>
+
+      <!-- MENU -->
+      <p>Once users started a plan, the biggest problem was navigation.</p>
+      <p>The navigation menu changed from page to page, navigation buttons were mixed with other actions, and there was no signpost letting users know where they were in the app.</p>
+      <figure class="narrow">
+        <div class="menus">
+          <div><img src="figures/nav-old-demographic.webp" width="356" height="800" alt="Original menu on one page, listing the Project Information sections with checkboxes. Nothing marks the current page."></div>
+          <div><img src="figures/nav-old-chem-inv.webp" width="356" height="800" alt="Original menu on another page. The Project Information sections are gone, replaced by Hazardous Chemicals sections."></div>
+        </div>
+        <figcaption>The original menu on two different pages.</figcaption>
+      </figure>
+      <p>In <em>Don't Make Me Think</em>, Steve Krug compares navigation to street signs. It should look the same on every page, with a clear "You are here" marker.</p>
+      <p>So I designed a new nav menu that stayed the same on every page and highlighted the active screen.</p>
+      <figure class="narrow">
+        <div class="menus">
+          <div><img src="figures/nav-new-demographic.webp" width="283" height="748" alt="The wireframe&#x27;s menu on the first page. Both main sections are listed. The first is open, and the current page is in bold."></div>
+          <div><img src="figures/nav-new-chem-inv.webp" width="283" height="748" alt="The wireframe&#x27;s menu on the second page. Both main sections are still listed. The second is open, and the current page is in bold."></div>
+        </div>
+        <figcaption>The wireframe's menu on the same two pages.</figcaption>
+      </figure>
+      <p>My reworked prototype retains the identity of the original app, with its sections and page names in their original order, so experienced users can still find their way around.</p>
+      <figure class="narrow">
+        <div class="menus">
+          <div><img src="figures/proto-nav-demographic.webp" width="280" height="680" alt="The prototype&#x27;s menu on the first page. Schedule A is open, and the current page is highlighted with a bar beside it."></div>
+          <div><img src="figures/proto-nav-chem-inv.webp" width="280" height="870" alt="The prototype&#x27;s menu on the second page. Schedule B is open, its first page is checked off, and the current page is highlighted."></div>
+        </div>
+        <figcaption>The prototype's menu on the same two pages.</figcaption>
+      </figure>
+      <p>Much better. Next up: the Room Use Entry screen.</p>
+
+      <!-- ROOMS -->
+      <p>The first task users were supposed to do was list rooms in their lab and what each one was used for.</p>
+      <p>But the page buried that task under a wall of text about entrance signs and hazard categories. And the 'Add Room' button sat at the bottom, mixed with 'Save' and 'Save &amp; Continue'.</p>
+      <figure>
+        <img src="figures/rooms-old.webp" width="778" height="573" alt="The original Room Use Entry page: a long block of text about laboratory entrance signs and hazard category definitions, with small &#x27;Add Room&#x27;, &#x27;Save&#x27; and &#x27;Save &amp; Continue&#x27; buttons in a row at the bottom.">
+        <figcaption>The original Room Use Entry page.</figcaption>
+      </figure>
+      <p>No one read that text, and no one should be expected to.</p>
+      <p>So I replaced the cluttered wall of text with information icons. Each explanation stayed out of the way until a user asked for it.</p>
+      <p>I moved 'Add Room' to the top where it belonged, and the 'Save' and 'Save &amp; Continue' buttons became clear navigation.</p>
+      <figure>
+        <img src="figures/rooms-new-full.webp" width="1100" height="620" alt="Room Use Entry in the wireframe: a room drop-down with an &#x27;Add Room&#x27; button beside it, a table of rooms with a checkbox for each hazard category and an information icon under each category name, and &#x27;Back&#x27; and &#x27;Continue&#x27; buttons at the bottom.">
+        <figcaption>Room Use Entry in the wireframe.</figcaption>
+      </figure>
+      <p>In my updated prototype, I also added some simulated backend logic to only show valid room numbers for the building in question.</p>
+      <figure>
+        <img src="figures/proto-rooms.webp" width="960" height="542" alt="Room Use Entry in the prototype: a dark callout above the rsNA column reads &quot;Recombinant or synthetic nucleic acid molecules.&quot; Below it, a table of rooms with an information icon under each hazard category, and &#x27;Back&#x27; and &#x27;Continue&#x27; buttons at the bottom.">
+        <figcaption>Room Use Entry in the prototype, with an information callout open.</figcaption>
+      </figure>
+      <p>That's better. Now, the Chemical Inventory screen.</p>
+
+      <!-- CHEMICAL INVENTORY -->
+      <p>The app had to work for both the users and the organization, but this screen failed on both.</p>
+      <p>Weak language minimized the call to action. Users were directed to a full URL with no hyperlink. It used repetitive language. Nondescriptive links broke accessibility guidelines and scannability.</p>
+      <p>And a long notice, which applied to only a few labs, was given as much visual weight as the most important information on the page.</p>
+      <figure>
+        <img src="figures/chem-old.webp" width="1590" height="474" alt="An original page: four paragraphs, three links labeled only &quot;here,&quot; and a long block of regulatory text.">
+        <figcaption>The original Chemical Inventory page.</figcaption>
+      </figure>
+      <p>I cut the repetition and gave every link a descriptive label.</p>
+      <p>Then I used visual hierarchy to show each lab their status at a glance. An "out of compliance" warning, in a WCAG-compliant dark red, sat right beside a link to the inventory portal.</p>
+      <p>And I shrank the security notice and moved it to the bottom, where it no longer cluttered the page.</p>
+      <figure>
+        <img src="figures/chem-new.webp" width="920" height="345" alt="The same page in the wireframe: a requirement, a red out-of-compliance status beside a link to the inventory portal, a help link, and a smaller note at the bottom with a heading saying who it is for.">
+        <figcaption>The same page in the wireframe.</figcaption>
+      </figure>
+      <p>In my revamped prototype, new copy helps guide the user flow. Every page opens with a single line of plain instructions, and boxes are used for visual hierarchy.</p>
+      <figure>
+        <img src="figures/proto-chem-inv.webp" width="960" height="710" alt="Chemical Inventory in the prototype: a one-line requirement under the title, the out-of-compliance warning in a pale red box with a link to the inventory portal, a help link, and the security note for labs with Chemicals of Interest in smaller grey text below.">
+        <figcaption>Chemical Inventory in the prototype.</figcaption>
+      </figure>
+      <p>This next screen feels personal.</p>
+
+      <!-- CHEMICAL WASTE -->
+      <p>Before working on this app, I worked in hazardous waste collection.</p>
+      <p>On campus, I saw plenty of chemical waste that wasn't collected, stored, or labeled properly.</p>
+      <p>No wonder! The language on the app was filled with jargon. Some of the users we interviewed rightfully didn't know what a "halogenated solvent" was.</p>
+      <p>And the Chemical Waste Disposal page gave them little help. The users we spoke to pleaded for examples of what EHS wanted.</p>
+      <figure>
+        <img src="figures/waste-old.webp" width="785" height="740" alt="The original Chemical Waste Disposal page: three paragraphs of instructions, two large empty text boxes marked with red asterisks, and a checklist of waste streams such as halogenated and non-halogenated solvents.">
+        <figcaption>The original Chemical Waste Disposal page.</figcaption>
+      </figure>
+      <p>So I put placeholder text in the input fields. I provided definitions and removed the jargon.</p>
+      <figure>
+        <img src="figures/waste-new.webp" width="1000" height="1242" alt="Chemical Waste Disposal in the wireframe: short bulleted guidelines, a required yes-or-no question answered Yes, waste type checkboxes with an information icon beside each, and answer boxes with grey example text such as High-performance Liquid Chromatography and 19L/week.">
+        <figcaption>Chemical Waste Disposal in the wireframe.</figcaption>
+      </figure>
+      <p>When I rebuilt this page for the reworked prototype, I put an example in every empty field. And each information icon now reveals its definition on hover or keyboard focus.</p>
+      <figure>
+        <img src="figures/proto-waste.webp" width="960" height="1176" alt="Chemical Waste Disposal in the prototype: three short guidelines with descriptive links, a yes-or-no question answered Yes, waste types with an information icon beside each, and answer boxes with grey examples such as High-performance liquid chromatography and 19 L/week.">
+        <figcaption>Chemical Waste Disposal in the prototype.</figcaption>
+      </figure>
+      <p>Much clearer. On the waste page, poor guidance led to poorly managed waste. On the Machinery Use screen, it led to injuries.</p>
+
+      <!-- MACHINERY -->
+      <p>When I investigated root causes of injuries, I could trace some of them back to our systems.</p>
+      <p>Often, I found that when someone got hurt, training in the lab was word-of-mouth. A senior lab member showed the junior how to use the machine, with nothing for them to refer back to.</p>
+      <p>There was no standard operating procedure, or SOP, for the machine.</p>
+      <p>And when I reviewed the machinery page, I found this.</p>
+      <figure class="tall">
+        <img src="figures/machinery-old.webp" width="864" height="2470" alt="An entire original page shrunk to fit the screen: a single narrow column of tiny checkboxes running the full height of an otherwise empty page.">
+        <figcaption>The original Machinery Use page, scaled to fit.</figcaption>
+      </figure>
+      <p>The Machinery Use page asked users to scroll through a list of nearly every machine imaginable, checking off each one their lab used.</p>
+      <p>When a lab missed a machine on that list, they never wrote an SOP for that machine.</p>
+      <p>So I replaced the checklist with a search box.</p>
+      <figure>
+        <img src="figures/machinery-search.webp" width="1050" height="180" alt="The search box in the wireframe: the user has typed 3, and the suggestion below reads 3D Printer.">
+        <figcaption>The machinery search in the wireframe.</figcaption>
+      </figure>
+      <p>And here's how it looks in the updated version.</p>
+      <figure>
+        <img src="figures/proto-machinery.webp" width="960" height="542" alt="Machinery Use in the prototype: the user has typed 3 in the search box, and the suggestion below reads 3D printer.">
+        <figcaption>The machinery search in the prototype.</figcaption>
+      </figure>
+      <p>Labs can find every machine they use, so writing an SOP for each one is easier. A fix like this, along with providing a template, could actually prevent injuries.</p>
+      <p>Now let's wrap up the plan.</p>
+
+      <!-- PROGRESS -->
+      <p>Once users finished searching for buried buttons, looking up obscure words, and scrolling through endless checklists, there was a final stumbling block.</p>
+      <p>The link to submit a finished plan was buried among other links on the main menu.</p>
+      <p>The user was expected to navigate back to the main menu from the final app screen, locate their plan, labeled with a cryptic number like 202656999, and locate the button to 'Submit for Approval'.</p>
+      <figure>
+        <img src="figures/submit-links.webp" width="1540" height="110" alt="Two rows from the original main menu. Each plan has a row of links: Update, View, Submit for Approval, Delete, Change Building.">
+        <figcaption>Links for each plan on the original main menu.</figcaption>
+      </figure>
+      <p>My solution was simple.</p>
+      <p>First, show users the button to submit as soon as they finish the last screen of the plan.</p>
+      <p>Second, add a clear progress indicator to show users how far they had come and how much was left, with a 'Submit Plan for Approval' button that only unlocked when the plan was complete.</p>
+      <figure>
+        <img src="figures/schedule-incomplete.webp" width="960" height="540" alt="The overview page in the wireframe: one section&#x27;s progress ring shows 0% and the other 15%. The &#x27;Submit Plan for Approval&#x27; button is grey.">
+        <figcaption>The overview page in the wireframe, with a plan in progress.</figcaption>
+      </figure>
+      <figure>
+        <img src="figures/schedule-complete.webp" width="960" height="540" alt="The same page with both progress rings at 100% and the &#x27;Submit Plan for Approval&#x27; button active.">
+        <figcaption>The same page, with the plan complete.</figcaption>
+      </figure>
+      <p>And in my revamped prototype, a progress ring tracks each schedule, and the 'Submit plan for approval' button stays locked until both are finished.</p>
+      <figure>
+        <img src="figures/proto-schedule.webp" width="960" height="640" alt="The overview page in the prototype: progress rings for Schedule A at 0% and Schedule B at 11%, and a greyed-out &#x27;Submit plan for approval&#x27; button with a note to finish both schedules.">
+        <figcaption>The overview page in the prototype, with a plan in progress.</figcaption>
+      </figure>
+      <p>These are a few examples of my changes. There were about 50 others I wrote up in the heuristic evaluation. But what happened after that?</p>
+
+      <!-- OUTCOME -->
+      <p>I presented our findings and my wireframe to the EHS director and the IT team.</p>
+      <p>They adopted a plan to fix the most serious bugs and typos from our evaluation. The director also named navigation as a sensible next priority.</p>
+      <p>My wireframe was only partially implemented, and the course ended before we could ultimately test it with users.</p>
+      <p>But you can test it out for yourself!</p>
+      <figure class="embed">
+        <iframe src="prototype/index.html" title="The revamped Lab Safety Plan prototype" loading="lazy"></iframe>
+        <figcaption>The revamped prototype. <a href="prototype/index.html" target="_blank" rel="noopener">Open it in a new tab</a>.</figcaption>
+      </figure>
+
+      <!-- ENDING -->
+      <p>Since creating that first wireframe in Figma, both me and technology have come a long way.</p>
+      <p>The experience of using AI has gone from wrestling hallucinating chatbots to creating fully fledged apps at the click of a button.</p>
+      <p>And I've become well-versed in principles of visual design, communication, and web development.</p>
+
+      <!-- CONCLUSION -->
+      <p>If I redesigned the app again, it would probably look a bit different. 
+Better, even!</p>
+      <p>Let's hope that the users eventually get the app they deserve.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer container" aria-label="Site footer">
+    <small class="footer-note">© 2026 Site handcrafted by P. R. Truesdell</small>
+  </footer>
+</body>
+</html>
