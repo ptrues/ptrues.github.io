@@ -887,7 +887,7 @@ P.dea = () => `
         <div class="row"><label class="sr" for="dea-sel-${n}">Schedule ${n} substance</label>
           <select id="dea-sel-${n}" style="max-width:20rem"><option value="">Choose a substance</option>${subs.map(s => `<option>${esc(s)}</option>`).join("")}</select>
           <button class="btn small-btn" data-dea-add="${n}">${ICON.plus}Add</button></div>
-        ${(S.dea.added[n] || []).length ? `<ul class="files">${S.dea.added[n].map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
+        ${(S.dea.added[n] || []).length ? `<ul class="files" style="max-width:26rem">${S.dea.added[n].map((s, i) => `<li>${esc(s)}<button class="icon-btn" style="margin-left:auto" data-del-dea="${n}:${i}" aria-label="Remove ${esc(s)}">${ICON.trash}</button></li>`).join("")}</ul>` : ""}
       </div>` : ""}
     </div>`).join("")}
   </div>
@@ -1200,6 +1200,9 @@ function bind() {
   $$("[data-dea-add]", sheet).forEach(el => el.onclick = () => {
     const n = el.dataset.deaAdd, v = $("#dea-sel-" + n).value;
     if (!v) return; (S.dea.added[n] ||= []); if (!S.dea.added[n].includes(v)) S.dea.added[n].push(v); rerender();
+  });
+  $$("[data-del-dea]", sheet).forEach(el => el.onclick = () => {
+    const [n, i] = el.dataset.delDea.split(":"); S.dea.added[n].splice(+i, 1); rerender();
   });
 
   // Machinery search
