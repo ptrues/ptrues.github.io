@@ -22,29 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      # upload-pages-artifact has no exclude option and publishes `path` whole,
-      # so build-time-only directories are dropped from the checkout first.
-      # Nothing served links into tools/.
-      - name: Prune build-time files from the artifact
-        run: rm -rf tools
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5  # paired with deploy-pages@v5; v4/v4 failed to find the artifact (2026-11-25)
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+  # Upload and deploy live in pages-deploy.yml, shared with
+  # refresh-listings.yml; see the note there on the artifact race.
+  pages:
+    uses: ./.github/workflows/pages-deploy.yml

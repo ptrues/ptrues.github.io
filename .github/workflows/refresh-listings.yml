@@ -22,9 +22,9 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 20    # a hung fetch must not sit on the pages group all day
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      outcome: ${{ steps.refresh.outcome }}
+      sha: ${{ steps.commit.outputs.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -56,6 +56,7 @@ jobs:
           python tools/antwerp-rentals/scripts/05_build_map.py --data-only
 
       - name: Commit the refreshed data
+        id: commit
         run: |
           git config user.name  "listings-bot"
           git config user.email "listings-bot@users.noreply.github.com"
@@ -69,35 +70,30 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      # Deploy from this run. A push made with GITHUB_TOKEN does NOT trigger
-      # deploy.yml -- GitHub's loop protection, and it fails silently: the
-      # commit lands, no deployment runs, and the site keeps serving yesterday's
-      # listings.json. That is the one failure the staleness banner cannot see,
-      # because the banner is computed from the *deployed* status.json.
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+  # Deploy from this run. A push made with GITHUB_TOKEN does NOT trigger
+  # deploy.yml -- GitHub's loop protection, and it fails silently: the
+  # commit lands, no deployment runs, and the site keeps serving yesterday's
+  # listings.json. That is the one failure the staleness banner cannot see,
+  # because the banner is computed from the *deployed* status.json.
+  # The deploy itself is pages-deploy.yml, shared with deploy.yml; it publishes
+  # the exact commit the refresh pushed.
+  deploy:
+    needs: refresh
+    uses: ./.github/workflows/pages-deploy.yml
+    with:
+      ref: ${{ needs.refresh.outputs.sha }}
 
-      # upload-pages-artifact has no exclude option and publishes `path` whole.
-      # Kept identical to deploy.yml on purpose; if the two ever drift, factor
-      # them into a workflow_call rather than patching one side.
-      - name: Prune build-time files from the artifact
-        run: rm -rf tools
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5  # paired with deploy-pages@v5; v4/v4 failed to find the artifact (2026-11-25)
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-
-      # Last, so that everything above has already happened. The page is now
-      # honest about being stale; this is what makes the run red in the Actions
-      # tab and sends the notification.
+  # Last, so that everything above has already happened. The page is now
+  # honest about being stale; this is what makes the run red in the Actions
+  # tab and sends the notification.
+  report:
+    needs: [refresh, deploy]
+    if: always() && needs.refresh.outputs.outcome == 'failure'
+    runs-on: ubuntu-latest
+    steps:
       - name: Report the refresh outcome
-        if: steps.refresh.outcome == 'failure'
         run: |
           echo "::error::The refresh failed; status.json has been deployed with the reason."
           exit 1

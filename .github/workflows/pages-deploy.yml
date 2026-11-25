@@ -1,0 +1,86 @@
+name: Publish to GitHub Pages
+
+# The one place the site is uploaded and deployed. deploy.yml (every push) and
+# refresh-listings.yml (the nightly data refresh) both call this, so the two
+# can never drift.
+#
+# Why two jobs and retries. deploy-pages looks the artifact up by name through
+# the Actions API, and that lookup is eventually consistent: a large artifact
+# (the site is ~170 MB) can be missing for a while after upload-pages-artifact
+# reports success. With upload and deploy as back-to-back steps, deploy ran one
+# second after the upload and failed with 'No artifacts named "github-pages"
+# were found' on 6 of 10 pushes on 2026-11-24/25 (runs 45602603345,
+# 45524694914, ...). Bumping the action versions did not help; it is timing,
+# not a version bug. So:
+#   1. upload and deploy are separate jobs (GitHub's own starter layout), which
+#      puts job start-up time between them; and
+#   2. the deploy is retried twice, after 30 s and then 90 s, before the run
+#      goes red.
+#
+# No concurrency group here: the callers hold the "pages" group, and a called
+# workflow that took the same group would wait on its own caller forever.
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Commit to publish. Empty means the commit that triggered the caller.
+        type: string
+        default: ""
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      # upload-pages-artifact has no exclude option and publishes `path` whole,
+      # so build-time-only directories are dropped from the checkout first.
+      # Nothing served links into tools/.
+      - name: Prune build-time files from the artifact
+        run: rm -rf tools
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+
+  deploy:
+    needs: upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.try1.outputs.page_url || steps.try2.outputs.page_url || steps.try3.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: try1
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Wait for the artifact to become visible
+        if: steps.try1.outcome == 'failure'
+        run: sleep 30
+
+      - name: Deploy to GitHub Pages (retry 1)
+        id: try2
+        if: steps.try1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Wait longer for the artifact
+        if: steps.try2.outcome == 'failure'
+        run: sleep 90
+
+      # Last attempt: no continue-on-error, so a third failure turns the run red.
+      - name: Deploy to GitHub Pages (retry 2)
+        id: try3
+        if: steps.try2.outcome == 'failure'
+        uses: actions/deploy-pages@v5
