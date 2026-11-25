@@ -85,13 +85,13 @@ jobs:
         run: rm -rf tools
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4  # v5 artifacts not found by deploy-pages@v4 (2026-11-24 deploys)
+        uses: actions/upload-pages-artifact@v5  # paired with deploy-pages@v5; v4/v4 failed to find the artifact (2026-11-25)
         with:
           path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # Last, so that everything above has already happened. The page is now
       # honest about being stale; this is what makes the run red in the Actions
